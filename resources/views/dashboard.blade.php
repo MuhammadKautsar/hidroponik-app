@@ -69,7 +69,7 @@
                     </a>
                 </div>
                 <div class="col-xl-4 col-lg-6">
-                    <a href="{{ route('pasarmurah') }}">
+                    <a href="{{ route('pasar_murah') }}">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">

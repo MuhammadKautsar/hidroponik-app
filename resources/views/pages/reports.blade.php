@@ -16,33 +16,27 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Id</th>
-                    <th scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th scope="col" class="sort" data-sort="status">Laporan</th>
-                    <th scope="col">Pelapor</th>
-                    <th scope="col" class="sort" data-sort="completion">Penjual</th>
-                    <th scope="col"></th>
+                    <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Laporan</th>
+                    <th class="text-center" scope="col">Pelapor</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Penjual</th>
+                    <th class="text-center" scope="col">aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
                   @foreach($data_report as $item)
                     <tr>
-                      <td>{{$item['id']}}</td>
-                      <td>{{$item['created_at']}}</td>
-                      <td>{{$item['laporan']}}</td>
-                      <td>{{$item['pelapor']}}</td>
-                      <td>{{$item['penjual']}}</td>
-                      <td class="text-right">
-                        <div class="dropdown">
-                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div>
+                      <td class="text-center">{{$item['id']}}</td>
+                      <td class="text-center">{{$item['created_at']}}</td>
+                      <td class="text-center">{{$item['laporan']}}</td>
+                      <td class="text-center">{{$item['pelapor']}}</td>
+                      <td class="text-center">{{$item['penjual']}}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Edit
+                        </button>
+                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
                   @endforeach

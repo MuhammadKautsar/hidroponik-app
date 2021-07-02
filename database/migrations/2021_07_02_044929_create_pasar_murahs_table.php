@@ -15,10 +15,11 @@ class CreatePasarMurahsTable extends Migration
     {
         Schema::create('pasar_murahs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('course');
-            $table->string('profile_image');
+            $table->string('gambar');
+            $table->string('nama');
+            $table->string('lokasi');
+            $table->string('waktu');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }

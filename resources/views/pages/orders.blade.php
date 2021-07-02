@@ -16,37 +16,31 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="name">Id</th>
-                    <th scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th scope="col" class="sort" data-sort="status">Produk</th>
-                    <th scope="col">Jumlah</th>
-                    <th scope="col" class="sort" data-sort="completion">Alamat</th>
-                    <th scope="col" class="sort" data-sort="completion">Total</th>
-                    <th scope="col" class="sort" data-sort="completion">Status</th>
-                    <th scope="col"></th>
+                    <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Produk</th>
+                    <th class="text-center" scope="col">Jumlah</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Alamat</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Total</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
+                    <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
                   @foreach($data_order as $item)
                     <tr>
-                      <td>{{$item['id']}}</td>
-                      <td>{{$item['created_at']}}</td>
-                      <td>{{$item['produk']}}</td>
-                      <td>{{$item['jumlah']}}</td>
-                      <td>{{$item['alamat']}}</td>
-                      <td>{{$item['total']}}</td>
-                      <td>{{$item['status']}}</td>
-                      <td class="text-right">
-                        <div class="dropdown">
-                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div>
+                      <td class="text-center">{{$item['id']}}</td>
+                      <td class="text-center">{{$item['created_at']}}</td>
+                      <td class="text-center">{{$item['produk']}}</td>
+                      <td class="text-center">{{$item['jumlah']}}</td>
+                      <td class="text-center">{{$item['alamat']}}</td>
+                      <td class="text-center">{{$item['total']}}</td>
+                      <td class="text-center">{{$item['status']}}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Edit
+                        </button>
+                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
                   @endforeach

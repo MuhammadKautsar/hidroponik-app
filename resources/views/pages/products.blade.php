@@ -9,6 +9,10 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Tambah
+              </button>
               <h3 class="mb-0">Produk</h3>
             </div>
             <!-- Light table -->

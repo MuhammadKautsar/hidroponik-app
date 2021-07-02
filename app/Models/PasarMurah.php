@@ -10,9 +10,10 @@ class PasarMurah extends Model
     use HasFactory;
     protected $table = 'pasar_murahs';
     protected $fillable = [
-        'name',
-        'email',
-        'course',
-        'profile_image',
+        'gambar',
+        'nama',
+        'lokasi',
+        'waktu',
+        'keterangan',
     ];
 }

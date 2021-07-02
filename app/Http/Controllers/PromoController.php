@@ -103,17 +103,11 @@ class PromoController extends Controller
         return redirect('/promo')->with('sukses','Data berhasil diinput');
     }
 
-    public function edit($id)
-    {
-        $promo = Promo::find($id);
-        return view('pages/edit',['promo' => $promo]);
-    }
-
     public function update(Request $request, $id)
     {
         $promo = Promo::find($id);
         $promo->update($request->all());
-        return redirect('/promo',['promo' => $promo])->with('sukses','Data berhasil diupdate');
+        return redirect('/promo')->with('sukses','Data berhasil diupdate');
     }
 
     public function hapus($id)

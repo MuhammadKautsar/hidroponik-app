@@ -102,7 +102,7 @@ body
     text-align: left;
 
     color: #525f7f;
-    background-color: #f8f9fe;
+    background-color: #eef0f5;
 }
 
 [tabindex='-1']:focus
@@ -17916,7 +17916,7 @@ a.btn-icon-only
 {
     padding: 2.5rem 0; 
 
-    background: #f7fafc;
+    background: #eef0f5;
 }
 .footer .col-footer .heading
 {

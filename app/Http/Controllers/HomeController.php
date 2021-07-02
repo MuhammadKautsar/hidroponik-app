@@ -33,4 +33,10 @@ class HomeController extends Controller
         $jumlah_user = User::all()->count();
         return view('dashboard', compact('jumlah_produk', 'jumlah_pesanan', 'jumlah_promo', 'jumlah_laporan', 'jumlah_user'));
     }
+
+    public function penjual()
+    {
+        
+        return view('penjual.dashboard');
+    }
 }
