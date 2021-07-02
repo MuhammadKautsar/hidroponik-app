@@ -18,7 +18,7 @@
               <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Tambah
               </button>
-              <h3 class="mb-0">Promo</h3>
+              <h3 class="mb-0">Pasar Murah</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
