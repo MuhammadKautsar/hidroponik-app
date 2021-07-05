@@ -62,6 +62,7 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
+                @if (auth()->user()->level=="admin")
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-black"></i> {{ __('Dashboard') }}
@@ -104,6 +105,35 @@
                         <i class="ni ni-single-copy-04 text-black"></i> {{ __('Laporan') }}
                     </a>
                 </li>
+                @endif
+                @if (auth()->user()->level=="user")
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('home') }}">
+                        <i class="ni ni-shop text-black"></i> {{ __('Home') }}
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link text-white" href="{{ route('orders') }}">
+                        <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('products') }}">
+                        <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('reports') }}">
+                        <i class="ni ni-single-copy-04 text-black"></i> {{ __('Ulasan') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('sellers') }}">
+                      <i class="ni ni-single-02 text-black"></i>
+                      <span class="nav-link-text">Profil</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </div>

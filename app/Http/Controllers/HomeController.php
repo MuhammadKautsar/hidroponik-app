@@ -36,7 +36,6 @@ class HomeController extends Controller
 
     public function penjual()
     {
-        
         return view('penjual.dashboard');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablePromos extends Migration
+class CreatePromosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,9 @@ class CreateTablePromos extends Migration
     {
         Schema::create('promos', function (Blueprint $table) {
             $table->id();
+            $table->string('gambar');
             $table->string('nama');
-            $table->integer('potongan');
+            $table->string('potongan');
             $table->string('periode');
             $table->text('keterangan');
             $table->timestamps();

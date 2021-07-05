@@ -99,20 +99,55 @@ class PromoController extends Controller
 
     public function create(Request $request)
     {
-        Promo::create($request->all());
+        $promo = new Promo;
+        if($request->hasfile('gambar'))
+        {
+            $file = $request->file('gambar');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/promos/', $filename);
+            $promo->gambar = $filename;
+        }
+        $promo->nama = $request->input('nama');
+        $promo->potongan = $request->input('potongan');
+        $promo->periode = $request->input('periode');
+        $promo->keterangan = $request->input('keterangan');
+        $promo->save();
         return redirect('/promo')->with('sukses','Data berhasil diinput');
     }
 
     public function update(Request $request, $id)
     {
         $promo = Promo::find($id);
-        $promo->update($request->all());
+        if($request->hasfile('gambar'))
+        {
+            $destination = 'uploads/promos/'.$promo->gambar;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('gambar');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/promos/', $filename);
+            $promo->gambar = $filename;
+        }
+        $promo->nama = $request->input('nama');
+        $promo->potongan = $request->input('potongan');
+        $promo->periode = $request->input('periode');
+        $promo->keterangan = $request->input('keterangan');
+        $promo->update();
         return redirect('/promo')->with('sukses','Data berhasil diupdate');
     }
 
     public function hapus($id)
     {
         $promo = Promo::find($id);
+        $destination = 'uploads/promos/'.$promo->gambar;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
         $promo->delete($promo);
         return redirect('/promo')->with('sukses','Data berhasil dihapus');
     }

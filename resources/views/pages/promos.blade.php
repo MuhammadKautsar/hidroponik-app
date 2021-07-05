@@ -26,6 +26,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="budget">Gambar</th>
                     <th class="text-center" scope="col" class="sort" data-sort="budget">Nama</th>
                     <th class="text-center" scope="col" class="sort" data-sort="status">Potongan</th>
                     <th class="text-center" scope="col">Periode</th>
@@ -37,6 +38,9 @@
                   @foreach($promo as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
+                      <td class="text-center">
+                        <img src="{{ asset('uploads/promos/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
+                      </td>
                       <td class="text-center">{{$item['nama']}}</td>
                       <td class="text-center">{{$item['potongan']}}</td>
                       <td class="text-center">{{$item['periode']}}</td>
@@ -93,8 +97,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <form action="/promo/create" method="POST">
-                        {{csrf_field()}}
+                    <form action="/promo/create" method="POST" enctype="multipart/form-data">
+                      @csrf
+                      <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Gambar</label>
+                        <input name="gambar" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      </div>
                       <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
                         <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -133,6 +141,11 @@
                   <div class="modal-body">
                     <form action="/promo/{{$data->id}}/update" method="POST">
                         {{csrf_field()}}
+                      <div class="mb-3">
+                        <label for="" class="form-label">Gambar</label>
+                        <input name="gambar" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <img src="{{ asset('uploads/promos/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
+                      </div>
                       <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
                         <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
