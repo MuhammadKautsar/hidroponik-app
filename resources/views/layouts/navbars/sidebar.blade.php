@@ -108,7 +108,7 @@
                 @endif
                 @if (auth()->user()->level=="user")
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}">
+                    <a class="nav-link text-white" href="{{ route('dashboard') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Home') }}
                     </a>
                 </li>

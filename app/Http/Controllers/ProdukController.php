@@ -42,7 +42,20 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $produk = new Produk;
+        if($request->hasfile('gambar'))
+        {
+            $file = $request->file('gambar');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/', $filename);
+            $produk->gambar = $filename;
+        }
+        $produk->nama = $request->input('nama');
+        $produk->harga = $request->input('harga');
+        $produk->stok = $request->input('stok');
+        $produk->save();
+        return redirect('/produk')->with('sukses','Data berhasil diinput');
     }
 
 
@@ -54,9 +67,27 @@ class ProdukController extends Controller
     }
 
 
-    public function edit(Produk $produk)
+    public function edit(Request $request, $id)
     {
-        //
+        $produk = Produk::where('idproduk',$id);
+        if($request->hasfile('gambar'))
+        {
+            $destination = 'uploads/'.$produk->gambar;
+            if(File::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('gambar');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/', $filename);
+            $produk->gambar = $filename;
+        }
+        $produk->nama = $request->input('nama');
+        $produk->harga = $request->input('harga');
+        $produk->stok = $request->input('stok');
+        $produk->update(['idproduk','gambar','nama','harga','stok']);
+        return redirect('/produk')->with('sukses','Data berhasil diupdate');
     }
 
     
@@ -92,9 +123,12 @@ class ProdukController extends Controller
     }
 
 
-    public function destroy(Produk $produk)
+    public function destroy($idproduk)
     {
-        //
+        $produk = Produk::where('idproduk',$idproduk);
+
+        $produk->delete();
+        return redirect('/produk')->with('sukses','Data berhasil dihapus');
     }
 
     // function put($idproduk, Request $request)
