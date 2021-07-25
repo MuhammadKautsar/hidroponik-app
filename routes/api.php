@@ -9,6 +9,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ProdukController;
 
+use App\Http\Controllers\UploadController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +21,8 @@ use App\Http\Controllers\ProdukController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('upload', [UploadController::class, 'upload']);
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -45,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/produk', [ProdukController::class, 'create']);
 Route::get('/produks', [ProdukController::class, 'show']);
-Route::put('/produk/{idproduk}', [ProdukController::class, 'update']);
+Route::put('/produk/{id}', [ProdukController::class, 'put']);
 Route::delete('/produk/{idproduk}', [ProdukController::class, 'delete']);
 
 

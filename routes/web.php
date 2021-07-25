@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasarMurahController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +62,8 @@ Route::group(['middleware' => ['auth','cekLevel:admin,user']], function () {
 // 	Auth::routes();
 // 	Route::get('/dashboard', 'App\Http\Controllers\HomeController@penjual')->name('dashboard');
 // });
+
+Route::get('/post', [PostController::class, 'index']);
+Route::post('/post/create', [PostController::class, 'store']);
+Route::delete('/delete/{id}', [PostController::class, 'destroy']);
+Route::get('/edit/{id}', [PostController::class, 'edit']);

@@ -15,30 +15,47 @@ class ProdukController extends Controller
     }
 
 
+    // public function create(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'gambar' => 'required',
+    //         'nama' => 'required|string',
+    //         'harga' => 'required|numeric',
+    //         'stok' => 'required|numeric',
+    //     ]);
+
+    //     $gambar = $request->file('gambar')->getClientOriginalName();
+    //     $request->file('gambar')->move('uploads', $gambar);
+
+    //     $data = [
+    //         'gambar' => $gambar,
+    //         'nama' => $request->input('nama'),
+    //         'harga' => $request->input('harga'),
+    //         'stok' => $request->input('stok')
+    //     ];
+
+    //     $produk = Produk::create($data);
+
+    //     return response()->json($data);
+    // }
+
     public function create(Request $request)
     {
-        $this->validate($request, [
-            'gambar' => 'required',
-            'nama' => 'required|string',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
-        ]);
-
-        $gambar = $request->file('gambar')->getClientOriginalName();
-        $request->file('gambar')->move('uploads', $gambar);
-
-        $data = [
-            'gambar' => $gambar,
-            'nama' => $request->input('nama'),
-            'harga' => $request->input('harga'),
-            'stok' => $request->input('stok')
-        ];
-
-        $produk = Produk::create($data);
-
-        return response()->json($data);
+        $produk = new Produk;
+        if($request->hasfile('gambar'))
+        {
+            $file = $request->file('gambar');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('uploads/', $filename);
+            $produk->gambar = $filename;
+        }
+        $produk->nama = $request->input('nama');
+        $produk->harga = $request->input('harga');
+        $produk->stok = $request->input('stok');
+        $produk->save();
+        return response()->json($produk);
     }
-
 
     public function store(Request $request)
     {
@@ -91,9 +108,9 @@ class ProdukController extends Controller
     }
 
     
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $produk = Produk::find($request->idproduk);
+        $produk = Produk::find($id);
 
         if($request->hasfile('gambar'))
         {
@@ -113,12 +130,53 @@ class ProdukController extends Controller
         $produk->harga = $request->input('harga');
         $produk->stok = $request->input('stok');
 
+        $produk->nama = $request->nama ? $request->nama : $produk->nama;
+        $produk->harga = $request->harga ? $request->harga : $produk->harga;
+        $produk->stok = $request->stok ? $request->stok :$produk->stok;
+
         $produk->update();
+        return response()->json($produk);
+        // return response()->json(
+        //     [
+        //         "message" => "PUT Method Succsess ",
+        //         "data" => $produk
+        //     ]
+        // );
+    }
+
+    function put($id, Request $request)
+    {
+        $produk = Produk::where('id', $id)->first();
+        if($produk){
+            if($request->hasfile('gambar'))
+                {
+                    $destination = 'uploads/'.$produk->gambar;
+                    if(File::exists($destination))
+                    {
+                        File::delete($destination);
+                    }
+                    $file = $request->file('gambar');
+                    $extention = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extention;
+                    $file->move('uploads/', $filename);
+                    $produk->gambar = $filename;
+                }
+            $produk->nama = $request->nama ? $request->nama : $produk->nama;
+            $produk->harga = $request->harga ? $request->harga : $produk->harga;
+            $produk->stok = $request->stok ? $request->stok :$produk->stok;
+
+            $produk->save();
+            return response()->json(
+                [
+                    "message" => "PUT Method Succsess ",
+                    "data" => $produk
+                ]
+            );
+        }
         return response()->json(
             [
-                "message" => "PUT Method Succsess ",
-                "data" => $produk
-            ]
+                "message" => "promo with id " . $id . " not found"
+            ], 400
         );
     }
 
