@@ -1,7 +1,7 @@
-@extends('layouts.app', ['class' => 'bg-white'])
+@extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
-    @include('layouts.headers.guest')
+    @include('layouts.back.inc.headers.guest')
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
@@ -13,7 +13,7 @@
                                     Create new account OR Sign in with these credentials:
                             </small>
                         </div>
-                        <form role="form" method="POST" action="{{ route('login') }}">
+                        <form role="form" method="POST" action="{{ route('admin.login') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">

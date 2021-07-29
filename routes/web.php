@@ -5,6 +5,8 @@ use App\Http\Controllers\PasarMurahController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PenjualController;
+use App\Http\Controllers\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,10 @@ Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/dashboard', 'App\Http\Controllers\HomeController@penjual')->name('dashboard');
+
+Route::get('/welcome', [PenjualController::class, 'welcome']);
+Route::get('/daftar', [PenjualController::class, 'register']);
+Route::get('/masuk', [PenjualController::class, 'login']);
 
 Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -67,3 +73,13 @@ Route::get('/post', [PostController::class, 'index']);
 Route::post('/post/create', [PostController::class, 'store']);
 Route::delete('/delete/{id}', [PostController::class, 'destroy']);
 Route::get('/edit/{id}', [PostController::class, 'edit']);
+
+Route::prefix('admin')->group(function(){
+	Route::get('/', function () {
+		return view('back.welcome');
+	});
+	Route::get('/login', [Admin\Auth\LoginController::class, 'loginForm'])->name('admin.login');
+	Route::post('/login', [Admin\Auth\LoginController::class, 'login'])->name('admin.login');
+	Route::get('/home', [Admin\HomeController::class, 'index'])->name('admin.home');
+	Route::get('/logout', [Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
+});

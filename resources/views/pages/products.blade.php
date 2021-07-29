@@ -34,9 +34,11 @@
                   </tr>
                 </thead>
                 <tbody class="list">
+                  @php $no = 0 @endphp
                   @foreach($data_product as $item)
+                    @php $no++ @endphp
                     <tr>
-                      <td class="text-center">{{$item['idproduk']}}</td>
+                      <td class="text-center">{{$no}}</td>
                       <td class="text-center">
                         <img src="{{ asset('uploads/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
                       </td>

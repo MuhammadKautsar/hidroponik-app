@@ -10,7 +10,7 @@ class ProdukController extends Controller
 
     public function index()
     {
-        $data_product=Produk::all();
+        $data_product=Produk::paginate(3);
         return view('pages.products', compact('data_product'));
     }
 
