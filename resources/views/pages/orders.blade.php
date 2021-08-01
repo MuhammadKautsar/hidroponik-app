@@ -23,7 +23,9 @@
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Alamat</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Total</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
+                    @if (auth()->user()->level=="user")
                     <th class="text-center" scope="col">Aksi</th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -36,12 +38,34 @@
                       <td class="text-center">{{$item['alamat']}}</td>
                       <td class="text-center">{{$item['total']}}</td>
                       <td class="text-center">{{$item['status']}}</td>
+                      @if (auth()->user()->level=="user")
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Edit
+                        <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Tinjau
                         </button>
-                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                        {{-- <div class="dropdown">
+                          <button class="btn btn-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tinjau
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                          </div>
+                        </div> --}}
+                        {{-- <form action="/pesanan/{{$item->id}}/update" method="POST" enctype="multipart/form-data">
+                          {{csrf_field()}}
+                          <div class="mb-3">
+                            <select name="status" id="" class="form-control">
+                              <option value="" hidden selected>--Pilih Level--</option>
+                              <button type="submit" class="btn btn-primary"><option value="Belum" type="submit">Belum</option></button>
+                              <option value="Diproses">Diproses</option>
+                              <option value="Selesai">Selesai</option>
+                          </select>
+                          </div>
+                        </form> --}}
                       </td>
+                      @endif
                     </tr>
                   @endforeach
                 </tbody>
@@ -77,9 +101,46 @@
         </div>
         @include('layouts.footers.auth')
       </div>
+    </div>
+
+      @foreach($data_order as $data)
+            <!-- Modal -->
+            <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                        <div class="mb-3">
+                          <label for="" class="form-label">Status</label>
+                          {{-- <input name="status" type="text" class="form-control" id="exampleInputEmail1" value="{{$data->status}}"> --}}
+                          <select name="status" id="" class="form-control">
+                            <option value="" hidden selected>--Pilih--</option>
+                            <option value="Belum">Belum</option>
+                            <option value="Diproses">Diproses</option>
+                            <option value="Dikirim">Dikirim</option>
+                            <option value="Selesai">Selesai</option>
+                            <option value="Batal">Batal</option>
+                        </select>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
 @endsection
 
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 @endpush

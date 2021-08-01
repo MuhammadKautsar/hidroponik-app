@@ -55,6 +55,26 @@
                                         </span>
                                     @endif
                                 </div>
+                                <div class="form-group{{ $errors->has('nomor_hp') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-nomor_hp">{{ __('Nomor HP') }}</label>
+                                    <input type="text" name="nomor_hp" id="input-nomor_hp" class="form-control form-control-alternative{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nomor HP') }}" value="{{ old('nomor_hp', auth()->user()->nomor_hp) }}" required autofocus>
+
+                                    @if ($errors->has('nomor_hp'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('nomor_hp') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group{{ $errors->has('alamat') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-alamat">{{ __('Alamat') }}</label>
+                                    <input type="text" name="alamat" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" value="{{ old('alamat', auth()->user()->alamat) }}" required autofocus>
+
+                                    @if ($errors->has('alamat'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('alamat') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>

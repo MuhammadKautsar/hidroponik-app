@@ -6,6 +6,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PenjualController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Admin;
 
 /*
@@ -44,8 +45,6 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	 Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
-	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	 Route::get('pembeli', [UserController::class, 'pembeli'])->name('buyers');
 	 Route::get('penjual', [UserController::class, 'penjual'])->name('sellers');
 	 Route::get('/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
@@ -59,9 +58,14 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 Route::group(['middleware' => ['auth','cekLevel:admin,user']], function () {
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
-	Route::post('/produk/{idproduk}/update', [ProdukController::class, 'edit']);
-	Route::get('/produk/{idproduk}/delete', [ProdukController::class, 'destroy']);
+	Route::post('/produk/{id}/update', [ProdukController::class, 'edit']);
+	Route::get('/produk/{id}/delete', [ProdukController::class, 'destroy']);
 	Route::get('/pesanan', 'App\Http\Controllers\OrderController@index')->name('orders');
+	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');
+	Route::get('/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');
+	Route::get('/ulasan', 'App\Http\Controllers\FeedbackController@index')->name('feedbacks');
+	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
+	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 });
 
 // Route::group(['middleware' => ['auth','cekLevel:user']], function () {
@@ -74,12 +78,21 @@ Route::post('/post/create', [PostController::class, 'store']);
 Route::delete('/delete/{id}', [PostController::class, 'destroy']);
 Route::get('/edit/{id}', [PostController::class, 'edit']);
 
+Route::delete('/deleteimage/{id}', [PostController::class, 'deleteimage']);
+Route::delete('/deletecover/{id}', [PostController::class, 'deletecover']);
+
+Route::put('/update/{id}', [PostController::class, 'update']);
+
 Route::prefix('admin')->group(function(){
 	Route::get('/', function () {
 		return view('back.welcome');
 	});
+	// Route::get('/register', function () {
+	// 	return view('back.auth.register');
+	// });
 	Route::get('/login', [Admin\Auth\LoginController::class, 'loginForm'])->name('admin.login');
 	Route::post('/login', [Admin\Auth\LoginController::class, 'login'])->name('admin.login');
 	Route::get('/home', [Admin\HomeController::class, 'index'])->name('admin.home');
 	Route::get('/logout', [Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
+	Route::get('/produk', [ProdukController::class, 'indexAdmin'])->name('admin.products');
 });

@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('products') }}">
+                    <a class="nav-link text-white" href="{{ route('admin.products') }}">
                         <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
                     </a>
                 </li>

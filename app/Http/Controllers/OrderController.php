@@ -95,7 +95,15 @@ class OrderController extends Controller
 
     public function index()
     {
-        $data_order=order::all();
+        $data_order=Order::all();
         return view('pages.orders', compact('data_order'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data_order = Order::find($id);
+        $data_order->status = $request->input('status');
+        $data_order->update();
+        return redirect('/pesanan');
     }
 }

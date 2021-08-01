@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Feedback;
 
 class Produk extends Model
 {
@@ -17,4 +18,8 @@ class Produk extends Model
     ];
 
     protected $table='produks';
+
+    public function feedbacks(){
+        return $this->hasMany(Feedback::class);
+    }
 }

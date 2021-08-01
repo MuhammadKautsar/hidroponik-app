@@ -1,4 +1,4 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-green" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,27 +108,27 @@
                 @endif
                 @if (auth()->user()->level=="user")
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ route('dashboard') }}">
+                    <a class="nav-link text-white" href="{{ route('dashboard') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Home') }}
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-black" href="{{ route('orders') }}">
+                    <a class="nav-link text-white" href="{{ route('orders') }}">
                         <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ route('products') }}">
+                    <a class="nav-link text-white" href="{{ route('products') }}">
                         <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ route('reports') }}">
+                    <a class="nav-link text-white" href="{{ route('feedbacks') }}">
                         <i class="ni ni-single-copy-04 text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black" href="{{ route('sellers') }}">
+                    <a class="nav-link text-white" href="/profile">
                       <i class="ni ni-single-02 text-black"></i>
                       <span class="nav-link-text">Profil</span>
                     </a>

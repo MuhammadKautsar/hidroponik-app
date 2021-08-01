@@ -44,9 +44,10 @@
                         <img src="cover/{{ $post->cover }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-">
+                        {{-- <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-">
                           Edit
-                        </button>
+                        </button> --}}
+                        <a href="/edit/{{ $post->id }}" class="btn btn-primary btn-sm">Update</a>
                         <form action="/delete/{{ $post->id }}" method="post">
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
                             @csrf
@@ -131,7 +132,7 @@
               </div>
             </div>
 
-            
+            @foreach ($posts as $post)
             <!-- Modal -->
             <div class="modal fade" id="editModal-" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -148,13 +149,13 @@
                           <input name="cover" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           <img src="/cover/{{ $post->cover }}" width="100px" height="70px" alt="Image">
                         </div>
-                        <div class="mb-3">
-                          @foreach ($posts->images as $img)
+                        {{-- <div class="mb-3">
+                          @foreach ($images as $img)
                           <label for="exampleInputEmail1" class="form-label">Images</label>
                           <input name="images[]" multiple type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                           <img src="/images/{{ $img->image }}" width="100px" height="70px" alt="Image">
                           @endforeach
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                           <label for="exampleInputEmail1" class="form-label">Title</label>
                           <input name="title" type="text" class="form-control" id="exampleInputEmail1">
@@ -176,6 +177,7 @@
                 </div>
               </div>
             </div>
+            @endforeach
             
 
 @endsection

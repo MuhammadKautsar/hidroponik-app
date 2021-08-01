@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProdukController extends Controller
 {
 
     public function index()
     {
-        $data_product=Produk::paginate(3);
+        $data_product=Produk::all();
         return view('pages.products', compact('data_product'));
+    }
+
+    public function indexAdmin()
+    {
+        $data_product=Produk::all();
+        return view('back.products', compact('data_product'));
     }
 
 
@@ -181,10 +188,14 @@ class ProdukController extends Controller
     }
 
 
-    public function destroy($idproduk)
+    public function destroy($id)
     {
-        $produk = Produk::where('idproduk',$idproduk);
-
+        $produk = Produk::find($id);
+        $destination = 'uploads/'.$produk->gambar;
+        if(File::exists($destination))
+        {
+            File::delete($destination);
+        }
         $produk->delete();
         return redirect('/produk')->with('sukses','Data berhasil dihapus');
     }

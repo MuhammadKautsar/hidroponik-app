@@ -1,11 +1,10 @@
-@extends('layouts.app', ['class' => 'bg-silver'])
+@extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
-<div class="header bg-green py-7 py-lg-5">
-</div>
+    @include('layouts.back.inc.headers.guest')
 
-<div class="container mt--10 pb-5">
-    <div class="header-body text-center mt-9 mb-7">
+    <div class="container mt--8 pb-5">
+        <!-- Table -->
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card bg-secondary shadow border-0">
@@ -63,23 +62,6 @@
                                     <input class="form-control" placeholder="{{ __('Confirm Password') }}" type="password" name="password_confirmation" required>
                                 </div>
                             </div>
-                            <div class="form-group{{ $errors->has('level') ? ' has-danger' : '' }}">
-                                {{-- <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div> --}}
-                                    <select name="level" id="" class="form-control">
-                                        <option value="" hidden selected>--Pilih Level--</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
-                                    </select>
-                                {{-- </div> --}}
-                                @if ($errors->has('level'))
-                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('level') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-success mt-4">{{ __('Create account') }}</button>
                             </div>
@@ -89,8 +71,4 @@
             </div>
         </div>
     </div>
-</div>
-    {{-- @include('layouts.headers.guest') --}}
-
-    
 @endsection

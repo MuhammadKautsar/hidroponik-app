@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.back.app')
 
 @section('content')
     @include('layouts.headers.cards')
@@ -15,11 +15,6 @@
             <!-- Card header -->
             <div class="card-header border-0">
               <!-- Button trigger modal -->
-              @if (auth()->user()->level=="user")
-              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah
-              </button>
-              @endif
               <h3 class="mb-0">Produk</h3>
             </div>
             <!-- Light table -->
@@ -48,12 +43,12 @@
                       <td class="text-center">{{$item['harga']}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">
-                        @if (auth()->user()->level=="user")
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                        @if (auth()->admin())
+                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->idproduk }}">
                           Edit
                         </button>
                         @endif
-                        <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                        <a href="/produk/{{$item->idproduk}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
                   @endforeach
@@ -131,7 +126,7 @@
 
     @foreach($data_product as $data)
     <!-- Modal -->
-    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal-{{ $data->idproduk }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
