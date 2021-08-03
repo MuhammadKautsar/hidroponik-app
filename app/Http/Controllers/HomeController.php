@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Promo;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Feedback;
 
 class HomeController extends Controller
 {
@@ -31,7 +32,29 @@ class HomeController extends Controller
         $jumlah_promo = Promo::all()->count();
         $jumlah_laporan = Report::all()->count();
         $jumlah_user = User::all()->count();
-        return view('dashboard', compact('jumlah_produk', 'jumlah_pesanan', 'jumlah_promo', 'jumlah_laporan', 'jumlah_user'));
+        $jumlah_ulasan = Feedback::all()->count();
+
+        $belum = Order::where('status', 'Belum')->count();
+        $diproses = Order::where('status', 'Diproses')->count();
+        $dikirim = Order::where('status', 'Dikirim')->count();
+        $selesai = Order::where('status', 'Selesai')->count();
+        $batal = Order::where('status', 'Batal')->count();
+        $ulasan = Feedback::all()->count();
+
+        return view('dashboard', compact(
+            'jumlah_produk', 
+            'jumlah_pesanan', 
+            'jumlah_promo', 
+            'jumlah_laporan', 
+            'jumlah_user',
+            'jumlah_ulasan',  
+            'belum',
+            'diproses',
+            'dikirim',
+            'selesai',
+            'batal',
+            'ulasan',
+        ));
     }
 
     public function penjual()

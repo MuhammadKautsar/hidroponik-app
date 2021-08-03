@@ -22,4 +22,8 @@ class Produk extends Model
     public function feedbacks(){
         return $this->hasMany(Feedback::class);
     }
+
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
 }

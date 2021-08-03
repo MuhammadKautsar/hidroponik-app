@@ -30,4 +30,11 @@ class UserController extends Controller
         $data_pembeli=User::all();
         return view('pages.buyers', compact('data_pembeli'));
     }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/penjual')->with('sukses','Data berhasil dihapus');
+    }
 }

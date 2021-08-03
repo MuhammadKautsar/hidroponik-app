@@ -84,31 +84,36 @@
                       <span class="nav-link-text">Promo</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('pasar_murah') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Pasar Murah') }}
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('sellers') }}">
                       <i class="ni ni-single-02 text-black"></i>
-                      <span class="nav-link-text">Penjual</span>
+                      <span class="nav-link-text">Pengguna</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('buyers') }}">
                         <i class="ni ni-circle-08 text-black"></i> {{ __('Pembeli') }}
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('reports') }}">
                         <i class="ni ni-single-copy-04 text-black"></i> {{ __('Laporan') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('feedbacks') }}">
+                        <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
+                    </a>
+                </li>
                 @endif
                 @if (auth()->user()->level=="user")
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('dashboard') }}">
+                    <a class="nav-link text-white" href="{{ route('home') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Home') }}
                     </a>
                 </li>
@@ -124,15 +129,15 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('feedbacks') }}">
-                        <i class="ni ni-single-copy-04 text-black"></i> {{ __('Ulasan') }}
+                        <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link text-white" href="/profile">
                       <i class="ni ni-single-02 text-black"></i>
                       <span class="nav-link-text">Profil</span>
                     </a>
-                </li>
+                </li> --}}
                 @endif
             </ul>
         </div>

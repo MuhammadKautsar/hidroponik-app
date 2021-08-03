@@ -33,10 +33,10 @@
                       <td class="text-center">{{$item['pelapor']}}</td>
                       <td class="text-center">{{$item['penjual']}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Edit
+                        <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Balas
                         </button>
-                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                        <a href="/laporan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
                   @endforeach
@@ -71,8 +71,9 @@
             </div>
           </div>
         </div>
-        @include('layouts.footers.auth')
       </div>
+      @include('layouts.footers.auth')
+    </div>
 @endsection
 
 @push('js')

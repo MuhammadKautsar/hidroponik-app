@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\FeedbackController;
 
 use App\Http\Controllers\UploadController;
 
@@ -81,3 +82,5 @@ Route::post('/report', [ReportController::class, 'post']);
 Route::put('/report/{id}', [ReportController::class, 'put']);
 
 Route::delete('/report/{id}', [ReportController::class, 'delete']);
+
+Route::post('/feedback', [FeedbackController::class, 'post']);

@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PenjualController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin;
 
 /*
@@ -47,19 +48,23 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	 Route::get('pembeli', [UserController::class, 'pembeli'])->name('buyers');
 	 Route::get('penjual', [UserController::class, 'penjual'])->name('sellers');
+	 Route::get('penjual/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
 	 Route::post('/promo/create', 'App\Http\Controllers\PromoController@create');
 	 Route::post('/promo/{id}/update', 'App\Http\Controllers\PromoController@update');
 	 Route::get('/promo/{id}/delete', 'App\Http\Controllers\PromoController@hapus');
 	 Route::get('/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');
+	 Route::get('/laporan/{id}/delete', [ReportController::class, 'destroy']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
 Route::group(['middleware' => ['auth','cekLevel:admin,user']], function () {
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
-	Route::post('/produk/{id}/update', [ProdukController::class, 'edit']);
-	Route::get('/produk/{id}/delete', [ProdukController::class, 'destroy']);
+	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
+	Route::delete('/produk/{id}/delete', [ProdukController::class, 'destroy']);
+	Route::delete('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
+	Route::delete('/deletecover/{id}', [ProdukController::class, 'deletecover']);
 	Route::get('/pesanan', 'App\Http\Controllers\OrderController@index')->name('orders');
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');
 	Route::get('/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');

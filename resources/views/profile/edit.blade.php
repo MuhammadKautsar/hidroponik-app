@@ -34,7 +34,7 @@
 
 
                             <div class="pl-lg-4">
-                                <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" width="150px" height="150px" class="rounded-circle mb-4">
+                                <img src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg" width="150px" height="150px" class="rounded-circle mb-4">
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
                                     <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>

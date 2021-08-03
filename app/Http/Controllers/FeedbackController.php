@@ -16,4 +16,22 @@ class FeedbackController extends Controller
         // $users=User::all();
         return view('pages.feedbacks', compact('feedbacks'));
     }
+
+    function post(Request $request)
+    {
+        $feedback = new Feedback;
+        $feedback->produk_id = $request->produk_id;
+        $feedback->user_id = $request->user_id;
+        $feedback->komentar = $request->komentar;
+        $feedback->rating = $request->rating;
+        
+        $feedback->save();
+
+        return response()->json(
+            [
+                "message" => "Succsess",
+                "data" => $feedback
+            ]
+        );
+    }
 }

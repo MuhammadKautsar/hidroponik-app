@@ -84,8 +84,8 @@
             </div>
           </div>
         </div>
-        @include('layouts.footers.auth')
       </div>
+      @include('layouts.footers.auth')
     </div>
 
             <!-- Modal -->
@@ -100,8 +100,8 @@
                     <form action="/pasar_murah/create" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="mb-3">
-                        <label for="" class="form-label">Gambar</label>
-                        <input name="gambar" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="" class="form-label">Gambar</label><br>
+                        <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
                       </div>
                       <div class="mb-3">
                         <label for="" class="form-label">Nama Pasar Murah</label>
@@ -142,9 +142,9 @@
                     <form action="/pasar_murah/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="mb-3">
-                          <label for="" class="form-label">Gambar</label>
-                          <input name="gambar" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          <img src="{{ asset('uploads/pasar_murahs/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
+                          <label for="" class="form-label">Gambar</label><br>
+                          <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
+                          <br><img src="{{ asset('uploads/pasar_murahs/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
                         </div>
                         <div class="mb-3">
                           <label for="" class="form-label">Nama Pasar Murah</label>

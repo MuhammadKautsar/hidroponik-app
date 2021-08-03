@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -12,6 +13,7 @@ class ProdukController extends Controller
     public function index()
     {
         $data_product=Produk::all();
+        $images = Image::all();
         return view('pages.products', compact('data_product'));
     }
 
@@ -66,19 +68,30 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        $produk = new Produk;
-        if($request->hasfile('gambar'))
-        {
-            $file = $request->file('gambar');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/', $filename);
-            $produk->gambar = $filename;
+        if($request->hasFile('gambar')){
+            $file=$request->file('gambar');
+            $imageName=time().'_'.$file->getClientOriginalName();
+            $file->move(\public_path('gambar/'),$imageName);
+
+            $produk = new Produk([
+                'nama' => $request->nama,
+                'harga' => $request->harga,
+                'stok' => $request->stok,
+                'gambar' => $imageName,
+            ]);
+            $produk->save();
         }
-        $produk->nama = $request->input('nama');
-        $produk->harga = $request->input('harga');
-        $produk->stok = $request->input('stok');
-        $produk->save();
+
+        if($request->hasFile('images')){
+            $files=$request->file('images');
+            foreach($files as $file){
+                $imageName=time().'_'.$file->getClientOriginalName();
+                $request['produk_id']=$produk->id;
+                $request['image']=$imageName;
+                $file->move(\public_path('/images'),$imageName);
+                Image::create($request->all());
+            }
+        }
         return redirect('/produk')->with('sukses','Data berhasil diinput');
     }
 
@@ -93,24 +106,34 @@ class ProdukController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $produk = Produk::where('idproduk',$id);
-        if($request->hasfile('gambar'))
-        {
-            $destination = 'uploads/'.$produk->gambar;
-            if(File::exists($destination))
-            {
-                File::delete($destination);
+        $produk=Produk::findOrFail($id);
+        if($request->hasFile("gambar")){
+            if(File::exists("gambar/".$produk->gambar)){
+                File::delete("gambar/".$produk->gambar);
             }
-            $file = $request->file('gambar');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/', $filename);
-            $produk->gambar = $filename;
+            $file=$request->file("gambar");
+            $produk->gambar=time()."_".$file->getClientOriginalName();
+            $file->move(\public_path("gambar"),$produk->gambar);
+            $request['gambar']=$produk->gambar;
         }
-        $produk->nama = $request->input('nama');
-        $produk->harga = $request->input('harga');
-        $produk->stok = $request->input('stok');
-        $produk->update(['idproduk','gambar','nama','harga','stok']);
+
+        $produk->update([
+            "nama" => $request->nama,
+            "harga" => $request->harga,
+            "stok" => $request->stok,
+            "gambar" => $produk->gambar,
+        ]);
+
+        if($request->hasFile("images")){
+            $files=$request->file("images");
+            foreach($files as $file){
+                $imageName=time()."_".$file->getClientOriginalName();
+                $request["produk_id"]=$id;
+                $request["image"]=$imageName;
+                $file->move(\public_path("images"),$imageName);
+                Image::create($request->all());
+            }
+        }
         return redirect('/produk')->with('sukses','Data berhasil diupdate');
     }
 
@@ -190,14 +213,39 @@ class ProdukController extends Controller
 
     public function destroy($id)
     {
-        $produk = Produk::find($id);
-        $destination = 'uploads/'.$produk->gambar;
-        if(File::exists($destination))
-        {
-            File::delete($destination);
+        $produks=Produk::findOrFail($id);
+
+        if(File::exists("gambar/".$produks->gambar)){
+            File::delete("gambar/".$produks->gambar);
         }
-        $produk->delete();
+        $images=Image::where("produk_id",$produks->id)->get();
+        foreach($images as $image){
+            if(File::exists("images/".$image->image)) {
+                File::delete("images/".$image->image);
+            }
+        }
+        $produks->delete();
         return redirect('/produk')->with('sukses','Data berhasil dihapus');
+    }
+
+    public function deleteimage($id)
+    {
+        $images=Image::findOrFail($id);
+        if(File::exists("images/".$images->image)) {
+            File::delete("images/".$images->image);
+        }
+
+        Image::find($id)->delete();
+        return back();
+    }
+
+    public function deletecover($id)
+    {
+        $gambar=Produk::findOrFail($id)->gambar;
+        if(File::exists("gambar/".$gambar)) {
+            File::delete("gambar/".$gambar);
+        }
+        return back();
     }
 
     // function put($idproduk, Request $request)

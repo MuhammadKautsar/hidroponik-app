@@ -94,4 +94,11 @@ class ReportController extends Controller
         $data_report=report::all();
         return view('pages.reports', compact('data_report'));
     }
+
+    public function destroy($id)
+    {
+        $report = Report::find($id);
+        $report->delete();
+        return redirect('/laporan')->with('sukses','Data berhasil dihapus');
+    }
 }

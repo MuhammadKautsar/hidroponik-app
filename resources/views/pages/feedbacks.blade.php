@@ -25,17 +25,21 @@
                   </tr>
                 </thead>
                 <tbody class="list">
+                  @php $no = 0 @endphp
                   @foreach($feedbacks as $item)
+                  @php $no++ @endphp
                     <tr>
-                      <td class="text-center">{{$item['id']}}</td>
+                      <td class="text-center">{{$no}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{ $item->user->name }}</td>
                       <td class="text-center">{{$item['komentar']}}</td>
                       <td class="text-center">{{$item['rating']}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                        @if (auth()->user()->level=="user")
+                        <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Balas
                         </button>
+                        @endif
                         <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
@@ -70,9 +74,10 @@
               </nav>
             </div>
           </div>
-        </div>
-        @include('layouts.footers.auth')
+        </div> 
       </div>
+      @include('layouts.footers.auth')
+    </div>
 @endsection
 
 @push('js')

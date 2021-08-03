@@ -99,44 +99,44 @@
             </div>
           </div>
         </div>
-        @include('layouts.footers.auth')
       </div>
+      @include('layouts.footers.auth')
     </div>
 
-      @foreach($data_order as $data)
-            <!-- Modal -->
-            <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Pesanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
-                        {{csrf_field()}}
-                        <div class="mb-3">
-                          <label for="" class="form-label">Status</label>
-                          {{-- <input name="status" type="text" class="form-control" id="exampleInputEmail1" value="{{$data->status}}"> --}}
-                          <select name="status" id="" class="form-control">
-                            <option value="" hidden selected>--Pilih--</option>
-                            <option value="Belum">Belum</option>
-                            <option value="Diproses">Diproses</option>
-                            <option value="Dikirim">Dikirim</option>
-                            <option value="Selesai">Selesai</option>
-                            <option value="Batal">Batal</option>
-                        </select>
-                        </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-warning">Update</button>
-                    </form>
-                  </div>
+    @foreach($data_order as $data)
+    <!-- Modal -->
+    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Pesanan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="mb-3">
+                  <label for="" class="form-label">Status</label>
+                  {{-- <input name="status" type="text" class="form-control" id="exampleInputEmail1" value="{{$data->status}}"> --}}
+                  <select name="status" id="" class="form-control">
+                    <option value="" hidden selected>--Pilih--</option>
+                    <option value="Belum">Belum</option>
+                    <option value="Diproses">Diproses</option>
+                    <option value="Dikirim">Dikirim</option>
+                    <option value="Selesai">Selesai</option>
+                    <option value="Batal">Batal</option>
+                </select>
                 </div>
-              </div>
-            </div>
-            @endforeach
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-warning">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
 @endsection
 
 @push('js')

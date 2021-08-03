@@ -9,7 +9,7 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Penjual</h3>
+              <h3 class="mb-0">Pengguna</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -17,7 +17,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th class="text-center" scope="col">Id</th>
-                    <th class="text-center" scope="col">Foto</th>
+                    {{-- <th class="text-center" scope="col">Foto</th> --}}
                     <th class="text-center" scope="col">Nama</th>
                     <th class="text-center" scope="col">Email</th>
                     <th class="text-center" scope="col">No Hp</th>
@@ -29,19 +29,19 @@
                   @foreach($data_penjual as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">
+                      {{-- <td class="text-center">
                         <img src="{{ asset('uploads/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
-                      </td>
+                      </td> --}}
                       <td class="text-center">{{$item['name']}}</td>
                       <td class="text-center">{{$item['email']}}</td>
-                      <td class="text-center">{{$item['no_hp']}}</td>
+                      <td class="text-center">{{$item['nomor_hp']}}</td>
                       <td class="text-center">{{$item['alamat']}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                  Edit
-                </button>
-                          <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
-                        </td>
+                        {{-- <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Edit
+                        </button> --}}
+                          <a href="/penjual/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                      </td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -75,8 +75,9 @@
             </div>
           </div>
         </div>
-        @include('layouts.footers.auth')
       </div>
+      @include('layouts.footers.auth')
+    </div>
 @endsection
 
 @push('js')

@@ -228,7 +228,7 @@ a
 {
     text-decoration: none;
 
-    color: #5e72e4;
+    color: #38c172;
     background-color: transparent;
 
     -webkit-text-decoration-skip: objects;
@@ -6109,8 +6109,8 @@ input[type='button'].btn-block
     z-index: 1;
 
     color: #fff;
-    border-color: #5e72e4; 
-    background-color: #5e72e4;
+    border-color: #2dce89; 
+    background-color: #2dce89;
 }
 
 .page-item.disabled .page-link

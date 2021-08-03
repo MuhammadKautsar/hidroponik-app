@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
+use App\Models\Produk;
 
 class Image extends Model
 {
     use HasFactory;
     protected $fillable=[
         'image',
-        'post_id',
+        'produk_id',
     ];
 
-    public function posts(){
-        return $this->belongsTo(Post::class);
+    public function produks(){
+        return $this->belongsTo(Produk::class);
     }
 }
