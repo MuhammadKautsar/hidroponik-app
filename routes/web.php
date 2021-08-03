@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	 Route::get('pembeli', [UserController::class, 'pembeli'])->name('buyers');
 	 Route::get('penjual', [UserController::class, 'penjual'])->name('sellers');
+	 Route::post('/penjual/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('penjual/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
 	 Route::post('/promo/create', 'App\Http\Controllers\PromoController@create');

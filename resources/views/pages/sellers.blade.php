@@ -4,11 +4,20 @@
     @include('layouts.headers.cards')
     
     <div class="container-fluid mt--7">
+      @if(session('sukses'))
+        <div class="alert alert-light" role="alert">
+          {{session('sukses')}}
+        </div>
+      @endif
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Tambah
+              </button>
               <h3 class="mb-0">Pengguna</h3>
             </div>
             <!-- Light table -->
@@ -78,9 +87,52 @@
       </div>
       @include('layouts.footers.auth')
     </div>
+
+  <!-- Modal add -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tambah Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/penjual/create" method="POST" enctype="multipart/form-data">
+            @csrf
+            {{-- <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Gambar</label>
+              <br>
+              <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div> --}}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nama</label>
+              <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input name="email" type="email" class="form-control" id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            {{-- <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+              <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
+            </div> --}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 @endpush

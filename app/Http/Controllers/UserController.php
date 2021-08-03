@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,6 +30,16 @@ class UserController extends Controller
     {
         $data_pembeli=User::all();
         return view('pages.buyers', compact('data_pembeli'));
+    }
+
+    public function create(Request $request)
+    {
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        return redirect('/penjual')->with('sukses','Data berhasil diinput');
     }
 
     public function destroy($id)
