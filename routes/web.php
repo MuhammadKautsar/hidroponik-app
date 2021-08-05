@@ -89,6 +89,8 @@ Route::delete('/deletecover/{id}', [PostController::class, 'deletecover']);
 
 Route::put('/update/{id}', [PostController::class, 'update']);
 
+Route::post('search', [PostController::class, 'Search']);
+
 Route::prefix('admin')->group(function(){
 	Route::get('/', function () {
 		return view('back.welcome');

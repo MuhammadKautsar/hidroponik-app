@@ -15,9 +15,10 @@ class CreateTableReports extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->text('laporan');
-            $table->string('pelapor');
-            $table->string('penjual');
+            $table->foreignId('pembeli_id')->constrained();
+            $table->foreignId('penjual_id')->constrained();
+            $table->string('isi_laporan');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

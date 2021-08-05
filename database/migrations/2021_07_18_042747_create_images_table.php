@@ -15,8 +15,8 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string ('image');
             $table->foreignId ('produk_id')->constraint('produks')->onDelete('cascade');
+            $table->string ('path_image');
             $table->timestamps();
         });
     }

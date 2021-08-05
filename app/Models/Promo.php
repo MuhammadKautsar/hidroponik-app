@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Produk;
 
 class Promo extends Model
 {
@@ -13,4 +14,8 @@ class Promo extends Model
 
     protected $table = 'promos';
     protected $fillable = ['nama','potongan','periode','keterangan'];
+
+    public function produks(){
+        return $this->hasMany(Produk::class);
+    }
 }

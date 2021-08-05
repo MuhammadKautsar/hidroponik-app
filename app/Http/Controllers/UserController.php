@@ -20,6 +20,18 @@ class UserController extends Controller
         return view('users.index');
     }
 
+    function get()
+    {
+        $data = User::all();
+
+        return response()->json(
+            [
+                "message" => "Succsess",
+                "data" => $data
+            ]
+        );
+    }
+
     public function penjual()
     {
         $data_penjual=User::all();
