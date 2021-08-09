@@ -15,14 +15,12 @@ class CreateTableOrders extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pembeli_id')->constrained();
-            $table->foreignId('produk_id')->constrained();
-            $table->integer('jumlah');
-            $table->integer('total_harga');
-            $table->string('status_checkout');
-            $table->string('status_order');
-            $table->date('tanggal');
             $table->timestamps();
+            $table->string('produk');
+            $table->integer('jumlah');
+            $table->string('alamat');
+            $table->integer('total');
+            $table->string('status');
         });
     }
 

@@ -13,13 +13,6 @@ class Feedback extends Model
 
     protected $table='feedbacks';
 
-    protected $fillable=[
-        'produk_id',
-        'pembeli_id',
-        'komentar',
-        'rating',
-    ];
-
     public function produk(){
         return $this->belongsTo(Produk::class);
     }
