@@ -15,7 +15,7 @@
             <!-- Card header -->
             <div class="card-header border-0">
               <!-- Button trigger modal -->
-              @if (auth()->user()->level=="user")
+              @if (auth()->user()->level=="penjual")
               <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Tambah
               </button>
@@ -28,7 +28,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th class="text-center" scope="col">No</th>
-                    <th class="text-center" scope="col">Gambar</th>
+                    {{-- <th class="text-center" scope="col">Gambar</th> --}}
                     <th class="text-center" scope="col">Nama</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
@@ -41,9 +41,11 @@
                     @php $no++ @endphp
                     <tr>
                       <td class="text-center">{{$no}}</td>
-                      <td class="text-center">
-                        <img src="{{ asset('gambar/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
-                      </td>
+                      {{-- <td class="text-center">
+                        @foreach ($item->images as $img)
+                          <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
+                        @endforeach
+                      </td> --}}
                       <td class="text-center">{{$item['nama']}}</td>
                       <td class="text-center">{{$item['harga']}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
@@ -53,7 +55,7 @@
                           View
                         </button>
                         @endif
-                        @if (auth()->user()->level=="user")
+                        @if (auth()->user()->level=="penjual")
                         <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
                         </button>
@@ -112,10 +114,10 @@
           <div class="modal-body">
             <form action="/produk/create" method="POST" enctype="multipart/form-data">
               @csrf
-              <div class="mb-3">
+              {{-- <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Cover</label><br>
                 <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
+              </div> --}}
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Gambar</label><br>
                 <input name="images[]" multiple type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -177,16 +179,16 @@
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-              <div class="mb-3">
+              {{-- <div class="mb-3">
                 <label for="" class="form-label">Cover</label><br>
                 <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
                 <br><img src="{{ asset('gambar/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
-              </div>
+              </div> --}}
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <input name="images[]" multiple type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
                 <br>@foreach ($data->images as $img)
-                    <img src="/images/{{ $img->image }}" width="100px" height="70px" alt="Image">
+                    <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
                   @endforeach
               </div>
               <div class="mb-3">
@@ -223,14 +225,14 @@
           </div>
           <div class="modal-body">
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
-              <div class="mb-3">
+              {{-- <div class="mb-3">
                 <label for="" class="form-label">Cover</label><br>
                 <br><img src="{{ asset('gambar/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
-              </div>
+              </div> --}}
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <br>@foreach ($data->images as $img)
-                    <img src="/images/{{ $img->image }}" width="100px" height="70px" alt="Image">
+                    <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
                   @endforeach
               </div>
           </div>

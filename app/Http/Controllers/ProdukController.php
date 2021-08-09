@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Auth;
 
 class ProdukController extends Controller
 {
@@ -74,6 +76,7 @@ class ProdukController extends Controller
             $file->move(\public_path('gambar/'),$imageName);
 
             $produk = new Produk([
+                'penjual_id' => Auth::user()->id,
                 'nama' => $request->nama,
                 'harga' => $request->harga,
                 'stok' => $request->stok,
@@ -87,7 +90,7 @@ class ProdukController extends Controller
             foreach($files as $file){
                 $imageName=time().'_'.$file->getClientOriginalName();
                 $request['produk_id']=$produk->id;
-                $request['image']=$imageName;
+                $request['path_image']=$imageName;
                 $file->move(\public_path('/images'),$imageName);
                 Image::create($request->all());
             }

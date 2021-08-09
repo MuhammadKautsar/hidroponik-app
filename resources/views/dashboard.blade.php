@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_produk }}</span>
                         </p>
                     </div>
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_pesanan }}</span>
                         </p>
                     </div>
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_promo }}</span>
                         </p>
                     </div>
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_user }}</span>
                         </p>
                     </div>
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_laporan }}</span>
                         </p>
                     </div>
@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 mb-0 text-muted text-sm">
+                        <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold mb-0">{{ $jumlah_ulasan }}</span>
                         </p>
                     </div>
@@ -176,7 +176,7 @@
             </div>
         </div>
         @endif
-        @if (auth()->user()->level=="user")
+        @if (auth()->user()->level=="penjual")
         <div class="row">
             <div class="col-xl-4 col-lg-6">
                 <a href="{{ route('orders') }}">

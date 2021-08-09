@@ -111,7 +111,7 @@
                     </a>
                 </li>
                 @endif
-                @if (auth()->user()->level=="user")
+                @if (auth()->user()->level=="penjual")
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Home') }}

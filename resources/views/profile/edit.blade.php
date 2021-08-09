@@ -2,7 +2,7 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Hello') . ' '. auth()->user()->name,
+        'title' => __('Hello') . ' '. auth()->user()->nama_lengkap,
         'class' => 'col-lg-7'
     ])   
 
@@ -17,14 +17,14 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             
                             @if (session('status'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <div class="alert alert-light alert-dismissible fade show" role="alert">
                                     {{ session('status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -34,14 +34,17 @@
 
 
                             <div class="pl-lg-4">
-                                <img src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg" width="150px" height="150px" class="rounded-circle mb-4">
-                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
-                                    <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
+                                <div class="form-group{{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
+                                    <img src="{{ auth()->user()->getProfileImage() }}" width="150px" height="150px" class="rounded-circle mb-4"><br>
+                                    <input type="file" name="profile_image">
+                                </div>
+                                <div class="form-group{{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-nama_lengkap">{{ __('Nama') }}</label>
+                                    <input type="text" name="nama_lengkap" id="input-nama_lengkap" class="form-control form-control-alternative{{ $errors->has('nama_lengkap') ? ' is-invalid' : '' }}" placeholder="{{ __('Nama') }}" value="{{ old('nama_lengkap', auth()->user()->nama_lengkap) }}" required autofocus>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('nama_lengkap'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
+                                            <strong>{{ $errors->first('nama_lengkap') }}</strong>
                                         </span>
                                     @endif
                                 </div>

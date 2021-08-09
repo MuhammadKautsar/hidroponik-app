@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Feedback;
+use App\Models\Produk;
+use App\Models\Report;
 
 class User extends Authenticatable
 {
@@ -19,12 +21,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'nama_lengkap',
+        'username',
         'email',
         'nomor_hp',
         'alamat',
         'password',
         'level',
+        'profile_image',
     ];
 
     /**
@@ -48,5 +52,21 @@ class User extends Authenticatable
 
     public function feedbacks(){
         return $this->hasMany(Feedback::class);
+    }
+
+    public function produks(){
+        return $this->hasMany(Produk::class);
+    }
+
+    public function repots(){
+        return $this->hasMany(Report::class);
+    }
+
+    public function getProfileImage(){
+        if(!$this->profile_image){
+            return asset('images/default.png');
+        }
+
+        return asset('images/'.$this->profile_image);
     }
 }

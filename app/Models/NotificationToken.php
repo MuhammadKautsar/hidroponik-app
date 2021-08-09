@@ -4,19 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Image;
+use App\Models\User;
 
-class Post extends Model
+class NotificationToken extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'title',
-        'author',
-        'body',
-        'cover',
+        'user_id',
     ];
 
-    public function images(){
-        return $this->hasMany(Image::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

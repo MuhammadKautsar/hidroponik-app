@@ -111,7 +111,8 @@ class PromoController extends Controller
         }
         $promo->nama = $request->input('nama');
         $promo->potongan = $request->input('potongan');
-        $promo->periode = $request->input('periode');
+        $promo->awal_periode = $request->input('awal_periode');
+        $promo->akhir_periode = $request->input('akhir_periode');
         $promo->keterangan = $request->input('keterangan');
         $promo->save();
         return redirect('/promo')->with('sukses','Data berhasil diinput');

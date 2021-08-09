@@ -34,11 +34,11 @@ class HomeController extends Controller
         $jumlah_user = User::all()->count();
         $jumlah_ulasan = Feedback::all()->count();
 
-        $belum = Order::where('status', 'Belum')->count();
-        $diproses = Order::where('status', 'Diproses')->count();
-        $dikirim = Order::where('status', 'Dikirim')->count();
-        $selesai = Order::where('status', 'Selesai')->count();
-        $batal = Order::where('status', 'Batal')->count();
+        $belum = Order::where('status_order', 'Belum')->count();
+        $diproses = Order::where('status_order', 'Diproses')->count();
+        $dikirim = Order::where('status_order', 'Dikirim')->count();
+        $selesai = Order::where('status_order', 'Selesai')->count();
+        $batal = Order::where('status_order', 'Batal')->count();
         $ulasan = Feedback::all()->count();
 
         return view('dashboard', compact(

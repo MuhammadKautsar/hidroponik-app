@@ -18,12 +18,12 @@
                   <tr>
                     <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
                     <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="status">Produk</th>
-                    <th class="text-center" scope="col">Jumlah</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Alamat</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Total</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
+                    <th class="text-center" scope="col">Produk</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Jumlah</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Total Harga</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
-                    @if (auth()->user()->level=="user")
+                    @if (auth()->user()->level=="penjual")
                     <th class="text-center" scope="col">Aksi</th>
                     @endif
                   </tr>
@@ -32,13 +32,13 @@
                   @foreach($data_order as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{{$item['created_at']}}</td>
-                      <td class="text-center">{{$item['produk']}}</td>
+                      <td class="text-center">{{$item['tanggal']}}</td>
+                      <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                      <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">{{$item['alamat']}}</td>
-                      <td class="text-center">{{$item['total']}}</td>
-                      <td class="text-center">{{$item['status']}}</td>
-                      @if (auth()->user()->level=="user")
+                      <td class="text-center">{{$item['total_harga']}}</td>
+                      <td class="text-center">{{$item['status_order']}}</td>
+                      @if (auth()->user()->level=="penjual")
                       <td class="text-center">
                         <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Tinjau

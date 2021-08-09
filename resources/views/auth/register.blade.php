@@ -16,16 +16,16 @@
                         <form role="form" method="POST" action="{{ route('register') }}">
                             @csrf
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                            <div class="form-group{{ $errors->has('nama_lengkap') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
-                                    <input class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" type="text" name="name" value="{{ old('name') }}" required autofocus>
+                                    <input class="form-control{{ $errors->has('nama_lengkap') ? ' is-invalid' : '' }}" placeholder="{{ __('Nama Lengkap') }}" type="text" name="nama_lengkap" value="{{ old('nama_lengkap') }}" required autofocus>
                                 </div>
-                                @if ($errors->has('name'))
+                                @if ($errors->has('nama_lengkap'))
                                     <span class="invalid-feedback" style="display: block;" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('nama_lengkap') }}</strong>
                                     </span>
                                 @endif
                             </div>

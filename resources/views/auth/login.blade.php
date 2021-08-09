@@ -17,7 +17,7 @@
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>
-                                    Create new account OR Sign in with these credentials:
+                                    Sign in with these credentials:
                             </small>
                         </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
@@ -56,18 +56,18 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-5">
+                    <div class="col-4">
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}" class="text-dark">
                                 <small>{{ __('Forgot password?') }}</small>
                             </a>
                         @endif
                     </div>
-                    <div class="col-6 text-right">
+                    {{-- <div class="col-6 text-right">
                         <a href="{{ route('register') }}" class="text-dark">
                             <small>{{ __('Create new account') }}</small>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

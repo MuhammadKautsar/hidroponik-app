@@ -31,6 +31,11 @@ class ProfileController extends Controller
         }
 
         auth()->user()->update($request->all());
+        if($request->hasFile('profile_image')){
+            $request->file('profile_image')->move('images/',$request->file('profile_image')->getClientOriginalName());
+            auth()->user()->profile_image = $request->file('profile_image')->getClientOriginalName();
+            auth()->user()->save();
+        }
 
         return back()->withStatus(__('Profile successfully updated.'));
     }

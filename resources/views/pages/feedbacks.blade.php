@@ -31,7 +31,7 @@
                     <tr>
                       <td class="text-center">{{$no}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
-                      <td class="text-center">{{ $item->user->name }}</td>
+                      <td class="text-center">{{ $item->user->nama_lengkap }}</td>
                       <td class="text-center">{{$item['komentar']}}</td>
                       <td class="text-center">{{$item['rating']}}</td>
                       <td class="text-center">

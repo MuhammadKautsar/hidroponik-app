@@ -41,7 +41,7 @@
                       {{-- <td class="text-center">
                         <img src="{{ asset('uploads/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
                       </td> --}}
-                      <td class="text-center">{{$item['name']}}</td>
+                      <td class="text-center">{{$item['nama_lengkap']}}</td>
                       <td class="text-center">{{$item['email']}}</td>
                       <td class="text-center">{{$item['nomor_hp']}}</td>
                       <td class="text-center">{{$item['alamat']}}</td>
@@ -49,7 +49,7 @@
                         {{-- <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
                         </button> --}}
-                          <a href="/penjual/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                          <a href="/penjual/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a>
                       </td>
                     </tr>
                   @endforeach

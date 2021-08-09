@@ -29,7 +29,8 @@
                   <th class="text-center" scope="col" class="sort" data-sort="budget">Gambar</th>
                   <th class="text-center" scope="col" class="sort" data-sort="budget">Nama</th>
                   <th class="text-center" scope="col" class="sort" data-sort="status">Potongan</th>
-                  <th class="text-center" scope="col">Periode</th>
+                  <th class="text-center" scope="col">Awal Periode</th>
+                  <th class="text-center" scope="col">Akhir Periode</th>
                   <th class="text-center" scope="col" class="sort" data-sort="completion">Keterangan</th>
                   <th class="text-center" scope="col">Aksi</th>
                 </tr>
@@ -43,13 +44,14 @@
                     </td>
                     <td class="text-center">{{$item['nama']}}</td>
                     <td class="text-center">{{$item['potongan']}}</td>
-                    <td class="text-center">{{$item['periode']}}</td>
+                    <td class="text-center">{{$item['awal_periode']}}</td>
+                    <td class="text-center">{{$item['akhir_periode']}}</td>
                     <td class="text-center">{{$item['keterangan']}}</td>
                     <td class="text-center">
-                      <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                      <button type="button" class="btn btn-primary btn-sm float-left" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                         Edit
                       </button>
-                      <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                      <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm float-right" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                     </td>
                   </tr>
                 @endforeach
@@ -113,8 +115,12 @@
               <input name="potongan" type="number" class="form-control" id="exampleInputEmail1">
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Periode</label>
-              <input name="periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
+              <input name="awal_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
+              <input name="akhir_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Keterangan</label>

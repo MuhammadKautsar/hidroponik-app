@@ -28,14 +28,14 @@
                   @foreach($data_report as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{{$item['created_at']}}</td>
-                      <td class="text-center">{{$item['laporan']}}</td>
-                      <td class="text-center">{{$item['pelapor']}}</td>
-                      <td class="text-center">{{$item['penjual']}}</td>
+                      <td class="text-center">{{$item['tanggal']}}</td>
+                      <td class="text-center">{{$item['isi_laporan']}}</td>
+                      <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                      <td class="text-center">{{$item->penjual->nama_lengkap}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                        {{-- <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Balas
-                        </button>
+                        </button> --}}
                         <a href="/laporan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>

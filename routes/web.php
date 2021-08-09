@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-Route::group(['middleware' => ['auth','cekLevel:admin,user']], function () {
+Route::group(['middleware' => ['auth','cekLevel:admin,penjual']], function () {
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
