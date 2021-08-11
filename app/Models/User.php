@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Feedback;
 use App\Models\Produk;
 use App\Models\Report;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -52,6 +53,10 @@ class User extends Authenticatable
 
     public function feedbacks(){
         return $this->hasMany(Feedback::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 
     public function produks(){

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Feedback;
 use App\Models\User;
 use App\Models\Promo;
+use App\Models\Order;
 
 class Produk extends Model
 {
@@ -26,6 +27,10 @@ class Produk extends Model
 
     public function feedbacks(){
         return $this->hasMany(Feedback::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
     }
 
     public function images(){

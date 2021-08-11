@@ -70,20 +70,19 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        if($request->hasFile('gambar')){
-            $file=$request->file('gambar');
-            $imageName=time().'_'.$file->getClientOriginalName();
-            $file->move(\public_path('gambar/'),$imageName);
+        // if($request->hasFile('gambar')){
+        //     $file=$request->file('gambar');
+        //     $imageName=time().'_'.$file->getClientOriginalName();
+        //     $file->move(\public_path('gambar/'),$imageName);
 
             $produk = new Produk([
                 'penjual_id' => Auth::user()->id,
                 'nama' => $request->nama,
                 'harga' => $request->harga,
                 'stok' => $request->stok,
-                'gambar' => $imageName,
+                // 'gambar' => $imageName,
             ]);
             $produk->save();
-        }
 
         if($request->hasFile('images')){
             $files=$request->file('images');

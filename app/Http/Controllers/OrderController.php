@@ -98,7 +98,8 @@ class OrderController extends Controller
     public function index()
     {
         $data_order=Order::all();
-        return view('pages.orders', compact('data_order'));
+        $data_product=Produk::all();
+        return view('pages.orders', compact('data_order', 'data_product'));
     }
 
     public function update(Request $request, $id)

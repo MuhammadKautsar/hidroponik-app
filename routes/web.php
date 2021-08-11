@@ -9,6 +9,9 @@ use App\Http\Controllers\PenjualController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin;
+use App\Models\Produk;
+use App\Models\User;
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +39,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-Route::get('/dashboard', 'App\Http\Controllers\HomeController@penjual')->name('dashboard');
+// Route::get('/dashboard', 'App\Http\Controllers\HomeController@penjual')->name('dashboard');
 
 Route::get('/welcome', [PenjualController::class, 'welcome']);
 Route::get('/daftar', [PenjualController::class, 'register']);
@@ -60,6 +63,18 @@ Route::group(['middleware' => ['auth','cekLevel:admin']], function () {
 });
 
 Route::group(['middleware' => ['auth','cekLevel:admin,penjual']], function () {
+
+	Route::get('/dashboard', function () {
+        $data_product = Produk::with('penjual')->get();
+        return view('penjual.dashboard', ['data_product' => $data_product]);
+    })->name('dashboard');
+
+	Route::get('/order', function () {
+		$data_product = Produk::with('penjual')->get();
+        $data_order = Order::with('produk')->get();
+        return view('penjual.orders', compact('data_product', 'data_order'));
+    })->name('order');
+
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
