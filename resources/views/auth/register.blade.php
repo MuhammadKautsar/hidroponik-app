@@ -70,8 +70,9 @@
                                     </div> --}}
                                     <select name="level" id="" class="form-control">
                                         <option value="" hidden selected>--Pilih Level--</option>
+                                        <option value="superadmin">Superadmin</option>
                                         <option value="admin">Admin</option>
-                                        <option value="user">User</option>
+                                        <option value="penjual">Penjual</option>
                                     </select>
                                 {{-- </div> --}}
                                 @if ($errors->has('level'))
