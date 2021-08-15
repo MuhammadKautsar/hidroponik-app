@@ -62,25 +62,7 @@
           <div class="card-footer py-4">
             <nav aria-label="...">
               <ul class="pagination justify-content-end mb-0">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">
-                    <i class="fas fa-angle-left"></i>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    <i class="fas fa-angle-right"></i>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
+                {{ $promo->links() }}
               </ul>
             </nav>
           </div>
@@ -104,7 +86,12 @@
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Gambar</label>
               <br>
-              <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="gambar" type="file" id="image" aria-describedby="emailHelp"><br>
+              <br>
+              <div class="col-sm-6">
+                <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
+                      alt="preview image" width="100px" height="70px">
+              </div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
@@ -179,6 +166,18 @@
     </div>
   </div>
   @endforeach
+
+  <script>
+  $('#image').change(function(){
+           
+    let reader = new FileReader();
+    reader.onload = (e) => { 
+      $('#preview-image').attr('src', e.target.result); 
+    }
+    reader.readAsDataURL(this.files[0]); 
+  
+   });
+   </script>
 
 @endsection
 

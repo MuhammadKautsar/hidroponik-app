@@ -56,15 +56,20 @@ class User extends Authenticatable
     }
 
     public function orders(){
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, 'pembeli_id');
     }
 
     public function produks(){
-        return $this->hasMany(Produk::class);
+        return $this->hasMany(Produk::class, 'penjual_id');
     }
 
     public function repots(){
         return $this->hasMany(Report::class);
+    }
+
+    public function notificationTokens()
+    {
+        return $this->hasMany(NotificationToken::class, 'user_id');
     }
 
     public function getProfileImage(){

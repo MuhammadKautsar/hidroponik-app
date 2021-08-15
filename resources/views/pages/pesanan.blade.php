@@ -29,10 +29,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach($data_product as $product)
-                  @if ($product->penjual->id == Auth::user()->id)
-                    @foreach($data_order as $item)
-                    @if ($item->produk->id == $product->id)
+                  @foreach($data_order as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
                       <td class="text-center">{{$item['tanggal']}}</td>
@@ -70,9 +67,6 @@
                       </td>
                       @endif
                     </tr>
-                    @endif
-                    @endforeach
-                  @endif
                   @endforeach
                 </tbody>
               </table>

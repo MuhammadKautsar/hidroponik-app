@@ -20,32 +20,32 @@ class UserController extends Controller
         return view('users.index');
     }
 
-    public function penjual()
+    public function pengguna(Request $request)
     {
-        $data_penjual=User::all();
-        return view('pages.sellers', compact('data_penjual'));
-    }
-
-    public function pembeli()
-    {
-        $data_pembeli=User::all();
-        return view('pages.buyers', compact('data_pembeli'));
+        if($request->has('search')){
+            $data_user=User::where('nama_lengkap','LIKE','%'.$request->search.'%')
+                            ->orWhere('level','LIKE','%'.$request->search.'%')->paginate(3);
+        }else{
+            $data_user=User::paginate(3);
+        }
+        return view('pages.users', compact('data_user'));
     }
 
     public function create(Request $request)
     {
         $user = new User;
-        $user->name = $request->input('name');
+        $user->nama_lengkap = $request->input('nama_lengkap');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
+        $user->level = $request->input('level');
         $user->save();
-        return redirect('/penjual')->with('sukses','Data berhasil diinput');
+        return redirect('/pengguna')->with('sukses','Data berhasil diinput');
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect('/penjual')->with('sukses','Data berhasil dihapus');
+        return redirect('/pengguna')->with('sukses','Data berhasil dihapus');
     }
 }

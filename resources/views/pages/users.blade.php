@@ -16,7 +16,11 @@
             <div class="card-header border-0">
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah
+                @if (auth()->user()->level=="superadmin")
+                Tambah Admin
+                @elseif (auth()->user()->level=="admin")
+                Tambah Penjual
+                @endif
               </button>
               <h3 class="mb-0">Pengguna</h3>
             </div>
@@ -25,31 +29,33 @@
               <table class="table align-items-center table-flush table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col">Id</th>
-                    {{-- <th class="text-center" scope="col">Foto</th> --}}
+                    <th class="text-center" scope="col">No</th>
+                    <th class="text-center" scope="col">Foto</th>
                     <th class="text-center" scope="col">Nama</th>
                     <th class="text-center" scope="col">Email</th>
                     <th class="text-center" scope="col">No Hp</th>
                     <th class="text-center" scope="col">Alamat</th>
+                    <th class="text-center" scope="col">Level</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach($data_penjual as $item)
+                  @foreach($data_user as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      {{-- <td class="text-center">
-                        <img src="{{ asset('uploads/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
-                      </td> --}}
+                      <td class="text-center">
+                        <img src="{{ $item->getProfileImage() }}" class="avatar avatar-sm rounded-circle" alt="Image">
+                      </td>
                       <td class="text-center">{{$item['nama_lengkap']}}</td>
                       <td class="text-center">{{$item['email']}}</td>
                       <td class="text-center">{{$item['nomor_hp']}}</td>
                       <td class="text-center">{{$item['alamat']}}</td>
+                      <td class="text-center">{{$item['level']}}</td>
                       <td class="text-center">
                         {{-- <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
                         </button> --}}
-                          <a href="/penjual/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a>
+                          <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a>
                       </td>
                     </tr>
                   @endforeach
@@ -60,25 +66,7 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
+                  {{ $data_user->links() }}
                 </ul>
               </nav>
             </div>
@@ -93,20 +81,21 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Admin</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            @if (auth()->user()->level=="superadmin")
+            Tambah Admin
+            @elseif (auth()->user()->level=="admin")
+            Tambah Penjual
+            @endif
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/penjual/create" method="POST" enctype="multipart/form-data">
+          <form action="/pengguna/create" method="POST" enctype="multipart/form-data">
             @csrf
-            {{-- <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Gambar</label>
-              <br>
-              <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
-            </div> --}}
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama</label>
-              <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="nama_lengkap" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Email</label>
@@ -116,10 +105,16 @@
               <label for="exampleInputEmail1" class="form-label">Password</label>
               <input name="password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
-            {{-- <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-              <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
-            </div> --}}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Level</label>
+              <select name="level" id="" class="form-control">
+                @if (auth()->user()->level=="superadmin")
+                <option value="admin">Admin</option>
+                @elseif (auth()->user()->level=="admin")
+                <option value="penjual">Penjual</option>
+                @endif
+              </select>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -62,19 +62,19 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                @if (auth()->user()->level=="admin")
+                @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-black"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('products') }}">
+                    <a class="nav-link text-white" href="{{ route('produks') }}">
                         <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-white" href="{{ route('orders') }}">
+                    <a class="nav-link text-white" href="{{ route('pesanan') }}">
                         <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
                     </a>
                 </li>
@@ -84,22 +84,12 @@
                       <span class="nav-link-text">Promo</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('pasar_murah') }}">
-                        <i class="ni ni-shop text-black"></i> {{ __('Pasar Murah') }}
-                    </a>
-                </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('sellers') }}">
+                    <a class="nav-link text-white" href="{{ route('users') }}">
                       <i class="ni ni-single-02 text-black"></i>
                       <span class="nav-link-text">Pengguna</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('buyers') }}">
-                        <i class="ni ni-circle-08 text-black"></i> {{ __('Pembeli') }}
-                    </a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('reports') }}">
                         <i class="ni ni-single-copy-04 text-black"></i> {{ __('Laporan') }}
@@ -110,8 +100,7 @@
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
-                @endif
-                @if (auth()->user()->level=="penjual")
+                @elseif (auth()->user()->level=="penjual")
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('home') }}">
                         <i class="ni ni-shop text-black"></i> {{ __('Home') }}
@@ -132,12 +121,6 @@
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-white" href="/profile">
-                      <i class="ni ni-single-02 text-black"></i>
-                      <span class="nav-link-text">Profil</span>
-                    </a>
-                </li> --}}
                 @endif
             </ul>
         </div>

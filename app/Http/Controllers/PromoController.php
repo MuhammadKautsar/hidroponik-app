@@ -92,9 +92,13 @@ class PromoController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $promo=Promo::all();
+        if($request->has('search')){
+            $promo=Promo::where('nama','LIKE','%'.$request->search.'%')->paginate(4);
+        }else{
+            $promo=Promo::paginate(4);
+        }
         return view('pages.promos', compact('promo'));
     }
 

@@ -45,7 +45,6 @@
                 <tbody class="list">
                   @php $no = 0 @endphp
                   @foreach($data_product as $item)
-                  @if ($item->penjual->id == Auth::user()->id)
                     @php $no++ @endphp
                     <tr>
                       <td class="text-center">{{$no}}</td>
@@ -67,14 +66,13 @@
                           Edit
                         </button>
                         @endif
-                        <form action="/produk/{{$item->id}}/delete" method="post">
+                        <form action="/produks/{{$item->id}}/delete" method="post">
                           <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
                           @csrf
                           @method('delete')
                         </form>
                       </td>
                     </tr>
-                    @endif
                   @endforeach
                 </tbody>
               </table>
@@ -140,9 +138,9 @@
       </div>
     </div>
 
-    @foreach($data_product as $data)
+    {{-- @foreach($data_product as $data) --}}
     <!-- Modal -->
-    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -172,7 +170,7 @@
               @endforeach
               @endif
             </div> --}}
-            <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+            <form action="/produk/{{$item->id}}/update" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
               {{-- <div class="mb-3">
@@ -183,9 +181,9 @@
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <input name="images[]" multiple type="file" id="image" aria-describedby="emailHelp"><br>
-                <br>@foreach ($data->images as $img)
-                    <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
-                  @endforeach
+                {{-- <br>@foreach ($data->images as $img)
+                    <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
+                  @endforeach --}}
                   <div class="col-md-12">
                     <div class="mt-1 text-center">
                     <div class="images-preview"> </div>
@@ -194,15 +192,15 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+                <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$item->nama}}">
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Harga</label>
-                <input name="harga" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->harga}}">
+                <input name="harga" type="number" class="form-control" id="exampleInputEmail1" value="{{$item->harga}}">
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Stok</label>
-                <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
+                <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$item->stok}}">
               </div>
           </div>
           <div class="modal-footer">
@@ -213,7 +211,7 @@
         </div>
       </div>
     </div>
-    @endforeach
+    {{-- @endforeach --}}
 
     @foreach($data_product as $data)
     <!-- Modal -->
@@ -233,7 +231,7 @@
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <br>@foreach ($data->images as $img)
-                    <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
+                    <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
                   @endforeach
               </div>
           </div>

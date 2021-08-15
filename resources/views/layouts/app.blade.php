@@ -23,6 +23,8 @@
         
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
