@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 	 Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
 	 Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
+	 Route::get('/pengguna/status/{user_id}/{status_code}', [UserController::class, 'updateStatus'])->name('users.status.update');
 	 Route::get('/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
 	 Route::post('/promo/create', 'App\Http\Controllers\PromoController@create');
 	 Route::post('/promo/{id}/update', 'App\Http\Controllers\PromoController@update');

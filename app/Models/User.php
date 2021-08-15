@@ -28,6 +28,7 @@ class User extends Authenticatable
         'nomor_hp',
         'alamat',
         'password',
+        'status',
         'level',
         'profile_image',
     ];

@@ -98,9 +98,9 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if($request->has('search')){
-            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(3);
+            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(5);
         }else{
-            $data_order=Order::paginate(3);
+            $data_order=Order::paginate(5);
         }
         $data_product=Produk::all();
         return view('pages.orders', compact('data_order', 'data_product'));
@@ -109,9 +109,9 @@ class OrderController extends Controller
     public function indexAdmin(Request $request)
     {
         if($request->has('search')){
-            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(3);
+            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(5);
         }else{
-            $data_order=Order::paginate(3);
+            $data_order=Order::paginate(5);
         }
         $data_product=Produk::all();
         return view('pages.pesanan', compact('data_order', 'data_product'));

@@ -24,9 +24,9 @@ class UserController extends Controller
     {
         if($request->has('search')){
             $data_user=User::where('nama_lengkap','LIKE','%'.$request->search.'%')
-                            ->orWhere('level','LIKE','%'.$request->search.'%')->paginate(3);
+                            ->orWhere('level','LIKE','%'.$request->search.'%')->paginate(4);
         }else{
-            $data_user=User::paginate(3);
+            $data_user=User::paginate(4);
         }
         return view('pages.users', compact('data_user'));
     }
@@ -47,5 +47,30 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect('/pengguna')->with('sukses','Data berhasil dihapus');
+    }
+
+    /**
+     * To update Status of User
+     *
+     * @param  Integer $user_id
+     * @param  Integer $status_code
+     * @return Success Response.
+     */
+    public function updateStatus($user_id, $status_code)
+    {
+        try {
+            $update_user = User::whereId($user_id)->update([
+                'status' => $status_code
+            ]);
+
+            if($update_user){
+                return redirect()->route('users')->with('success', 'User Status Update Successfully.');
+            }
+
+            return redirect()->route('users')->with('error', 'Fail to Update User Status.');
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

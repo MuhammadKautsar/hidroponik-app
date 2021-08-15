@@ -89,9 +89,13 @@ class ReportController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data_report=report::all();
+        if($request->has('search')){
+            $data_report=report::where('nama','LIKE','%'.$request->search.'%')->paginate(5);
+        }else{
+            $data_report=report::paginate(5);
+        }
         return view('pages.reports', compact('data_report'));
     }
 

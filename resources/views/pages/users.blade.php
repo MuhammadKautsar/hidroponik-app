@@ -55,7 +55,18 @@
                         {{-- <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
                         </button> --}}
-                          <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a>
+                        @if ($item->status == 1)
+                        <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
+                          class="btn btn-danger m-2">
+                            <i class="fa fa-ban"></i>
+                        </a> 
+                        @else
+                        <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
+                          class="btn btn-success m-2">
+                            <i class="fa fa-check"></i>
+                        </a> 
+                        @endif
+                        {{-- <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a> --}}
                       </td>
                     </tr>
                   @endforeach

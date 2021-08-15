@@ -20,6 +20,11 @@
                                     Sign in with these credentials:
                             </small>
                         </div>
+
+                        @if (session('error'))
+                            <span class="text-danger"> {{session('error')}} </span>
+                        @endif
+
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 

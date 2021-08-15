@@ -11,7 +11,7 @@ class FeedbackController extends Controller
 {
     public function index()
     {
-        $feedbacks=Feedback::latest()->paginate(1);
+        $feedbacks=Feedback::latest()->paginate(5);
         // $produks=Produk::all();
         // $users=User::all();
         return view('pages.feedbacks', compact('feedbacks'));
