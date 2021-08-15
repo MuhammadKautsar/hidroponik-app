@@ -35,6 +35,7 @@ class UserController extends Controller
     {
         $user = new User;
         $user->nama_lengkap = $request->input('nama_lengkap');
+        $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->level = $request->input('level');
