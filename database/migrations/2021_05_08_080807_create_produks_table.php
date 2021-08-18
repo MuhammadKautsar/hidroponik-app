@@ -16,7 +16,7 @@ class CreateProduksTable extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('penjual_id')->constrained('users');
-            $table->foreignId('promo_id')->constrained();
+            $table->foreignId('promo_id')->constrained()->nullable();
             $table->string('nama');
             $table->integer('harga');
             $table->integer('stok');

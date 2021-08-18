@@ -32,7 +32,7 @@
                   @foreach($data_order as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{{$item['tanggal']}}</td>
+                      <td class="text-center">{{$item['created_at']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
