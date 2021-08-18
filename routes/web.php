@@ -61,11 +61,11 @@ Route::group(['middleware' => ['auth','cekLevel:penjual,admin,superadmin']], fun
         return view('penjual.dashboard', ['data_product' => $data_product]);
     })->name('dashboard');
 
-	Route::get('/order', function () {
-		$data_product = Produk::with('penjual')->get();
-        $data_order = Order::with('produk')->get();
-        return view('penjual.orders', compact('data_product', 'data_order'));
-    })->name('order');
+	// Route::get('/order', function () {
+	// 	$data_product = Produk::with('penjual')->get();
+    //     $data_order = Order::with('produk')->get();
+    //     return view('penjual.orders', compact('data_product', 'data_order'));
+    // })->name('order');
 
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::get('/produks', [ProdukController::class, 'indexAdmin'])->name('produks');
