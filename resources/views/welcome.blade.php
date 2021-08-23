@@ -10,7 +10,7 @@
                 <div class="col-lg-5 col-md-6">
                     <h1 class="text-black">{{ __('Welcome!') }}</h1>
                     <h2 class="text-black">{{ __('to') }}</h2>
-                    <h1 class="text-black">{{ __('Hidroponik App') }}</h1>
+                    <h1 class="text-black">{{ __('AgriHub App') }}</h1>
                 </div>
             </div>
         </div>

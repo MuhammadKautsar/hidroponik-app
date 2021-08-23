@@ -24,7 +24,7 @@
     --red: #f5365c;
     --orange: #fb6340;
     --yellow: #ffd600;
-    --green: #2dce89;
+    --green: #34A853;
     --teal: #11cdef;
     --cyan: #2bffc6;
     --white: #fff;
@@ -14942,7 +14942,7 @@ button.bg-yellow:focus
 
 .bg-green
 {
-    background-color: #2dce89 !important;
+    background-color: #34A853 !important;
 }
 
 a.bg-green:hover,

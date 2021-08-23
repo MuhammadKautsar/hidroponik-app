@@ -104,6 +104,13 @@ class PromoController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'nama' => 'required',
+            'potongan' => 'required|numeric',
+            'awal_periode' => 'required',
+            'akhir_periode' => 'required',
+        ]);
+        
         $promo = new Promo;
         if($request->hasfile('gambar'))
         {

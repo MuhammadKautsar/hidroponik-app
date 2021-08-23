@@ -95,19 +95,31 @@
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
-              <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Potongan</label>
-              <input name="potongan" type="number" class="form-control" id="exampleInputEmail1">
+              <input name="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
+              @error('potongan')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-              <input name="awal_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('awal_periode')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-              <input name="akhir_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('akhir_periode')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Keterangan</label>

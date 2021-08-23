@@ -105,20 +105,32 @@
           <form action="/pengguna/create" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Nama</label>
-              <input name="nama_lengkap" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+              <input name="nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('nama_lengkap')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Username</label>
-              <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('username')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Email</label>
-              <input name="email" type="email" class="form-control" id="exampleInputEmail1">
+              <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1">
+              @error('email')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Password</label>
-              <input name="password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              @error('password')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Level</label>

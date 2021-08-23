@@ -109,8 +109,11 @@
                 <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div> --}}
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Gambar</label><br>
-                <input name="gambar[]" multiple type="file" id="images" aria-describedby="emailHelp"><br>
+                <label for="images" class="form-label">Gambar</label><br>
+                <input name="images[]" multiple type="file" id="images" aria-describedby="emailHelp"><br>
+                @error('images')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
                 <br>
                 <div class="col-md-12">
                   <div class="mt-1 text-center">
@@ -120,15 +123,24 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Harga</label>
-                <input name="harga" type="number" class="form-control" id="exampleInputEmail1">
+                <input name="harga" type="number" class="form-control @error('harga') is-invalid @enderror" id="exampleInputEmail1">
+                @error('harga')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Stok</label>
-                <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input name="stok" type="number" class="form-control @error('stok') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('stok')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
           </div>
           <div class="modal-footer">

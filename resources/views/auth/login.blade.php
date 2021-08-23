@@ -61,13 +61,13 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}" class="text-dark">
                                 <small>{{ __('Forgot password?') }}</small>
                             </a>
                         @endif
-                    </div>
+                    </div> --}}
                     {{-- <div class="col-6 text-right">
                         <a href="{{ route('register') }}" class="text-dark">
                             <small>{{ __('Create new account') }}</small>

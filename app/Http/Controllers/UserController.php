@@ -33,6 +33,14 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'username' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'level' => 'required',
+        ]);
+        
         $user = new User;
         $user->nama_lengkap = $request->input('nama_lengkap');
         $user->username = $request->input('username');

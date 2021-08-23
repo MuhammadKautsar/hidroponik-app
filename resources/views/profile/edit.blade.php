@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('nomor_hp') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-nomor_hp">{{ __('Nomor HP') }}</label>
-                                    <input type="text" name="nomor_hp" id="input-nomor_hp" class="form-control form-control-alternative{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nomor HP') }}" value="{{ old('nomor_hp', auth()->user()->nomor_hp) }}" required autofocus>
+                                    <input type="text" name="nomor_hp" id="input-nomor_hp" class="form-control form-control-alternative{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nomor HP') }}" value="{{ old('nomor_hp', auth()->user()->nomor_hp) }}">
 
                                     @if ($errors->has('nomor_hp'))
                                         <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('alamat') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-alamat">{{ __('Alamat') }}</label>
-                                    <input type="text" name="alamat" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" value="{{ old('alamat', auth()->user()->alamat) }}" required autofocus>
+                                    <input type="text" name="alamat" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" value="{{ old('alamat', auth()->user()->alamat) }}">
 
                                     @if ($errors->has('alamat'))
                                         <span class="invalid-feedback" role="alert">

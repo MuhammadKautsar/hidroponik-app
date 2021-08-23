@@ -83,6 +83,13 @@ class ProdukController extends Controller
         //     $imageName=time().'_'.$file->getClientOriginalName();
         //     $file->move(\public_path('gambar/'),$imageName);
 
+        $request->validate([
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|numeric',
+            'images' => 'required|images|max=5000',
+        ]);
+
             $produk = new Produk([
                 'penjual_id' => Auth::user()->id,
                 'nama' => $request->nama,
