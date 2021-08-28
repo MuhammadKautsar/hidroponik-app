@@ -8,29 +8,7 @@
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/logo putih.png" class="navbar-brand-img" alt="...">
         </a>
-        <!-- User -->
-        <ul class="nav align-items-center d-md-none">
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="media align-items-center">
-                        <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ auth()->user()->getProfileImage() }}">
-                        </span>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
-                    </a>
-                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        <i class="ni ni-user-run"></i>
-                        <span>{{ __('Logout') }}</span>
-                    </a>
-                </div>
-            </li>
-        </ul>
+        
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
@@ -128,5 +106,28 @@
         <a class="navbar-brand pb-0" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/Group 6890.png" class="navbar-brand-img" alt="...">
         </a>
+        <!-- User -->
+        <ul class="nav align-items-center d-md-none">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="media align-items-center">
+                        <span class="avatar avatar-sm rounded-circle">
+                        <img alt="Image placeholder" src="{{ auth()->user()->getProfileImage() }}">
+                        </span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
+                        <i class="ni ni-single-02"></i>
+                        <span>{{ __('My profile') }}</span>
+                    </a>
+                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                        <i class="ni ni-user-run"></i>
+                        <span>{{ __('Logout') }}</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>

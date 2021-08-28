@@ -73,8 +73,7 @@ Route::group(['middleware' => ['auth','cekLevel:penjual,admin,superadmin']], fun
 	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
 	Route::delete('/produk/{id}/delete', [ProdukController::class, 'destroy']);
 	Route::delete('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
-	Route::delete('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
-	Route::delete('/deletecover/{id}', [ProdukController::class, 'deletecover']);
+	Route::get('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
 	Route::get('/pesanan', 'App\Http\Controllers\OrderController@index')->name('orders');
 	Route::get('/order', 'App\Http\Controllers\OrderController@indexAdmin')->name('pesanan');
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');

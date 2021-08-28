@@ -91,53 +91,6 @@
       @include('layouts.footers.auth')
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tambah Produk</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="/produk/create" method="POST" enctype="multipart/form-data">
-              @csrf
-              {{-- <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Cover</label><br>
-                <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div> --}}
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Gambar</label><br>
-                <input name="gambar[]" multiple type="file" id="images" aria-describedby="emailHelp"><br>
-                <br>
-                <div class="col-md-12">
-                  <div class="mt-1 text-center">
-                  <div class="images-preview-div"> </div>
-                  </div>  
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Harga</label>
-                <input name="harga" type="number" class="form-control" id="exampleInputEmail1">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Stok</label>
-                <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
     @foreach($data_product as $data)
     <!-- Modal -->
     <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

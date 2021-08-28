@@ -110,7 +110,7 @@
               </div> --}}
               <div class="mb-3">
                 <label for="images" class="form-label">Gambar</label><br>
-                <input name="images[]" multiple type="file" id="images" aria-describedby="emailHelp"><br>
+                <input name="images[]" multiple type="file" class="@error('images') is-invalid @enderror" id="images" aria-describedby="emailHelp"><br>
                 @error('images')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -162,47 +162,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            {{-- <div class="col-lg-3">
-              <p>cover:</p>
-              <form action="/deletecover/{{ $data->id }}" method="POST">
-              <button class="btn text-danger">X</button>
-              @csrf
-              @method('delete')
-              </form>
-              <img src="/gambar/{{ $data->gambar }}" width="100px" height="70px" alt="">
-              <br>
-
-              @if (count($data->images)>0)
-              <p>image:</p>
-              @foreach ($data->images as $img)
-              <form action="/deleteimage/{{ $img->id }}" method="POST">
-                <button class="btn text-danger">X</button>
-                @csrf
-                @method('delete')
-              </form>
-              <img src="/images/{{ $img->image }}" width="100px" height="70px" alt="">
-              @endforeach
-              @endif
-            </div> --}}
+            
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-              {{-- <div class="mb-3">
-                <label for="" class="form-label">Cover</label><br>
-                <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
-                <br><img src="{{ asset('gambar/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
-              </div> --}}
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <input name="images[]" multiple type="file" id="image" aria-describedby="emailHelp"><br>
-                <br>@foreach ($data->images as $img)
+                <br>{{-- <div class="col-lg-3"> --}}
+                  @if (count($data->images)>0)
+                  @foreach ($data->images as $img)
+                  <img src="{{ $img->path_image }}" width="85px" height="70px" alt="">
+                  <a href="/deleteimage/{{ $img->id }}" 
+                     class="text-red"> X
+                    
+                    {{-- @csrf
+                    @method('delete') --}}
+                    </a>
+                  @endforeach
+                  @endif
+                {{-- </div> --}}
+                {{-- <br>@foreach ($data->images as $img)
                     <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
                   @endforeach
                   <div class="col-md-12">
                     <div class="mt-1 text-center">
                     <div class="images-preview"> </div>
                     </div>  
-                  </div>
+                  </div> --}}
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
@@ -226,38 +213,6 @@
       </div>
     </div>
     @endforeach
-
-    @foreach($data_product as $data)
-    <!-- Modal -->
-    <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Detail Produk</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
-              {{-- <div class="mb-3">
-                <label for="" class="form-label">Cover</label><br>
-                <br><img src="{{ asset('gambar/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
-              </div> --}}
-              <div class="mb-3">
-                <label for="" class="form-label">Gambar</label><br>
-                <br>@foreach ($data->images as $img)
-                    <img src="/images/{{ $img->path_image }}" width="100px" height="70px" alt="Image">
-                  @endforeach
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    @endforeach
-
    
 <script >
 $(function() {
