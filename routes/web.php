@@ -5,6 +5,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
+use App\Http\Livewire\ListUsers;
 use App\Models\Produk;
 use App\Models\User;
 use App\Models\Order;
@@ -35,7 +36,8 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	 Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
+	//  Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
+     Route::get('pengguna', ListUsers::class)->name('users');
 	 Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/pengguna/status/{user_id}/{status_code}', [UserController::class, 'updateStatus'])->name('users.status.update');

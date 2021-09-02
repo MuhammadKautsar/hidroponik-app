@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
@@ -39,7 +39,7 @@
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">{{$item['total_harga']}}</td>
+                      <td class="text-center">Rp {{number_format($item['total_harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
                       @if (auth()->user()->level=="penjual")
                       <td class="text-center">

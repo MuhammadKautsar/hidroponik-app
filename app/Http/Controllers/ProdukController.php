@@ -31,7 +31,7 @@ class ProdukController extends Controller
             $data_product=Produk::paginate(4);
         }
         $images = Image::all();
-        return view('pages.produk', compact('data_product'));
+        return view('admin.produk', compact('data_product'));
     }
 
     public function store(Request $request)

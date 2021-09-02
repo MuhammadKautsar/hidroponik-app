@@ -114,7 +114,7 @@ class OrderController extends Controller
             $data_order=Order::paginate(5);
         }
         $data_product=Produk::all();
-        return view('pages.pesanan', compact('data_order', 'data_product'));
+        return view('admin.pesanan', compact('data_order', 'data_product'));
     }
 
     public function update(Request $request, $id)

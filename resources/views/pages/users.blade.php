@@ -2,20 +2,23 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
-      @if(session('sukses'))
+      {{-- @if(session('sukses'))
         <div class="alert alert-light" role="alert">
           {{session('sukses')}}
         </div>
-      @endif
+      @endif --}}
       <div class="row">
         <div class="col">
+
+            <div id="success_message"></div>
+
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#addUserModal">
                 @if (auth()->user()->level=="superadmin")
                 Tambah Admin
                 @elseif (auth()->user()->level=="admin")
@@ -59,12 +62,12 @@
                         <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
                           class="btn btn-danger m-2">
                             <i class="fa fa-ban"></i>
-                        </a> 
+                        </a>
                         @else
                         <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
                           class="btn btn-success m-2">
                             <i class="fa fa-check"></i>
-                        </a> 
+                        </a>
                         @endif
                         {{-- <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Nonaktif</a> --}}
                       </td>
@@ -88,7 +91,7 @@
     </div>
 
   <!-- Modal add -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -102,39 +105,42 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+
+            <ul id="saveform_errList"></ul>
+
           <form action="/pengguna/create" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-              <input name="nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="" class="form-label">Nama Lengkap</label>
+              <input name="nama_lengkap" type="text" class="nama_lengkap form-control @error('nama_lengkap') is-invalid @enderror" aria-describedby="emailHelp">
               @error('nama_lengkap')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Username</label>
-              <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="" class="form-label">Username</label>
+              <input name="username" type="text" class="username form-control @error('username') is-invalid @enderror" aria-describedby="emailHelp">
               @error('username')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email</label>
-              <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1">
+              <label for="" class="form-label">Email</label>
+              <input name="email" type="email" class="email form-control @error('email') is-invalid @enderror">
               @error('email')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Password</label>
-              <input name="password" type="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="" class="form-label">Password</label>
+              <input name="password" type="password" class="password form-control @error('password') is-invalid @enderror" aria-describedby="emailHelp">
               @error('password')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Level</label>
-              <select name="level" id="" class="form-control">
+              <label for="" class="form-label">Level</label>
+              <select name="level" id="" class="level form-control">
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
                 @elseif (auth()->user()->level=="admin")
@@ -145,12 +151,67 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="submit" class="btn btn-success add_user">Submit</button>
           </form>
         </div>
       </div>
     </div>
   </div>
+@endsection
+
+@section('scripts')
+
+<script>
+  $(document).ready(function () {
+
+    $(document).on('click', '.add_user', function (e) {
+      e.preventDefault();
+
+      var data = {
+        'nama_lengkap': $('.nama_lengkap').val(),
+        'username': $('.username').val(),
+        'email': $('.email').val(),
+        'password': $('.password').val(),
+        'level': $('.level').val(),
+      }
+      // console.log(data);
+
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
+      $.ajax({
+        type: "POST",
+        url: "/pengguna/create",
+        data: data,
+        dataType: "json",
+        success: function (response) {
+        //   console.log(response.errors.nama_lengkap);
+            if(response.status == 400)
+            {
+                $('#saveform_errList').html("");
+                $('#saveform_errList').addClass('alert alert-danger');
+                $.each(response.errors, function (key, err_values) {
+                    $('#saveform_errList').append('<li>'+err_values+'<li>');
+                });
+            }
+            else
+            {
+                $('#saveform_errList').html("");
+                $('#success_message').addClass('alert alert-success')
+                $('#success_message').text(response.message)
+                $('#addUserModal').modal('hide');
+                $('#addUserModal').find('input').val("");
+                fetchuser();
+            }
+        }
+      })
+    });
+  });
+</script>
+
 @endsection
 
 @push('js')

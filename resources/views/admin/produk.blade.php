@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
       @if(session('sukses'))
         <div class="alert alert-light" role="alert">
@@ -53,9 +53,9 @@
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">{{$item['nama']}}</td>
-                      <td class="text-center">{{$item['harga']}}</td>
+                      <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
-                      <td class="text-center">                        
+                      <td class="text-center">
                         @if (auth()->user()->level=="admin")
                         <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                           Show
@@ -122,7 +122,7 @@
     </div>
     @endforeach
 
-   
+
 <script >
 $(function() {
 // Multiple images preview with JavaScript

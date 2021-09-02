@@ -4,22 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the users
-     *
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\View\View
-     */
-    public function index(User $model)
-    {
-        return view('users.index');
-    }
-
     public function pengguna(Request $request)
     {
         if($request->has('search')){
@@ -33,21 +22,36 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required',
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'level' => 'required',
         ]);
-        
-        $user = new User;
-        $user->nama_lengkap = $request->input('nama_lengkap');
-        $user->username = $request->input('username');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->level = $request->input('level');
-        $user->save();
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'status'=>400,
+                'errors'=>$validator->messages(),
+            ]);
+        }
+        else
+        {
+            $user = new User;
+            $user->nama_lengkap = $request->input('nama_lengkap');
+            $user->username = $request->input('username');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            $user->level = $request->input('level');
+            $user->save();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Data berhasil diinput',
+            ]);
+        }
+
         return redirect('/pengguna')->with('sukses','Data berhasil diinput');
     }
 

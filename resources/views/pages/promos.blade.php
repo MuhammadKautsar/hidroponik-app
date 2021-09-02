@@ -161,8 +161,12 @@
               <input name="potongan" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->potongan}}">
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Periode</label>
-              <input name="periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->periode}}">
+              <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
+              <input name="awal_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
+              <input name="akhir_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->akhir_periode}}">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Keterangan</label>

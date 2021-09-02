@@ -56,9 +56,4 @@ class HomeController extends Controller
             'ulasan',
         ));
     }
-
-    public function penjual()
-    {
-        return view('penjual.dashboard');
-    }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
       @if(session('sukses'))
         <div class="alert alert-light" role="alert">
@@ -54,9 +54,9 @@
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">{{$item['nama']}}</td>
-                      <td class="text-center">{{$item['harga']}}</td>
+                      <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
-                      <td class="text-center">                        
+                      <td class="text-center">
                         @if (auth()->user()->level=="admin")
                         <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                           Show
@@ -118,7 +118,7 @@
                 <div class="col-md-12">
                   <div class="mt-1 text-center">
                   <div class="images-preview-div"> </div>
-                  </div>  
+                  </div>
                 </div>
               </div>
               <div class="mb-3">
@@ -162,7 +162,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            
+
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('put')
@@ -173,9 +173,9 @@
                   @if (count($data->images)>0)
                   @foreach ($data->images as $img)
                   <img src="{{ $img->path_image }}" width="85px" height="70px" alt="">
-                  <a href="/deleteimage/{{ $img->id }}" 
+                  <a href="/deleteimage/{{ $img->id }}"
                      class="text-red"> X
-                    
+
                     {{-- @csrf
                     @method('delete') --}}
                     </a>
@@ -188,7 +188,7 @@
                   <div class="col-md-12">
                     <div class="mt-1 text-center">
                     <div class="images-preview"> </div>
-                    </div>  
+                    </div>
                   </div> --}}
               </div>
               <div class="mb-3">
@@ -213,7 +213,7 @@
       </div>
     </div>
     @endforeach
-   
+
 <script >
 $(function() {
 // Multiple images preview with JavaScript
