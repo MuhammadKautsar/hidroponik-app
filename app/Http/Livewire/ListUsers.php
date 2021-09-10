@@ -16,6 +16,8 @@ class ListUsers extends Component
 
     public function render()
     {
-        return view('livewire.list-users');
+        return view('livewire.list-users')
+        ->extends('layouts.app')
+        ->section('content');
     }
 }

@@ -4,97 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\Models\User;
 use App\Models\Produk;
 
 class OrderController extends Controller
 {
-    function post(Request $request)
-    {
-        $order = new order;
-        $order->produk = $request->produk;
-        $order->jumlah = $request->jumlah;
-        $order->alamat = $request->alamat;
-        $order->total = $request->total;
-        $order->status = $request->status;
-
-        $order->save();
-
-        return response()->json(
-            [
-                "message" => "Succsess",
-                "data" => $order
-            ]
-        );
-    }
-
-    function get()
-    {
-        $data = order::all();
-
-        return response()->json(
-            [
-                "message" => "Succsess",
-                "data" => $data
-            ]
-        );
-    }
-
-    function getById($id)
-    {
-        $data = order::where('id', $id)->get();
-
-        return response()->json(
-            [
-                "message" => "Succsess",
-                "data" => $data
-            ]
-        );
-    }
-
-    function put($id, Request $request)
-    {
-        $order = order::where('id', $id)->first();
-        if($order){
-            $order->produk = $request->produk ? $request->produk : $order->produk;
-            $order->jumlah = $request->jumlah ? $request->jumlah : $order->jumlah;
-            $order->alamat = $request->alamat ? $request->alamat :$order->alamat;
-            $order->total = $request->total ? $request->total :$order->total;
-            $order->status = $request->status ? $request->status :$order->status;
-
-            $order->save();
-            return response()->json(
-                [
-                    "message" => "PUT Method Succsess ",
-                    "data" => $order
-                ]
-            );
-        }
-        return response()->json(
-            [
-                "message" => "order with id " . $id . " not found"
-            ], 400
-        );
-    }
-
-    function delete($id)
-    {
-        $order = order::where('id', $id)->first();
-        if($order) {
-            $order->delete();
-            return response()->json(
-                [
-                    "message" => "DELETE order id " . $id . " Success"
-                ]
-            );
-        }
-        return response()->json(
-            [
-                "message" => "order with id " . $id . " not found"
-            ], 400
-        );
-    }
-
     public function index(Request $request)
     {
         if($request->has('search')){
@@ -113,8 +26,7 @@ class OrderController extends Controller
         }else{
             $data_order=Order::paginate(5);
         }
-        $data_product=Produk::all();
-        return view('admin.pesanan', compact('data_order', 'data_product'));
+        return view('admin.pesanan', compact('data_order'));
     }
 
     public function update(Request $request, $id)

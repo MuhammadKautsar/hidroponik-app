@@ -8,7 +8,7 @@
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/logo putih.png" class="navbar-brand-img" alt="...">
         </a>
-        
+
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('feedbacks') }}">
+                    <a class="nav-link text-white" href="{{ route('umpanbalik') }}">
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>

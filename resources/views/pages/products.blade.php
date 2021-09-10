@@ -109,9 +109,9 @@
                 <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div> --}}
               <div class="mb-3">
-                <label for="images" class="form-label">Gambar</label><br>
-                <input name="images[]" multiple type="file" class="@error('images') is-invalid @enderror" id="images" aria-describedby="emailHelp"><br>
-                @error('images')
+                <label for="" class="form-label">Gambar</label><br>
+                <input name="gambar[]" multiple type="file" class="@error('gambar') is-invalid @enderror" id="images" aria-describedby="emailHelp"><br>
+                @error('gambar')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
                 <br>

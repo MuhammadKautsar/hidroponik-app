@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
         @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
         <div class="row">
@@ -112,7 +112,7 @@
                 </a>
             </div>
             <div class="col-xl-4 col-lg-6">
-                <a href="{{ route('feedbacks') }}">
+                <a href="{{ route('umpanbalik') }}">
                 <div class="card card-stats mb-4 mb-xl-0">
                     <div class="card-body">
                         <div class="row">

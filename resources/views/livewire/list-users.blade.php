@@ -1,7 +1,5 @@
 <div>
-    @extends('layouts.app')
 
-@section('content')
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
@@ -13,6 +11,7 @@
               <h3 class="mb-0">Pengguna</h3>
                 <label>Title</label>
                 <input wire:model="title" type="text" class="form-control">
+                {{ $title }}
                 <label>Content</label>
                 <input wire:model="content" type="text" class="form-control">
                 <br>
@@ -23,6 +22,5 @@
       </div>
       @include('layouts.footers.auth')
     </div>
-@endsection
 
 </div>

@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+// use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class ProdukController extends Controller
@@ -40,8 +41,17 @@ class ProdukController extends Controller
             'nama' => 'required',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
-            'images' => 'required|mimes:jpeg,jpg,png,gif|max:5000',
+            // 'gambar' => 'required|mimes:jpeg,jpg,png,gif|max:5000',
         ]);
+
+        // $validator = Validator::make($request->all(), [
+        //     'nama' => 'required',
+        //     'harga' => 'required|numeric|digits_between:1,6',
+        //     'stok' => 'required|numeric',
+        //     'keterangan' => 'required',
+        //     'penjual_id' => 'required',
+        //     //gambar
+        // ]);
 
             $produk = new Produk([
                 'penjual_id' => Auth::user()->id,

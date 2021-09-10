@@ -12,9 +12,17 @@ class FeedbackController extends Controller
     public function index()
     {
         $feedbacks=Feedback::latest()->paginate(5);
+        $data_product=Produk::all();
+        // $users=User::all();
+        return view('pages.feedbacks', compact('feedbacks', 'data_product'));
+    }
+
+    public function indexAdmin()
+    {
+        $feedbacks=Feedback::latest()->paginate(5);
         // $produks=Produk::all();
         // $users=User::all();
-        return view('pages.feedbacks', compact('feedbacks'));
+        return view('admin.umpanbalik', compact('feedbacks'));
     }
 
     function post(Request $request)
@@ -24,7 +32,7 @@ class FeedbackController extends Controller
         $feedback->user_id = $request->user_id;
         $feedback->komentar = $request->komentar;
         $feedback->rating = $request->rating;
-        
+
         $feedback->save();
 
         return response()->json(

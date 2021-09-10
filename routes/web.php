@@ -36,8 +36,8 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	//  Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
-     Route::get('pengguna', ListUsers::class)->name('users');
+	 Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
+    //  Route::get('pengguna', ListUsers::class)->name('users');
 	 Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/pengguna/status/{user_id}/{status_code}', [UserController::class, 'updateStatus'])->name('users.status.update');
@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth','cekLevel:penjual,admin,superadmin']], fun
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');
 	Route::get('/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');
 	Route::get('/ulasan', 'App\Http\Controllers\FeedbackController@index')->name('feedbacks');
+    Route::get('/umpanbalik', 'App\Http\Controllers\FeedbackController@indexAdmin')->name('umpanbalik');
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 });

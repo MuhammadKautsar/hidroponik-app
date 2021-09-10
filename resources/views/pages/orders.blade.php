@@ -46,27 +46,6 @@
                         <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Tinjau
                         </button>
-                        {{-- <div class="dropdown">
-                          <button class="btn btn-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tinjau
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div> --}}
-                        {{-- <form action="/pesanan/{{$item->id}}/update" method="POST" enctype="multipart/form-data">
-                          {{csrf_field()}}
-                          <div class="mb-3">
-                            <select name="status" id="" class="form-control">
-                              <option value="" hidden selected>--Pilih Level--</option>
-                              <button type="submit" class="btn btn-primary"><option value="Belum" type="submit">Belum</option></button>
-                              <option value="Diproses">Diproses</option>
-                              <option value="Selesai">Selesai</option>
-                          </select>
-                          </div>
-                        </form> --}}
                       </td>
                       @endif
                     </tr>
@@ -108,11 +87,11 @@
                   {{-- <input name="status" type="text" class="form-control" id="exampleInputEmail1" value="{{$data->status}}"> --}}
                   <select name="status_order" id="" class="form-control">
                     <option value="" hidden selected>--Pilih--</option>
-                    <option value="Belum">Belum</option>
-                    <option value="Diproses">Diproses</option>
-                    <option value="Dikirim">Dikirim</option>
-                    <option value="Selesai">Selesai</option>
-                    <option value="Batal">Batal</option>
+                    <option value="belum">Belum</option>
+                    <option value="diproses">Diproses</option>
+                    <option value="dikirim">Dikirim</option>
+                    <option value="selesai">Selesai</option>
+                    <option value="batal">Batal</option>
                 </select>
                 </div>
           </div>
