@@ -103,9 +103,9 @@
             </ul>
         </div>
         <!-- Footer -->
-        <a class="navbar-brand pb-0" href="{{ route('home') }}">
+        {{-- <a class="navbar-brand pb-0" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/Group 6890.png" class="navbar-brand-img" alt="...">
-        </a>
+        </a> --}}
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
