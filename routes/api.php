@@ -1,16 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\ApiAuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PromoController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\API\ApiProdukController;
+use App\Http\Controllers\API\ApiOrderController;
+use App\Http\Controllers\API\ApiFeedbackController;
 
-use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,64 +18,47 @@ use App\Http\Controllers\UploadController;
 |
 */
 
-Route::post('upload', [UploadController::class, 'upload']);
+// baru terbuat
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::get('/products', [ProductController::class, 'get']);
-    Route::get('/products/{id}', [ProductController::class, 'getById']);
+// register sama login
+Route::prefix('register')->group(function () {
+    Route::post('', [ApiAuthController::class, 'register'])->name('register');
+    Route::post('alamat/{user}', [ApiAuthController::class, 'storeAlamat'])->name('registerAlamat');
+});
+Route::post('login', [ApiAuthController::class, 'login'])->name('login');
+Route::post('user/profil/{user}', [ApiAuthController::class, 'updateProfil'])->name('updateProfil');
+Route::post('logout/{user}', [ApiAuthController::class, 'logout'])->name('logout');
 
-    Route::post('/product', [ProductController::class, 'post']);
 
-    Route::put('/product/{id}', [ProductController::class, 'put']);
+// hasil
+// /api/produks (tampilin semua data) -> GET
+// /api/produks (create data) -> POST
+// /api/produks/{produk} (tampilin data spesifik) -> GET
+// /api/produks/{produk} (edit data spesifik) -> PUT/PATCh
+// /api/produks/{produk} (delete data spesifik) -> DELETE
+Route::resource('produks', ApiProdukController::class)->except(['create', 'edit']);
+Route::get('produk/{user}', [ApiProdukController::class, 'getProdukByPenjualId'])->name('getProdukByPenjualId');
 
-    Route::delete('/product/{id}', [ProductController::class, 'delete']);   
 
+// Order
+Route::resource('orders', ApiOrderController::class)->except(['create', 'edit']);
+Route::prefix('order')->group(function () {
+    Route::get('{user}', [ApiOrderController::class, 'getOrderByPembeliId'])->name('getOrderByPembeliId');
+    Route::get('penjual/{user}', [ApiOrderController::class, 'getOrderByPenjualId'])->name('getOrderByPenjualId');
+    Route::get('total/{user}', [ApiOrderController::class, 'getJumlahOrderPembeli'])->name('getJumlahOrderPembeli');
+    Route::prefix('status')->group(function () {
+        Route::get('checkout/{status}/{user}', [ApiOrderController::class, 'getOrderByCheckout'])->name('getOrderByCheckout');
+        Route::post('checkout/{order}', [ApiOrderController::class, 'changeCheckoutStatus'])->name('changeCheckoutStatus');
+
+        Route::get('order/{status}/{user}', [ApiOrderController::class, 'getOrderByOrder'])->name('getOrderByOrder');
+        Route::post('order/{order}', [ApiOrderController::class, 'changeOrderStatus'])->name('changeOrderStatus');
+    });
 });
 
-
-Route::post('/produk', [ProdukController::class, 'create']);
-Route::get('/produks', [ProdukController::class, 'show']);
-Route::put('/produk/{id}', [ProdukController::class, 'put']);
-Route::delete('/produk/{idproduk}', [ProdukController::class, 'delete']);
-
-
-Route::get('/orders', [OrderController::class, 'get']);
-Route::get('/orders/{id}', [OrderController::class, 'getById']);
-
-Route::post('/order', [OrderController::class, 'post']);
-
-Route::put('/order/{id}', [OrderController::class, 'put']);
-
-Route::delete('/order/{id}', [OrderController::class, 'delete']);
-
-
-Route::get('/promos', [PromoController::class, 'get']);
-Route::get('/promos/{id}', [PromoController::class, 'getById']);
-
-Route::post('/promo', [PromoController::class, 'post']);
-
-Route::put('/promo/{id}', [PromoController::class, 'put']);
-
-Route::delete('/promo/{id}', [PromoController::class, 'delete']);
-
-
-Route::get('/reports', [ReportController::class, 'get']);
-Route::get('/reports/{id}', [ReportController::class, 'getById']);
-
-Route::post('/report', [ReportController::class, 'post']);
-
-Route::put('/report/{id}', [ReportController::class, 'put']);
-
-Route::delete('/report/{id}', [ReportController::class, 'delete']);
-
-Route::post('/feedback', [FeedbackController::class, 'post']);
+// Feedback
+Route::resource('feedbacks', ApiFeedbackController::class)->except(['create', 'edit']);
+Route::get('feedback/{produk}', [ApiFeedbackController::class, 'getFeedbackByProdukId'])->name('getFeedbackByProdukId');
