@@ -32,8 +32,11 @@ class ProfileController extends Controller
 
         auth()->user()->update($request->all());
         if($request->hasFile('profile_image')){
-            $request->file('profile_image')->move('images/',$request->file('profile_image')->getClientOriginalName());
-            auth()->user()->profile_image = $request->file('profile_image')->getClientOriginalName();
+            $files=$request->file('profile_image');
+            $imageName=time().'_'.$files->getClientOriginalName();
+            $request['profile_image']=$imageName;
+            $files->move($this->path_file('/images'),$imageName);
+            auth()->user()->profile_image = asset('images/' . $imageName);
             auth()->user()->save();
         }
 
@@ -55,5 +58,12 @@ class ProfileController extends Controller
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
+    }
+
+    private function path_file($value)
+    {
+        // TODO: saat upload ke server. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
+        // return public_path($value);
+        return public_path('/../www/hidroponik-app' . $value);
     }
 }

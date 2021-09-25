@@ -40,7 +40,7 @@
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">Rp {{number_format($item['ongkir'],2,',','.')}}</td>
+                      <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],2,',','.')}}</td>
                       <td class="text-center">Rp {{number_format($item['total_harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
                       @if (auth()->user()->level=="penjual")
@@ -86,8 +86,8 @@
                 {{csrf_field()}}
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
-                    <input name="ongkir" type="number" class="form-control @error('ongkir') is-invalid @enderror" value="{{$data->ongkir}}">
-                    @error('ongkir')
+                    <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
+                    @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -95,11 +95,11 @@
                   <label for="" class="form-label">Status</label>
                   <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
                     <option value="{{$data->status_order}}" hidden selected>--Pilih--</option>
-                    <option value="belum">Belum</option>
-                    <option value="diproses">Diproses</option>
-                    <option value="dikirim">Dikirim</option>
-                    <option value="selesai">Selesai</option>
-                    <option value="batal">Batal</option>
+                    <option value="Belum">Belum</option>
+                    <option value="Diproses">Diproses</option>
+                    <option value="Dikirim">Dikirim</option>
+                    <option value="Selesai">Selesai</option>
+                    <option value="Batal">Batal</option>
                   </select>
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>

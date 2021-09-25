@@ -21,7 +21,7 @@ class CreateTableOrders extends Migration
             $table->integer('total_harga');
             $table->string('status_checkout');
             $table->string('status_order');
-            $table->integer('harga_jasa_pengiriman');
+            $table->integer('harga_jasa_pengiriman')->default(0);
             $table->timestamps();
         });
     }
