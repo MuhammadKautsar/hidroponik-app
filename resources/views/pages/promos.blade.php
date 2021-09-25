@@ -107,19 +107,21 @@
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-              <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-              @error('awal_periode')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-              <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-              @error('akhir_periode')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
+                    <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    @error('awal_periode')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
+                    <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    @error('akhir_periode')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Keterangan</label>
@@ -160,13 +162,21 @@
               <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
               <input name="potongan" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->potongan}}">
             </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-              <input name="awal_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-              <input name="akhir_periode" type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->akhir_periode}}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
+                    <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
+                    @error('awal_periode')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
+                    <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
+                    @error('akhir_periode')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Keterangan</label>

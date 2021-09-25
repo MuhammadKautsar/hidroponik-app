@@ -41,8 +41,8 @@ class ProdukController extends Controller
     {
         $request->validate([
             'nama' => 'required|min:3',
-            'harga' => 'required|min:4|numeric',
-            'stok' => 'required|max:3|numeric',
+            'harga' => 'required|numeric',
+            'stok' => 'required|numeric',
             // 'promo_id' => 'required',
             // 'gambar' => 'required|mimes:jpeg,jpg,png,gif|max:5000',
         ]);
@@ -162,8 +162,8 @@ class ProdukController extends Controller
 
     private function path_file($value)
     {
-        // TODO: saat upload ke server. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
-        // return public_path($value);
-        return public_path('/../www/hidroponik-app' . $value);
+        // TODO: saat upload ke server mtsn. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
+        return public_path($value);
+        // return public_path('../../public_html/hidroponik' . $value);
     }
 }

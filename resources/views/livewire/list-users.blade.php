@@ -95,44 +95,45 @@
         <div class="modal-body">
             <div class="mb-3">
               <label for="" class="form-label">Nama Lengkap</label>
-              <input wire:model.defer="state.nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror">
+              <input wire:model="nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror">
               @error('nama_lengkap')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Username</label>
-              <input wire:model.defer="state.username" type="text" class="form-control @error('username') is-invalid @enderror">
+              <input wire:model="username" type="text" class="form-control @error('username') is-invalid @enderror">
               @error('username')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Email</label>
-              <input wire:model.defer="state.email" type="text" class="form-control @error('email') is-invalid @enderror">
+              <input wire:model="email" type="text" class="form-control @error('email') is-invalid @enderror">
               @error('email')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Password</label>
-              <input wire:model.defer="state.password" type="password" class="form-control @error('password') is-invalid @enderror">
+              <input wire:model="password" type="password" class="form-control @error('password') is-invalid @enderror">
               @error('password')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Level</label>
-              <select wire:model="state.level" class="form-control @error('level') is-invalid @enderror">
+              <select wire:model="level" class="form-control @error('level') is-invalid @enderror">
+                <option value="">-Pilih-</option>
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
                 @elseif (auth()->user()->level=="admin")
                 <option value="penjual">Penjual</option>
                 @endif
               </select>
-              {{-- @error('level')
+              @error('level')
                   <div class="invalid-feedback">{{ $message }}</div>
-              @enderror --}}
+              @enderror
             </div>
         </div>
         <div class="modal-footer">

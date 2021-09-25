@@ -13,7 +13,7 @@ class CreateNotificationTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('noticationTokens', function (Blueprint $table) {
+        Schema::create('notication_tokens', function (Blueprint $table) {
             $table->id();
             $table->foreignId ('user_id')->constraint('users');
             $table->string ('notificationToken');

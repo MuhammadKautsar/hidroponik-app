@@ -13,9 +13,11 @@ class ListUsers extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $state = [];
-
-    // public $level;
+    public $nama_lengkap;
+    public $username;
+    public $email;
+    public $password;
+    public $level;
 
     public function pengguna(Request $request)
     {
@@ -35,12 +37,20 @@ class ListUsers extends Component
 
     public function createUser()
     {
-        $validateData = Validator::make($this->state, [
+        $data = [
+            'nama_lengkap' => $this->nama_lengkap,
+            'username' => $this->username,
+            'email' => $this->email,
+            'password' => $this->password,
+            'level' => $this->level
+        ];
+
+        $validateData = Validator::make($data, [
             'nama_lengkap' => 'required',
             'username' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            // 'level' => 'required',
+            'level' => 'required',
         ])->validate();
 
         $validateData['password'] = bcrypt($validateData['password']);
@@ -48,7 +58,7 @@ class ListUsers extends Component
         User::create($validateData);
 
         $this->dispatchBrowserEvent('hide-form');
-
+        $this->clear();
         return redirect()->back();
     }
 
@@ -57,5 +67,14 @@ class ListUsers extends Component
         return view('livewire.list-users', ['data_user' => User::paginate(4)])
         ->extends('layouts.app')
         ->section('content');
+    }
+
+    private function clear()
+    {
+        $this->nama_lengkap = null;
+        $this->username = null;
+        $this->email = null;
+        $this->password = null;
+        $this->level = null;
     }
 }
