@@ -37,9 +37,11 @@ class ApiProdukController extends Controller
                 'penjual' => $row->penjual->username, // string
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
                 'potongan' => $row->promo_id ? $row->promo->potongan : 0,
-                'periode' => $row->promo_id ? $row->promo->periode : '',
+                'periode_awal' => $row->promo_id ? $row->promo->awal_periode : '',
+                'periode_akhir' => $row->promo_id ? $row->promo->akhir_periode : '',
+                'promo_id' => $row->promo_id,
                 'total_feedback' => $row->total_feedback,
-                'penjual_id' => $row->penjual_id.''
+                'penjual_id' => $row->penjual_id . ''
             ]);
         }
 
@@ -53,6 +55,7 @@ class ApiProdukController extends Controller
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
             'penjual_id' => 'required',
+            'promo_id' => 'numeric'
             //gambar
         ]);
         if ($validator->fails()) {
@@ -64,6 +67,7 @@ class ApiProdukController extends Controller
                 'harga' => 'required|numeric|digits_between:1,6',
                 'stok' => 'required|numeric',
                 'penjual_id' => 'required',
+                'promo_id' => 'numeric'
                 //gambar
             ]
         );
@@ -105,9 +109,11 @@ class ApiProdukController extends Controller
             'penjual' => $produk->penjual->username, // string
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
             'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
-            'periode' => $produk->promo_id ? $produk->promo->periode : '',
+            'promo_id' => $produk->promo_id,
+            'periode_awal' => $produk->promo_id ? $produk->promo->awal_periode : '',
+            'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
             'total_feedback' => $produk->total_feedback,
-            'penjual_id' => $produk->penjual_id.''
+            'penjual_id' => $produk->penjual_id . ''
         ];
         return response()->json($showData);
     }
@@ -159,21 +165,22 @@ class ApiProdukController extends Controller
                 'gambar' => $gambar, // list/array
                 'harga' => $produk->harga, // number
                 'stok' => $produk->stok, // number
-                 'keterangan' => $produk->keterangan, // string
+                'keterangan' => $produk->keterangan, // string
                 'penjual' => $produk->penjual->username, // string
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
+                'promo_id' => $produk->promo_id,
                 'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
-                'periode' => $produk->promo_id ? $produk->promo->periode : '',
+                'periode_awal' => $produk->promo_id ? $produk->promo->awal_periode : '',
+                'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
                 'total_feedback' => $produk->total_feedback,
-                'penjual_id' => $produk->penjual_id.''
+                'penjual_id' => $produk->penjual_id . ''
             ]);
         }
         return response()->json($showData);
     }
     private function path_file($value)
     {
-        // TODO: saat upload ke server mtsn. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
         return public_path($value);
-        //return public_path('../../public_html/hidroponik' . $value);
+      
     }
 }

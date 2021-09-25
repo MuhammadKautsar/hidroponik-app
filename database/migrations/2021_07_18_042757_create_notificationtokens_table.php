@@ -13,10 +13,10 @@ class CreateNotificationTokensTable extends Migration
      */
     public function up()
     {
-        Schema::create('notication_tokens', function (Blueprint $table) {
+        Schema::create('notification_tokens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId ('user_id')->constraint('users');
-            $table->string ('notificationToken');
+            $table->foreignId('user_id')->constraint('users');
+            $table->string('notificationToken');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateNotificationTokensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('notification_tokens');
     }
 }

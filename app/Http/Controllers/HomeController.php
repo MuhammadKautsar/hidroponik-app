@@ -42,12 +42,12 @@ class HomeController extends Controller
         $ulasan = Feedback::all()->count();
 
         return view('dashboard', compact(
-            'jumlah_produk', 
-            'jumlah_pesanan', 
-            'jumlah_promo', 
-            'jumlah_laporan', 
+            'jumlah_produk',
+            'jumlah_pesanan',
+            'jumlah_promo',
+            'jumlah_laporan',
             'jumlah_user',
-            'jumlah_ulasan',  
+            'jumlah_ulasan',
             'belum',
             'diproses',
             'dikirim',

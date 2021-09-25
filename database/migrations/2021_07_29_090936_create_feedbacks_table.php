@@ -17,9 +17,10 @@ class CreateFeedbacksTable extends Migration
             $table->id();
             $table->foreignId('produk_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('komentar');
+            $table->string('komentar')->nullable();
             $table->string('rating');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

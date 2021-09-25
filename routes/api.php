@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ApiProdukController;
 use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiFeedbackController;
 use App\Http\Controllers\API\ApiReportController;
+use App\Http\Controllers\API\ApiPromoController;
 
 
 
@@ -34,7 +35,7 @@ Route::prefix('register')->group(function () {
 Route::post('login', [ApiAuthController::class, 'login'])->name('login');
 Route::post('user/profil/{user}', [ApiAuthController::class, 'updateProfil'])->name('updateProfil');
 Route::post('logout/{user}', [ApiAuthController::class, 'logout'])->name('logout');
-Route::post('report/user',[ApiReportController::class,'reportUser'])->name('reportUser');
+Route::post('report/user', [ApiReportController::class, 'reportUser'])->name('reportUser');
 
 // hasil
 // /api/produks (tampilin semua data) -> GET
@@ -62,7 +63,6 @@ Route::prefix('order')->group(function () {
         Route::post('checkout/kurang/{order}', [ApiOrderController::class, 'minusQuantity'])->name('minusQuantity');
         Route::get('order/{status}/{user}', [ApiOrderController::class, 'getOrderByOrder'])->name('getOrderByOrder');
         Route::post('order/{order}', [ApiOrderController::class, 'changeOrderStatus'])->name('changeOrderStatus');
-        
     });
     Route::post('beli/{order}', [ApiOrderController::class, 'changeHargaPengiriman'])->name('changeHargaPengiriman');
 });
@@ -70,3 +70,6 @@ Route::prefix('order')->group(function () {
 // Feedback
 Route::resource('feedbacks', ApiFeedbackController::class)->except(['create', 'edit']);
 Route::get('feedback/{produk}', [ApiFeedbackController::class, 'getFeedbackByProdukId'])->name('getFeedbackByProdukId');
+
+// PROMOS
+Route::get('promos', [ApiPromoController::class, 'index'])->name('get_promo');

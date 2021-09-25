@@ -16,13 +16,14 @@ class CreateProduksTable extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('penjual_id')->constrained('users');
-            $table->foreignId('promo_id')->constrained()->nullable();
+            $table->integer('promo_id')->nullable()->unsigned();
             $table->string('nama');
             $table->integer('harga');
             $table->integer('stok');
             $table->integer('total_feedback')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

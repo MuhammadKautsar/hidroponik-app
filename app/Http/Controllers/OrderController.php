@@ -13,7 +13,7 @@ class OrderController extends Controller
         if($request->has('search')){
             $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(5);
         }else{
-            $data_order=Order::paginate(5);
+            $data_order=Order::all();
         }
         $data_product=Produk::all();
         return view('pages.orders', compact('data_order', 'data_product'));

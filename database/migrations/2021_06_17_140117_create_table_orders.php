@@ -17,12 +17,13 @@ class CreateTableOrders extends Migration
             $table->id();
             $table->foreignId('pembeli_id')->constrained('users');
             $table->foreignId('produk_id')->constrained();
-            $table->integer('jumlah');
-            $table->integer('total_harga');
-            $table->string('status_checkout');
-            $table->string('status_order');
+            $table->integer('jumlah')->nullable();
             $table->integer('harga_jasa_pengiriman')->default(0);
+            $table->integer('total_harga')->nullable();
+            $table->string('status_checkout')->nullable();
+            $table->string('status_order')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

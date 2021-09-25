@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Produk;
+use App\Models\Report;
+use App\Models\Feedback;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use App\Models\Feedback;
-use App\Models\Produk;
-use App\Models\Report;
-use App\Models\Order;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

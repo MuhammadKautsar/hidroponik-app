@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
@@ -40,7 +40,7 @@
                           Balas
                         </button>
                         @endif
-                        <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                        <a href="/umpanbalik/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
                       </td>
                     </tr>
                   @endforeach
@@ -56,7 +56,7 @@
               </nav>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
       @include('layouts.footers.auth')
     </div>

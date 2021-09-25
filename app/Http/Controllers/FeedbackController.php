@@ -25,21 +25,17 @@ class FeedbackController extends Controller
         return view('admin.umpanbalik', compact('feedbacks'));
     }
 
-    function post(Request $request)
+    public function destroy($id)
     {
-        $feedback = new Feedback;
-        $feedback->produk_id = $request->produk_id;
-        $feedback->user_id = $request->user_id;
-        $feedback->komentar = $request->komentar;
-        $feedback->rating = $request->rating;
+        $feedback = Feedback::find($id);
+        $feedback->delete();
+        return redirect('/ulasan')->with('sukses','Data berhasil dihapus');
+    }
 
-        $feedback->save();
-
-        return response()->json(
-            [
-                "message" => "Succsess",
-                "data" => $feedback
-            ]
-        );
+    public function destroyAdmin($id)
+    {
+        $feedback = Feedback::find($id);
+        $feedback->delete();
+        return redirect('/umpanbalik')->with('sukses','Data berhasil dihapus');
     }
 }

@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Feedback;
 use App\Models\User;
-use App\Models\Promo;
 use App\Models\Order;
+use App\Models\Promo;
+use App\Models\Feedback;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Produk extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $fillable = [
@@ -23,25 +25,30 @@ class Produk extends Model
         'keterangan',
     ];
 
-    protected $table='produks';
+    protected $table = 'produks';
 
-    public function feedbacks(){
+    public function feedbacks()
+    {
         return $this->hasMany(Feedback::class);
     }
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 
-    public function images(){
+    public function images()
+    {
         return $this->hasMany(Image::class);
     }
 
-    public function penjual(){
+    public function penjual()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function promo(){
+    public function promo()
+    {
         return $this->belongsTo(Promo::class);
     }
 }

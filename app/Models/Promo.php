@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\Produk;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Promo extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $table = 'promos';
-    protected $fillable = ['nama','potongan','awal_periode', 'akhir_periode', 'keterangan'];
+    protected $fillable = ['nama', 'potongan', 'awal_periode', 'akhir_periode', 'keterangan'];
 
-    public function produks(){
+    public function produks()
+    {
         return $this->hasMany(Produk::class);
     }
 }

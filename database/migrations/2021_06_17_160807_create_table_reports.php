@@ -20,6 +20,7 @@ class CreateTableReports extends Migration
             $table->string('isi_laporan');
             $table->date('tanggal');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

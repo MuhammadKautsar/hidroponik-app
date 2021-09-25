@@ -179,8 +179,6 @@ class ApiAuthController extends Controller
     }
     private function path_file($value)
     {
-        // TODO: saat upload ke server mtsn. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
-         return public_path($value);
-        //return public_path('../../public_html/hidroponik' . $value);
+        return public_path($value);
     }
 }

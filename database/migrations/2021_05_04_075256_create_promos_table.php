@@ -22,6 +22,7 @@ class CreatePromosTable extends Migration
             $table->date('akhir_periode');
             $table->text('keterangan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
