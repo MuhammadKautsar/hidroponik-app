@@ -37,6 +37,8 @@
                     <th class="text-center" scope="col">No</th>
                     <th class="text-center" scope="col">Gambar</th>
                     <th class="text-center" scope="col">Nama</th>
+                    <th class="text-center" scope="col">Penjual</th>
+                    <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
                     <th class="text-center" scope="col">Aksi</th>
@@ -53,10 +55,19 @@
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">{{$item['nama']}}</td>
+                      @php($seller = $item->penjual)
+                      <td class="text-center">{{$seller->username}}</td>
+                      <td class="text-center">
+                        @if ($item->promo_id=="")
+                          Tidak ada</td>
+                        @elseif ($item->promo_id!="")
+                        @php($diskon = $item->promo)
+                        {{$diskon->potongan}} %</td>
+                        @endif
                       <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">
-                        @if (auth()->user()->level=="admin")
+                        @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
                         <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                           Show
                         </button>
@@ -92,7 +103,7 @@
     </div>
 
     @foreach($data_product as $data)
-    <!-- Modal -->
+    <!-- Modal Show-->
     <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -102,10 +113,6 @@
           </div>
           <div class="modal-body">
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
-              {{-- <div class="mb-3">
-                <label for="" class="form-label">Cover</label><br>
-                <br><img src="{{ asset('gambar/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
-              </div> --}}
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <br>@foreach ($data->images as $img)
@@ -122,28 +129,6 @@
     </div>
     @endforeach
 
-
-<script >
-$(function() {
-// Multiple images preview with JavaScript
-var previewImages = function(input, imgPreviewPlaceholder) {
-if (input.files) {
-var filesAmount = input.files.length;
-for (i = 0; i < filesAmount; i++) {
-var reader = new FileReader();
-reader.onload = function(event) {
-$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-}
-reader.readAsDataURL(input.files[i]);
-}
-}
-};
-$('#images').on('change', function() {
-previewImages(this, 'div.images-preview-div');
-});
-});
-
-  </script>
 @endsection
 
 @push('js')

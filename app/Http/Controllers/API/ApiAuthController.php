@@ -70,6 +70,9 @@ class ApiAuthController extends Controller
 
     public function updateProfil(User $user)
     {
+        $data = request()->all();
+        $user->update($data);
+        
         if (request()->hasFile('gambar')) {
             $file = request()->file('gambar');
             // $file = $request->file('gambar');
@@ -115,10 +118,11 @@ class ApiAuthController extends Controller
                 ]
             );
         $this->sendNotification($data['notificationToken'], 'Login', 'Selamat ' . $user['name'] . ' berhasil login');
-        // TODO: belum ada atribut notificationTokens. tolong ditambahkan tabel kedepannya
+        // // TODO: belum ada atribut notificationTokens. tolong ditambahkan tabel kedepannya
 
         $token = Str::random(50);
         return response()->json(['message' => 'berhasil login', 'user' => $user, 'token' => $token]);
+        // return response()->json(['message' => 'berhasil login', 'user' => $user]);
     }
 
     public function logout(User $user)
@@ -176,7 +180,7 @@ class ApiAuthController extends Controller
     private function path_file($value)
     {
         // TODO: saat upload ke server mtsn. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
-        return public_path($value);
-        // return public_path('../../public_html/hidroponik' . $value);
+         return public_path($value);
+        //return public_path('../../public_html/hidroponik' . $value);
     }
 }

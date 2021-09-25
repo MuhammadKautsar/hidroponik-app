@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\Image;
+use App\Models\Promo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -21,7 +22,8 @@ class ProdukController extends Controller
             $data_product=Produk::paginate(4);
         }
         $images = Image::all();
-        return view('pages.products', compact('data_product'));
+        $promo = Promo::all();
+        return view('pages.products', compact('data_product', 'promo'));
     }
 
     public function indexAdmin(Request $request)
@@ -38,9 +40,10 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
+            'nama' => 'required|min:3',
+            'harga' => 'required|min:4|numeric',
+            'stok' => 'required|max:3|numeric',
+            // 'promo_id' => 'required',
             // 'gambar' => 'required|mimes:jpeg,jpg,png,gif|max:5000',
         ]);
 
@@ -56,6 +59,7 @@ class ProdukController extends Controller
             $produk = new Produk([
                 'penjual_id' => Auth::user()->id,
                 'nama' => $request->nama,
+                'promo_id' => $request->promo_id,
                 'harga' => $request->harga,
                 'stok' => $request->stok,
                 'total_feedback' => 0,

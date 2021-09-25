@@ -32,6 +32,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $data_order = Order::find($id);
+        $data_order->ongkir = $request->input('ongkir');
         $data_order->status_order = $request->input('status_order');
         $data_order->update();
         return redirect('/pesanan');

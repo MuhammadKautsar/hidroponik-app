@@ -143,6 +143,11 @@
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Pesanan baru</h3>
                             </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-plus-square"></i>
+                                </div>
+                            </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold ml-3">{{ $belum }}</span>
@@ -158,6 +163,11 @@
                         <div class="row">
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Pesanan diproses</h3>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-box-seam"></i>
+                                </div>
                             </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">
@@ -175,6 +185,11 @@
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Pesanan dikirim</h3>
                             </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-truck"></i>
+                                </div>
+                            </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold ml-3">{{ $dikirim }}</span>
@@ -190,6 +205,11 @@
                         <div class="row">
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Pesanan selesai</h3>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-clipboard-check"></i>
+                                </div>
                             </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">
@@ -207,6 +227,11 @@
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Pesanan dibatalkan</h3>
                             </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-x-circle"></i>
+                                </div>
+                            </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">
                             <span class="h2 font-weight-bold ml-3">{{ $batal }}</span>
@@ -222,6 +247,11 @@
                         <div class="row">
                             <div class="col">
                                 <h3 class="card-title text-bold ml-3 mt-2">Ulasan baru</h3>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-dark text-white rounded-circle shadow">
+                                    <i class="bi-chat"></i>
+                                </div>
                             </div>
                         </div>
                         <p class="mt-3 mb-3 text-muted text-sm">

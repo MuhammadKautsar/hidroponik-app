@@ -52,20 +52,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function feedbacks(){
+    public function feedbacks()
+    {
         return $this->hasMany(Feedback::class);
     }
 
-    public function orders(){
-        return $this->hasMany(Order::class, 'pembeli_id');
-    }
-
-    public function produks(){
+    public function produks()
+    {
         return $this->hasMany(Produk::class, 'penjual_id');
     }
 
-    public function repots(){
+    public function repots()
+    {
         return $this->hasMany(Report::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'pembeli_id');
     }
 
     public function notificationTokens()
@@ -73,11 +77,12 @@ class User extends Authenticatable
         return $this->hasMany(NotificationToken::class, 'user_id');
     }
 
-    public function getProfileImage(){
-        if(!$this->profile_image){
+    public function getProfileImage()
+    {
+        if (!$this->profile_image) {
             return asset('images/default.png');
         }
 
-        return asset('images/'.$this->profile_image);
+        return  $this->profile_image;
     }
 }

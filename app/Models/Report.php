@@ -12,7 +12,7 @@ class Report extends Model
 
     //protected $hidden = ['created_at', 'updated_at'];
 
-    protected $table='reports';
+    protected $table = 'reports';
 
     protected $fillable = [
         'pembeli_id',
@@ -21,11 +21,13 @@ class Report extends Model
         'tanggal',
     ];
 
-    public function pembeli(){
-        return $this->belongsTo(User::class);
+    public function pembeli()
+    {
+        return $this->belongsTo(User::class, 'pembeli_id');
     }
 
-    public function penjual(){
-        return $this->belongsTo(User::class);
+    public function penjual()
+    {
+        return $this->belongsTo(User::class, 'penjual_id');
     }
 }

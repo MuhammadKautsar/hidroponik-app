@@ -2,7 +2,7 @@
 
 @section('content')
   @include('layouts.headers.cards')
-    
+
   <div class="container-fluid mt--7">
     @if(session('sukses'))
       <div class="alert alert-light" role="alert">
@@ -43,7 +43,7 @@
                       <img src="{{ asset('uploads/promos/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
                     </td>
                     <td class="text-center">{{$item['nama']}}</td>
-                    <td class="text-center">{{$item['potongan']}}</td>
+                    <td class="text-center">{{$item['potongan']}} %</td>
                     <td class="text-center">{{$item['awal_periode']}}</td>
                     <td class="text-center">{{$item['akhir_periode']}}</td>
                     <td class="text-center">{{$item['keterangan']}}</td>
@@ -101,7 +101,7 @@
               @enderror
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Potongan</label>
+              <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
               <input name="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
               @error('potongan')
                   <div class="invalid-feedback">{{ $message }}</div>
@@ -157,7 +157,7 @@
               <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Potongan</label>
+              <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
               <input name="potongan" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->potongan}}">
             </div>
             <div class="mb-3">
@@ -185,13 +185,13 @@
 
   <script>
   $('#image').change(function(){
-           
+
     let reader = new FileReader();
-    reader.onload = (e) => { 
-      $('#preview-image').attr('src', e.target.result); 
+    reader.onload = (e) => {
+      $('#preview-image').attr('src', e.target.result);
     }
-    reader.readAsDataURL(this.files[0]); 
-  
+    reader.readAsDataURL(this.files[0]);
+
    });
    </script>
 

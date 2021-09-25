@@ -42,39 +42,39 @@
             <ul class="navbar-nav">
                 @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('home') }}">
+                    <a class="nav-link {{ request()->is('home') ? 'active' : '' }} text-white" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-black"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('produks') }}">
+                    <a class="nav-link {{ request()->is('produks') ? 'active' : '' }} text-white" href="{{ route('produks') }}">
                         <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-white" href="{{ route('pesanan') }}">
+                    <a class="nav-link {{ request()->is('order') ? 'active' : '' }} text-white" href="{{ route('pesanan') }}">
                         <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('promos') }}">
+                    <a class="nav-link {{ request()->is('promo') ? 'active' : '' }} text-white" href="{{ route('promos') }}">
                       <i class="ni ni-tag text-black"></i>
                       <span class="nav-link-text">Promo</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('users') }}">
+                    <a class="nav-link {{ request()->is('admin/pengguna') ? 'active' : '' }} text-white" href="{{ route('users') }}">
                       <i class="ni ni-single-02 text-black"></i>
                       <span class="nav-link-text">Pengguna</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('reports') }}">
+                    <a class="nav-link {{ request()->is('laporan') ? 'active' : '' }} text-white" href="{{ route('reports') }}">
                         <i class="ni ni-single-copy-04 text-black"></i> {{ __('Laporan') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('umpanbalik') }}">
+                    <a class="nav-link {{ request()->is('umpanbalik') ? 'active' : '' }} text-white" href="{{ route('umpanbalik') }}">
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>

@@ -21,7 +21,7 @@ class Order extends Model
         'total_harga',
         'status_checkout',
         'status_order',
-        'tanggal',
+        'harga_jasa_pengiriman',
     ];
 
     public function pembeli(){

@@ -9,11 +9,13 @@ use App\Models\User;
 class NotificationToken extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'user_id',
+        'notificationToken'
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

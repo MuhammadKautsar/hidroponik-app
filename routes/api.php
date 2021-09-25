@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ApiProdukController;
 use App\Http\Controllers\API\ApiOrderController;
 use App\Http\Controllers\API\ApiFeedbackController;
+use App\Http\Controllers\API\ApiReportController;
+
 
 
 /*
@@ -32,7 +34,7 @@ Route::prefix('register')->group(function () {
 Route::post('login', [ApiAuthController::class, 'login'])->name('login');
 Route::post('user/profil/{user}', [ApiAuthController::class, 'updateProfil'])->name('updateProfil');
 Route::post('logout/{user}', [ApiAuthController::class, 'logout'])->name('logout');
-
+Route::post('report/user',[ApiReportController::class,'reportUser'])->name('reportUser');
 
 // hasil
 // /api/produks (tampilin semua data) -> GET
@@ -52,11 +54,17 @@ Route::prefix('order')->group(function () {
     Route::get('total/{user}', [ApiOrderController::class, 'getJumlahOrderPembeli'])->name('getJumlahOrderPembeli');
     Route::prefix('status')->group(function () {
         Route::get('checkout/{status}/{user}', [ApiOrderController::class, 'getOrderByCheckout'])->name('getOrderByCheckout');
+        Route::get('checkout/penjual/{status}/{user}', [ApiOrderController::class, 'getOrderByCheckoutPenjual'])->name('getOrderByCheckoutPenjual');
+        Route::get('checkout/{status}/selesai/{user}', [ApiOrderController::class, 'getOrderByCheckoutSelesai'])->name('getOrderByCheckoutSelesai');
+        Route::get('checkout/penjual/{status}/selesai/{user}', [ApiOrderController::class, 'getOrderByCheckoutSelesaiPenjual'])->name('getOrderByCheckoutSelesaiPenjual');
         Route::post('checkout/{order}', [ApiOrderController::class, 'changeCheckoutStatus'])->name('changeCheckoutStatus');
-
+        Route::post('checkout/tambah/{order}', [ApiOrderController::class, 'addQuantity'])->name('addQuantity');
+        Route::post('checkout/kurang/{order}', [ApiOrderController::class, 'minusQuantity'])->name('minusQuantity');
         Route::get('order/{status}/{user}', [ApiOrderController::class, 'getOrderByOrder'])->name('getOrderByOrder');
         Route::post('order/{order}', [ApiOrderController::class, 'changeOrderStatus'])->name('changeOrderStatus');
+        
     });
+    Route::post('beli/{order}', [ApiOrderController::class, 'changeHargaPengiriman'])->name('changeHargaPengiriman');
 });
 
 // Feedback

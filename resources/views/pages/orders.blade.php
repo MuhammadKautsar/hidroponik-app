@@ -16,13 +16,14 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
+                    <th class="text-center" scope="col">Id</th>
+                    <th class="text-center" scope="col">Tanggal</th>
+                    <th class="text-center" scope="col">Pembeli</th>
                     <th class="text-center" scope="col">Produk</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Jumlah</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Total Harga</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
+                    <th class="text-center" scope="col">Jumlah</th>
+                    <th class="text-center" scope="col">Ongkir</th>
+                    <th class="text-center" scope="col">Total Harga</th>
+                    <th class="text-center" scope="col">Status</th>
                     @if (auth()->user()->level=="penjual")
                     <th class="text-center" scope="col">Aksi</th>
                     @endif
@@ -39,6 +40,7 @@
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
+                      <td class="text-center">Rp {{number_format($item['ongkir'],2,',','.')}}</td>
                       <td class="text-center">Rp {{number_format($item['total_harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
                       @if (auth()->user()->level=="penjual")
@@ -83,16 +85,25 @@
             <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Ongkir</label>
+                    <input name="ongkir" type="number" class="form-control @error('ongkir') is-invalid @enderror" value="{{$data->ongkir}}">
+                    @error('ongkir')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
                   <label for="" class="form-label">Status</label>
-                  {{-- <input name="status" type="text" class="form-control" id="exampleInputEmail1" value="{{$data->status}}"> --}}
-                  <select name="status_order" id="" class="form-control">
-                    <option value="" hidden selected>--Pilih--</option>
+                  <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
+                    <option value="{{$data->status_order}}" hidden selected>--Pilih--</option>
                     <option value="belum">Belum</option>
                     <option value="diproses">Diproses</option>
                     <option value="dikirim">Dikirim</option>
                     <option value="selesai">Selesai</option>
                     <option value="batal">Batal</option>
-                </select>
+                  </select>
+                  @error('status_order')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
           </div>
           <div class="modal-footer">

@@ -37,6 +37,7 @@
                     <th class="text-center" scope="col">No</th>
                     <th class="text-center" scope="col">Gambar</th>
                     <th class="text-center" scope="col">Nama</th>
+                    <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
                     <th class="text-center" scope="col">Aksi</th>
@@ -54,19 +55,19 @@
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">{{$item['nama']}}</td>
+                      <td class="text-center">
+                        @if ($item->promo_id=="")
+                          Tidak ada</td>
+                        @elseif ($item->promo_id!="")
+                        @php($diskon = $item->promo)
+                        {{$diskon->potongan}} %</td>
+                        @endif
                       <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">
-                        @if (auth()->user()->level=="admin")
-                        <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
-                          Show
-                        </button>
-                        @endif
-                        @if (auth()->user()->level=="penjual")
                         <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
                         </button>
-                        @endif
                         <form action="/produk/{{$item->id}}/delete" method="post">
                           <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
                           @csrf
@@ -93,7 +94,7 @@
       @include('layouts.footers.auth')
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Add-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -129,6 +130,18 @@
                 @enderror
               </div>
               <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Promo</label>
+                <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                    <option value="">- Pilih -</option>
+                    @foreach ($promo as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                    @endforeach
+                </select>
+                @error('promo_id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Harga</label>
                 <input name="harga" type="number" class="form-control @error('harga') is-invalid @enderror" id="exampleInputEmail1">
                 @error('harga')
@@ -153,7 +166,7 @@
     </div>
 
     @foreach($data_product as $data)
-    <!-- Modal -->
+    <!-- Modal Edit-->
     <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -194,6 +207,13 @@
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
                 <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Promo</label>
+                <input name="promo_id" type="text" class="form-control @error('promo_id') is-invalid @enderror" value="{{$data->promo_id}}">
+                @error('promo_id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Harga</label>

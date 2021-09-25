@@ -27,9 +27,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
-
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function () {
@@ -37,7 +34,7 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	 Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
-    //  Route::get('pengguna', ListUsers::class)->name('users');
+    //  Route::get('admin/pengguna', ListUsers::class)->name('users');
 	 Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/pengguna/status/{user_id}/{status_code}', [UserController::class, 'updateStatus'])->name('users.status.update');
@@ -57,18 +54,6 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 });
 
 Route::group(['middleware' => ['auth','cekLevel:penjual,admin,superadmin']], function () {
-
-	Route::get('/dashboard', function () {
-        $data_product = Produk::with('penjual')->get();
-        return view('penjual.dashboard', ['data_product' => $data_product]);
-    })->name('dashboard');
-
-	// Route::get('/order', function () {
-	// 	$data_product = Produk::with('penjual')->get();
-    //     $data_order = Order::with('produk')->get();
-    //     return view('penjual.orders', compact('data_product', 'data_order'));
-    // })->name('order');
-
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::get('/produks', [ProdukController::class, 'indexAdmin'])->name('produks');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
