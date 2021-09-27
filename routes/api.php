@@ -43,7 +43,8 @@ Route::post('report/user', [ApiReportController::class, 'reportUser'])->name('re
 // /api/produks/{produk} (tampilin data spesifik) -> GET
 // /api/produks/{produk} (edit data spesifik) -> PUT/PATCh
 // /api/produks/{produk} (delete data spesifik) -> DELETE
-Route::resource('produks', ApiProdukController::class)->except(['create', 'edit']);
+Route::resource('produks', ApiProdukController::class)->except(['create', 'edit', 'update']);
+Route::post('produks/edited/{produk}', [ApiProdukController::class, 'update']);
 Route::get('produk/{user}', [ApiProdukController::class, 'getProdukByPenjualId'])->name('getProdukByPenjualId');
 
 

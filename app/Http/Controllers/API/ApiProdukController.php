@@ -55,7 +55,8 @@ class ApiProdukController extends Controller
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
             'penjual_id' => 'required',
-            'promo_id' => 'numeric'
+            'promo_id' => 'numeric',
+            'keterangan' => 'string',
             //gambar
         ]);
         if ($validator->fails()) {
@@ -67,7 +68,8 @@ class ApiProdukController extends Controller
                 'harga' => 'required|numeric|digits_between:1,6',
                 'stok' => 'required|numeric',
                 'penjual_id' => 'required',
-                'promo_id' => 'numeric'
+                'promo_id' => 'numeric',
+                'keterangan' => 'string',
                 //gambar
             ]
         );
@@ -128,6 +130,10 @@ class ApiProdukController extends Controller
     public function update(Produk $produk)
     {
         $data = request()->all();
+        if ($data['promo_id'])
+            if ($data['promo_id'] == '') {
+                $data['promo_id'] = NULL;
+            }
         $produk->update($data);
 
 
@@ -181,6 +187,5 @@ class ApiProdukController extends Controller
     private function path_file($value)
     {
         return public_path($value);
-      
     }
 }
