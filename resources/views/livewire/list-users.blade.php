@@ -26,6 +26,7 @@
                       <th class="text-center" scope="col">No</th>
                       <th class="text-center" scope="col">Foto</th>
                       <th class="text-center" scope="col">Nama</th>
+                      <th class="text-center" scope="col">Username</th>
                       <th class="text-center" scope="col">Email</th>
                       <th class="text-center" scope="col">No Hp</th>
                       <th class="text-center" scope="col">Alamat</th>
@@ -41,6 +42,7 @@
                           <img src="{{ $item->getProfileImage() }}" class="avatar avatar-sm rounded-circle" alt="Image">
                         </td>
                         <td class="text-center">{{$item['nama_lengkap']}}</td>
+                        <td class="text-center">{{$item['username']}}</td>
                         <td class="text-center">{{$item['email']}}</td>
                         <td class="text-center">{{$item['nomor_hp']}}</td>
                         <td class="text-center">{{$item['alamat']}}</td>

@@ -40,6 +40,7 @@
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -64,6 +65,7 @@
                         @endif
                       <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
+                      <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
                         <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Edit
@@ -155,6 +157,13 @@
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
               </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                <input name="keterangan" type="number" class="form-control @error('keterangan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('keterangan')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -185,7 +194,7 @@
                 <br>{{-- <div class="col-lg-3"> --}}
                   @if (count($data->images)>0)
                   @foreach ($data->images as $img)
-                  <img src="{{ $img->path_image }}" width="85px" height="70px" alt="">
+                  <img src="{{ $img->path_image }}" width="100px" height="70px" alt="">
                   <a href="/deleteimage/{{ $img->id }}"
                      class="text-red"> X
 
@@ -222,6 +231,10 @@
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Stok</label>
                 <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                <input name="keterangan" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
               </div>
           </div>
           <div class="modal-footer">

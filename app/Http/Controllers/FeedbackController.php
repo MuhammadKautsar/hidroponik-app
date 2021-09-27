@@ -36,6 +36,6 @@ class FeedbackController extends Controller
     {
         $feedback = Feedback::find($id);
         $feedback->delete();
-        return redirect('/umpanbalik')->with('sukses','Data berhasil dihapus');
+        return redirect('admin/ulasan')->with('sukses','Data berhasil dihapus');
     }
 }

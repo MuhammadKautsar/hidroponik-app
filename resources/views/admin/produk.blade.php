@@ -41,6 +41,7 @@
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -66,6 +67,7 @@
                         @endif
                       <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
+                      <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
                         @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
                         <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
@@ -105,7 +107,7 @@
     @foreach($data_product as $data)
     <!-- Modal Show-->
     <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Detail Produk</h5>
@@ -116,7 +118,7 @@
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
                 <br>@foreach ($data->images as $img)
-                    <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
+                    <img src="{{ $img->path_image }}" width="150px" height="110px" alt="Image">
                   @endforeach
               </div>
           </div>

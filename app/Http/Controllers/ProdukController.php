@@ -44,7 +44,7 @@ class ProdukController extends Controller
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
             // 'promo_id' => 'required',
-            // 'gambar' => 'required|mimes:jpeg,jpg,png,gif|max:5000',
+            'gambar' => 'required|max:5000'
         ]);
 
         // $validator = Validator::make($request->all(), [
@@ -62,6 +62,7 @@ class ProdukController extends Controller
                 'promo_id' => $request->promo_id,
                 'harga' => $request->harga,
                 'stok' => $request->stok,
+                'keterangan' => $request->keterangan,
                 'total_feedback' => 0,
             ]);
             $produk->save();
@@ -99,6 +100,7 @@ class ProdukController extends Controller
             "nama" => $request->nama,
             "harga" => $request->harga,
             "stok" => $request->stok,
+            "keterangan" => $request->keterangan,
             "gambar" => asset('/gambar' . $produk->gambar),
         ]);
 
@@ -146,7 +148,7 @@ class ProdukController extends Controller
             }
         }
         $produks->delete();
-        return redirect('/produks')->with('sukses', 'Data berhasil dihapus');
+        return redirect('admin/produk')->with('sukses', 'Data berhasil dihapus');
     }
 
     public function deleteimage($id)

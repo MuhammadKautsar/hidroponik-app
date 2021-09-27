@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use App\Http\Livewire\ListUsers;
+use App\Http\Livewire\ListPromos;
 use App\Models\Produk;
 use App\Models\User;
 use App\Models\Order;
@@ -33,20 +34,21 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	//  Route::get('pengguna', [UserController::class, 'pengguna'])->name('users');
      Route::get('admin/pengguna', ListUsers::class)->name('users');
-	 Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
+	//  Route::post('/pengguna/create', 'App\Http\Controllers\UserController@create');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
 	 Route::get('/pengguna/status/{user_id}/{status_code}', [UserController::class, 'updateStatus'])->name('users.status.update');
-     Route::get('/order', 'App\Http\Controllers\OrderController@indexAdmin')->name('pesanan');
-	 Route::get('/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
+     Route::get('admin/pesanan', 'App\Http\Controllers\OrderController@indexAdmin')->name('pesanan');
+	 Route::get('admin/promo', 'App\Http\Controllers\PromoController@index')->name('promos');
+    //  Route::get('admin/promo', ListPromos::class)->name('promos');
 	 Route::post('/promo/create', 'App\Http\Controllers\PromoController@create');
 	 Route::post('/promo/{id}/update', 'App\Http\Controllers\PromoController@update');
 	 Route::get('/promo/{id}/delete', 'App\Http\Controllers\PromoController@hapus');
-	 Route::get('/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');
+	 Route::get('admin/laporan', 'App\Http\Controllers\ReportController@index')->name('reports');
 	 Route::get('/laporan/{id}/delete', [ReportController::class, 'destroy']);
-     Route::get('/umpanbalik', 'App\Http\Controllers\FeedbackController@indexAdmin')->name('umpanbalik');
+     Route::get('admin/ulasan', 'App\Http\Controllers\FeedbackController@indexAdmin')->name('umpanbalik');
      Route::get('/umpanbalik/{id}/delete', 'App\Http\Controllers\FeedbackController@destroyAdmin');
-	 Route::get('/produks', [ProdukController::class, 'indexAdmin'])->name('produks');
-	Route::delete('/produk/{id}/delete', [ProdukController::class, 'destroy']);
+	 Route::get('admin/produk', [ProdukController::class, 'indexAdmin'])->name('produks');
+     Route::delete('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
 });
 
 Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
@@ -54,7 +56,6 @@ Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
 	Route::delete('/produk/{id}/delete', [ProdukController::class, 'destroy']);
-	Route::delete('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
 	Route::get('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
 	Route::get('/pesanan', 'App\Http\Controllers\OrderController@index')->name('orders');
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');

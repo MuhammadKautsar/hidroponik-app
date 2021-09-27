@@ -21,6 +21,6 @@ class ReportController extends Controller
     {
         $report = Report::find($id);
         $report->delete();
-        return redirect('/laporan')->with('sukses','Data berhasil dihapus');
+        return redirect('admin/laporan')->with('sukses','Data berhasil dihapus');
     }
 }

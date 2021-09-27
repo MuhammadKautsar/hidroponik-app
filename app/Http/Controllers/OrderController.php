@@ -31,6 +31,11 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'harga_jasa_pengiriman' => 'required|numeric',
+            'status_order' => 'required',
+        ]);
+
         $data_order = Order::find($id);
         $data_order->harga_jasa_pengiriman = $request->input('harga_jasa_pengiriman');
         $data_order->status_order = $request->input('status_order');

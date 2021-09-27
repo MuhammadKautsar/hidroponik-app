@@ -89,8 +89,7 @@
               <input name="gambar" type="file" id="image" aria-describedby="emailHelp"><br>
               <br>
               <div class="col-sm-6">
-                <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
-                      alt="preview image" width="100px" height="70px">
+                <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="preview image" width="100px" height="70px">
               </div>
             </div>
             <div class="mb-3">
@@ -159,7 +158,7 @@
               <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
+              <label for="exampleInputEmail1" class="form-label">Potongan (%)</label>
               <input name="potongan" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->potongan}}">
             </div>
             <div class="form-row">
