@@ -159,7 +159,7 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                <input name="keterangan" type="number" class="form-control @error('keterangan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <textarea name="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" id="exampleInputEmail1" rows="3"></textarea>
                 @error('keterangan')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -219,7 +219,13 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Promo</label>
-                <input name="promo_id" type="text" class="form-control @error('promo_id') is-invalid @enderror" value="{{$data->promo_id}}">
+                <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                    <option value="">- Pilih -</option>
+                    @php($diskon = $data->promo)
+                    @foreach ($promo as $diskon)
+                        <option value="{{ $diskon->id }}" {{ old('promo_id') == $diskon->id ? 'selected' : null }}>{{ $diskon->nama }}</option>
+                    @endforeach
+                </select>
                 @error('promo_id')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -234,7 +240,7 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                <input name="keterangan" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
+                <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3">{{$data->keterangan}}</textarea>
               </div>
           </div>
           <div class="modal-footer">

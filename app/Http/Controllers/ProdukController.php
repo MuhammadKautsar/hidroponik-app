@@ -98,6 +98,7 @@ class ProdukController extends Controller
 
         $produk->update([
             "nama" => $request->nama,
+            'promo_id' => $request->promo_id,
             "harga" => $request->harga,
             "stok" => $request->stok,
             "keterangan" => $request->keterangan,

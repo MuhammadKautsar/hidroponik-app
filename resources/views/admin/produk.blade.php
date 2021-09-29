@@ -9,13 +9,6 @@
           {{session('sukses')}}
         </div>
       @endif
-      <style>
-        .images-preview-div img
-        {
-        padding: 10px;
-        max-width: 100px;
-        }
-      </style>
       <div class="row">
         <div class="col">
           <div class="card">
