@@ -39,6 +39,7 @@ class ApiProdukController extends Controller
                 'potongan' => $row->promo_id ? $row->promo->potongan : 0,
                 'periode_awal' => $row->promo_id ? $row->promo->awal_periode : '',
                 'periode_akhir' => $row->promo_id ? $row->promo->akhir_periode : '',
+                'promo_nama' => $row->promo_id ? $row->promo->nama : '',
                 'promo_id' => $row->promo_id,
                 'total_feedback' => $row->total_feedback,
                 'penjual_id' => $row->penjual_id . ''
@@ -111,6 +112,7 @@ class ApiProdukController extends Controller
             'penjual' => $produk->penjual->username, // string
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
             'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
+            'promo_nama' => $produk->promo_id ? $produk->promo->nama : '',
             'promo_id' => $produk->promo_id,
             'periode_awal' => $produk->promo_id ? $produk->promo->awal_periode : '',
             'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
@@ -176,6 +178,7 @@ class ApiProdukController extends Controller
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
                 'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
+                'promo_nama' => $produk->promo_id ? $produk->promo->nama : '',
                 'periode_awal' => $produk->promo_id ? $produk->promo->awal_periode : '',
                 'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
                 'total_feedback' => $produk->total_feedback,

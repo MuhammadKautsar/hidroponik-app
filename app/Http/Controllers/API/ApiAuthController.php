@@ -72,7 +72,7 @@ class ApiAuthController extends Controller
     {
         $data = request()->all();
         $user->update($data);
-        
+
         if (request()->hasFile('gambar')) {
             $file = request()->file('gambar');
             // $file = $request->file('gambar');
@@ -88,7 +88,7 @@ class ApiAuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string',
+            'email' => 'required|string|email',
             'password' => 'required|string',
             'notificationToken' => 'required'
         ]);
@@ -104,9 +104,12 @@ class ApiAuthController extends Controller
         ]);
 
         $user = User::where('email', $data['email'])->where('status', 1)->first();
-
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return response()->json(['message' => 'email atau password tidak valid']);
+        if (!$user) {
+            return response()->json(['message' => ['email' => 'email tidak valid']]);
+        }
+        if (!Hash::check($data['password'], $user->password)) {
+            return response()->json(['message' => ['password' =>
+            'password tidak valid']]);
         }
 
         $isChecked = NotificationToken::where('notificationToken',  $data['notificationToken'])->first();

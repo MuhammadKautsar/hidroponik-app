@@ -37,6 +37,11 @@ class ApiOrderController extends Controller
                     'keterangan' => $row->produk->keterangan,
                     'total_feedback' => $row->produk->total_feedback,
                     'gambar' => $gambar,
+                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
+                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
+                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
+                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
+                    'promo_id' => $row->produk->promo_id,
                 ]
             ]);
         }
@@ -71,7 +76,7 @@ class ApiOrderController extends Controller
         $data['status_order'] = 'Belum';
         $data['harga_jasa_pengiriman'] = 0;
 
-         $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->first();
+        $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->first();
         if ($prevOrder) {
             $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
         } else
@@ -104,6 +109,12 @@ class ApiOrderController extends Controller
                 'keterangan' => $order->produk->keterangan,
                 'total_feedback' => $order->produk->total_feedback,
                 'gambar' => $gambar,
+                'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
+                'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
+                'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
+                'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
+                'promo_id' => $order->produk->promo_id,
+
             ]
         ];
         return response()->json($showData);
@@ -151,6 +162,12 @@ class ApiOrderController extends Controller
                     'keterangan' => $row->produk->keterangan,
                     'total_feedback' => $row->produk->total_feedback,
                     'gambar' => $gambar,
+                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
+                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
+                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
+                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
+                    'promo_id' => $row->produk->promo_id,
+
                 ]
             ]);
         }
@@ -185,6 +202,12 @@ class ApiOrderController extends Controller
                         'keterangan' => $order->produk->keterangan,
                         'total_feedback' => $order->produk->total_feedback,
                         'gambar' => $gambar,
+                        'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
+                        'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
+                        'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
+                        'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
+                        'promo_id' => $order->produk->promo_id,
+
                     ]
                 ]);
             }
@@ -196,7 +219,7 @@ class ApiOrderController extends Controller
     {
         $showData = array();
 
-         $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->whereNotIn('status_order', ['Batal', 'Selesai'])->get();
+        $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->whereNotIn('status_order', ['Batal', 'Selesai'])->get();
         // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
         foreach ($orders as $row) {
             $gambar = array();
@@ -219,13 +242,19 @@ class ApiOrderController extends Controller
                     'keterangan' => $row->produk->keterangan,
                     'total_feedback' => $row->produk->total_feedback,
                     'gambar' => $gambar,
+                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
+                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
+                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
+                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
+                    'promo_id' => $row->produk->promo_id,
+
                 ]
             ]);
         }
         return response()->json($showData);
     }
-    
-        public function getOrderByCheckoutPenjual($status, User $user)
+
+    public function getOrderByCheckoutPenjual($status, User $user)
     {
         $showData = array();
 
@@ -254,14 +283,20 @@ class ApiOrderController extends Controller
                         'keterangan' => $order->produk->keterangan,
                         'total_feedback' => $order->produk->total_feedback,
                         'gambar' => $gambar,
+                        'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
+                        'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
+                        'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
+                        'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
+                        'promo_id' => $order->produk->promo_id,
+
                     ]
                 ]);
             }
         }
         return response()->json($showData);
     }
-    
-        public function getOrderByCheckoutSelesai($status, User $user)
+
+    public function getOrderByCheckoutSelesai($status, User $user)
     {
         $showData = array();
 
@@ -289,12 +324,18 @@ class ApiOrderController extends Controller
                     'keterangan' => $row->produk->keterangan,
                     'total_feedback' => $row->produk->total_feedback,
                     'gambar' => $gambar,
+                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
+                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
+                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
+                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
+                    'promo_id' => $row->produk->promo_id,
+
                 ]
             ]);
         }
         return response()->json($showData);
     }
-    
+
     public function getOrderByCheckoutSelesaiPenjual($status, User $user)
     {
         $showData = array();
@@ -325,13 +366,19 @@ class ApiOrderController extends Controller
                         'keterangan' => $order->produk->keterangan,
                         'total_feedback' => $order->produk->total_feedback,
                         'gambar' => $gambar,
+                        'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
+                        'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
+                        'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
+                        'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
+                        'promo_id' => $order->produk->promo_id,
+
                     ]
                 ]);
             }
         }
         return response()->json($showData);
     }
-    
+
     public function getOrderByOrder($status, User $user)
     {
         $showData = array();
@@ -359,6 +406,12 @@ class ApiOrderController extends Controller
                     'keterangan' => $row->produk->keterangan,
                     'total_feedback' => $row->produk->total_feedback,
                     'gambar' => $gambar,
+                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
+                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
+                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
+                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
+                    'promo_id' => $row->produk->promo_id,
+
                 ]
             ]);
         }
@@ -370,7 +423,7 @@ class ApiOrderController extends Controller
 
         return response()->json(['total' => count($user->orders->where('status_checkout', '=', 'keranjang')->all())]);
     }
-    
+
     public function addQuantity(Order $order)
     {
         if ($order->jumlah + 1 <= $order->produk->stok) {
@@ -442,8 +495,8 @@ class ApiOrderController extends Controller
         $order->update($data);
         return response()->json(['message' => 'berhasil merubah status order']);
     }
-    
-        public function changeHargaPengiriman(Order $order)
+
+    public function changeHargaPengiriman(Order $order)
     {
         $validator = Validator::make(request()->all(), [
             'harga_jasa_pengiriman' => 'required|numeric'
@@ -458,16 +511,16 @@ class ApiOrderController extends Controller
                 'harga_jasa_pengiriman' => 'required|numeric'
             ]
         );
-        if($data['harga_jasa_pengiriman'] > 10000){
+        if ($data['harga_jasa_pengiriman'] > 10000) {
             return response()->json(['message' => 'harga melebihi batas maksimum']);
         }
-        if($data['harga_jasa_pengiriman'] < 0){
+        if ($data['harga_jasa_pengiriman'] < 0) {
             return response()->json(['message' => 'harga tidak mencapai minimal']);
         }
         $order->update($data);
         return response()->json(['message' => 'berhasil menambahkan harga pengiriman']);
     }
-    
+
     // notifikasi untuk si user hp
     private function sendNotification($to, $title, $body)
     {
