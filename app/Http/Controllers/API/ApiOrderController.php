@@ -30,6 +30,7 @@ class ApiOrderController extends Controller
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
+                    'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
@@ -102,6 +103,7 @@ class ApiOrderController extends Controller
             'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
             'pembeli' => $order->pembeli->nama_lengkap,
             'produk' => [
+                'id' => $order->produk_id . '',
                 'penjual' => $order->produk->penjual->nama_lengkap,
                 'nama' => $order->produk->nama,
                 'harga' => $order->produk->harga,
@@ -155,6 +157,7 @@ class ApiOrderController extends Controller
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
+                    'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
@@ -203,6 +206,7 @@ class ApiOrderController extends Controller
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
+                        'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
                         'nama' => $order->produk->nama,
                         'harga' => $order->produk->harga,
@@ -243,6 +247,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
+                    'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
@@ -284,6 +289,7 @@ class ApiOrderController extends Controller
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
+                        'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
                         'nama' => $order->produk->nama,
                         'harga' => $order->produk->harga,
@@ -325,6 +331,7 @@ class ApiOrderController extends Controller
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
+                    'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
@@ -367,6 +374,7 @@ class ApiOrderController extends Controller
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
+                        'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
                         'nama' => $order->produk->nama,
                         'harga' => $order->produk->harga,
@@ -407,6 +415,7 @@ class ApiOrderController extends Controller
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
+                    'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
