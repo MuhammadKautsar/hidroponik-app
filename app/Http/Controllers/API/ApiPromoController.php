@@ -14,16 +14,19 @@ class ApiPromoController extends Controller
     {
         $promos = array();
         $data = Promo::all();
+        $today = strtotime(now());
         foreach ($data as $row) {
-            array_push($promos, [
-                'id' => $row->id,
-                'nama' => $row->nama,
-                'potongan' => $row->potongan,
-                'periode_awal' => $row->awal_periode,
-                'periode_akhir' => $row->akhir_periode,
-            ]);
+            $start =  strtotime($row->awal_periode);
+            $end =  strtotime($row->akhir_periode);
+            if (($today >= $start) && ($today <= $end))
+                array_push($promos, [
+                    'id' => $row->id,
+                    'nama' => $row->nama,
+                    'potongan' => $row->potongan,
+                    'periode_awal' => $row->awal_periode,
+                    'periode_akhir' => $row->akhir_periode,
+                ]);
         }
-
         return response()->json($promos);
     }
 }

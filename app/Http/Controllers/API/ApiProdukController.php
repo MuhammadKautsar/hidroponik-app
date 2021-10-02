@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Models\Image;
 
+use App\Models\Promo;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,16 +17,21 @@ class ApiProdukController extends Controller
     public function index()
     {
         $showData = array();
+
+        $today = strtotime(now());
         $data = Produk::orderBy('updated_at', 'DESC')->get();
-
-        // Model::find($id)
-        // Model::all()
-        // Model::orderBy('updated_at', 'DESC')->get()
-
         foreach ($data as $row) {
             $gambar = array();
             foreach ($row->images as $image) {
                 array_push($gambar, $image->path_image);
+            }
+            // delete promo yang udah expired
+            if ($row->promo_id) {
+                $end =  strtotime($row->promo->akhir_periode);
+                if ($today > $end) {
+                    $row->promo->delete();
+                    $row->update(['promo_id' => NULL]);
+                }
             }
             array_push($showData, [
                 'id' => $row->id . '', // string
@@ -102,6 +108,14 @@ class ApiProdukController extends Controller
         foreach ($produk->images as $image) {
             array_push($gambar,  $image->path_image);
         }
+        $today = strtotime(now());
+        if ($produk->promo_id) {
+            $end =  strtotime($produk->promo->akhir_periode);
+            if ($today > $end) {
+                $produk->promo->delete();
+                $produk->update(['promo_id' => NULL]);
+            }
+        }
         $showData = [
             'id' => $produk->id . '', // string
             'nama' => $produk->nama, // string
@@ -161,11 +175,19 @@ class ApiProdukController extends Controller
     public function getProdukByPenjualId(User $user)
     {
         $showData = [];
+        $today = strtotime(now());
         foreach ($user->produks as $produk) {
             # code...
             $gambar = array();
             foreach ($produk->images as $image) {
                 array_push($gambar,  $image->path_image);
+            }
+            if ($produk->promo_id) {
+                $end =  strtotime($produk->promo->akhir_periode);
+                if ($today > $end) {
+                    $produk->promo->delete();
+                    $produk->update(['promo_id' => NULL]);
+                }
             }
             array_push($showData, [
                 'id' => $produk->id . '', // string

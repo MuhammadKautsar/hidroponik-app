@@ -148,7 +148,6 @@ class ApiAuthController extends Controller
         return response()->json(['message' => 'Berhasil logout']);
     }
 
-
     // notifikasi untuk si user hp
     private function sendNotification($to, $title, $body)
     {

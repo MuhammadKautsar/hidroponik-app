@@ -34,6 +34,17 @@ class User extends Authenticatable
         'profile_image',
     ];
 
+    // saat delete. akan delete childnya juga
+    protected static function booted()
+    {
+        static::deleting(function ($user) {
+            $user->produks()->delete();
+            $user->reportpenjuals()->delete();
+            $user->reportpembelis()->delete();
+            $user->orders()->delete();
+            $user->notificationTokens()->delete();
+        });
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -66,6 +77,14 @@ class User extends Authenticatable
     public function repots()
     {
         return $this->hasMany(Report::class);
+    }
+    public function reportpenjuals()
+    {
+        return $this->hasMany(Report::class, 'penjual_id');
+    }
+    public function reportpembelis()
+    {
+        return $this->hasMany(Report::class, 'pembeli_id');
     }
 
     public function orders()

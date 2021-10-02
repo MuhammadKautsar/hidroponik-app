@@ -26,7 +26,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
-                'tanggal' => $row->created_at,
+                'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
@@ -98,7 +98,7 @@ class ApiOrderController extends Controller
             'total_harga' => $order->total_harga,
             'status_checkout' => $order->status_checkout,
             'status_order' => $order->status_order,
-            'tanggal' => $order->created_at,
+            'tanggal' => $order->created_at->format('Y-m-d'),
             'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
             'pembeli' => $order->pembeli->nama_lengkap,
             'produk' => [
@@ -151,7 +151,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
-                'tanggal' => $row->created_at,
+                'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
@@ -177,10 +177,18 @@ class ApiOrderController extends Controller
     public function getOrderByPenjualId(User $user)
     {
         $showData = array();
-
+        $today = strtotime(now());
         foreach ($user->produks as $row) {
             foreach ($row->orders as $order) {
                 if ($order->status_checkout != 'Beli') continue;
+                // expired 2 hari kemudian
+                if ($order->status_order == 'Belum') {
+                    $expiredDate =  strtotime($order->created_at->modify('+2 days'));
+                    if ($today >= $expiredDate) {
+                        $order->update(["status_order" => 'Batal']);
+                        continue;
+                    }
+                }
                 $gambar = array();
                 foreach ($order->produk->images as $image) {
                     array_push($gambar, $image->path_image);
@@ -191,7 +199,7 @@ class ApiOrderController extends Controller
                     'total_harga' => $order->total_harga,
                     'status_checkout' => $order->status_checkout,
                     'status_order' => $order->status_order,
-                    'tanggal' => $order->created_at,
+                    'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
@@ -232,7 +240,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
-                'tanggal' => $row->created_at,
+                'tanggal' => $row->created_at->format('Y-m-d'),
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
                     'penjual' => $row->produk->penjual->nama_lengkap,
@@ -272,7 +280,7 @@ class ApiOrderController extends Controller
                     'total_harga' => $order->total_harga,
                     'status_checkout' => $order->status_checkout,
                     'status_order' => $order->status_order,
-                    'tanggal' => $order->created_at,
+                    'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
@@ -313,7 +321,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
-                'tanggal' => $row->created_at,
+                'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
@@ -355,7 +363,7 @@ class ApiOrderController extends Controller
                     'total_harga' => $order->total_harga,
                     'status_checkout' => $order->status_checkout,
                     'status_order' => $order->status_order,
-                    'tanggal' => $order->created_at,
+                    'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
                     'produk' => [
@@ -395,7 +403,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
-                'tanggal' => $row->created_at,
+                'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
@@ -465,6 +473,13 @@ class ApiOrderController extends Controller
 
         $order->update($data);
         if ($data['status_checkout'] == 'Beli') {
+            // hitung harga checkout
+            $hargaTotalProduk = $order->jumlah * $order->produk->harga;
+            if ($order->produk->promo_id) {
+                $promo = $hargaTotalProduk * ((float) $order->produk->promo->potongan) / 100;
+                $hargaTotalProduk = $hargaTotalProduk - $promo;
+            }
+            $order->update(['total_harga' => $hargaTotalProduk]);
             $order->produk->update(['stok' => ($order->produk->stok - $order->jumlah)]);
 
             if ($order->produk->penjual->notificationTokens) {

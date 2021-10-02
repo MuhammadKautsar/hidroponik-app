@@ -27,6 +27,15 @@ class Produk extends Model
 
     protected $table = 'produks';
 
+    // saat delete. akan delete childnya juga
+    protected static function booted()
+    {
+        static::deleting(function ($produk) {
+            $produk->orders()->delete();
+            $produk->feedbacks()->delete();
+        });
+    }
+
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
