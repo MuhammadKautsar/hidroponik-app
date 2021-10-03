@@ -39,33 +39,32 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'nama' => 'required|min:3',
-            'harga' => 'required|numeric',
+            'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
             // 'promo_id' => 'required',
             'gambar' => 'required|max:5000'
         ]);
 
-        // $validator = Validator::make($request->all(), [
-        //     'nama' => 'required',
-        //     'harga' => 'required|numeric|digits_between:1,6',
-        //     'stok' => 'required|numeric',
-        //     'keterangan' => 'required',
-        //     'penjual_id' => 'required',
-        //     //gambar
-        // ]);
+        $produk = new Produk([
+            'penjual_id' => Auth::user()->id,
+            'nama' => $request->nama,
+            'promo_id' => $request->promo_id,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
+            'keterangan' => $request->keterangan,
+            'total_feedback' => 0,
+        ]);
 
-            $produk = new Produk([
-                'penjual_id' => Auth::user()->id,
-                'nama' => $request->nama,
-                'promo_id' => $request->promo_id,
-                'harga' => $request->harga,
-                'stok' => $request->stok,
-                'keterangan' => $request->keterangan,
-                'total_feedback' => 0,
-            ]);
-            $produk->save();
+        if ($request->promo_id!=""){
+            $produk['harga_promo'] = $request->harga-$request->harga*$produk->promo->potongan/100;
+        } elseif ($request->promo_id="") {
+            $produk['harga_promo'] = "";
+        }
+
+        $produk->save();
 
         if($request->hasFile('gambar')){
             $files=$request->file('gambar');
@@ -85,6 +84,14 @@ class ProdukController extends Controller
 
     public function edit(Request $request, $id)
     {
+        // $request->validate([
+        //     'nama' => 'required|min:3',
+        //     'harga' => 'required|numeric|digits_between:1,6',
+        //     'stok' => 'required|numeric',
+        //     // 'promo_id' => 'required',
+        //     'gambar' => 'required|max:5000'
+        // ]);
+
         $produk = Produk::findOrFail($id);
         if ($request->hasFile("gambar")) {
             if (File::exists($this->path_file("/gambar/" . $produk->gambar))) {
@@ -101,9 +108,18 @@ class ProdukController extends Controller
             'promo_id' => $request->promo_id,
             "harga" => $request->harga,
             "stok" => $request->stok,
+            "harga_promo" => $request->harga_promo,
             "keterangan" => $request->keterangan,
             "gambar" => asset('/gambar' . $produk->gambar),
         ]);
+
+        if ($request->promo_id!=""){
+            $produk['harga_promo'] = $request->harga-$request->harga*$produk->promo->potongan/100;
+        } elseif ($request->promo_id="") {
+            $produk['harga_promo'] = "";
+        }
+
+        $produk->save();
 
         if ($request->hasFile("images")) {
             $files = $request->file("images");
@@ -165,8 +181,6 @@ class ProdukController extends Controller
 
     private function path_file($value)
     {
-        // TODO: saat upload ke server mtsn. comment line dibawah ini dan uncomment yang bagian ada public_htmlnya
         return public_path($value);
-        // return public_path('../../public_html/hidroponik' . $value);
     }
 }

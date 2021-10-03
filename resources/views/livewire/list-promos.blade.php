@@ -4,22 +4,13 @@
 
     <div class="container-fluid mt--7">
       <div class="row">
+        {{-- @if(session('sukses'))
+        <div class="alert alert-light" role="alert">
+          {{session('sukses')}}
+        </div>
+        @endif --}}
         <div class="col">
           <div class="card">
-            {{-- <form wire:submit.prevent="save">
-                <label>Photo</label>
-
-                @if ($gambar)
-                    gambar Preview:
-                    <img src="{{ $gambar->temporaryUrl() }}">
-                @endif
-
-                <input type="file" wire:model="gambar">
-
-                @error('gambar') <span class="error">{{ $message }}</span> @enderror
-
-                <button type="submit">Save gambar</button>
-            </form> --}}
             <!-- Card header -->
             <div class="card-header border-0">
                 <!-- Button trigger modal -->
@@ -48,7 +39,7 @@
                       <tr>
                         <td class="text-center">{{$item['id']}}</td>
                         <td class="text-center">
-                        <img src="{{ asset('uploads/promos/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
+                        <img src="{{ asset('storage/promo/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
                         </td>
                         <td class="text-center">{{$item['nama']}}</td>
                         <td class="text-center">{{$item['potongan']}} %</td>
@@ -84,68 +75,62 @@
   <div class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog">
       <form wire:submit.prevent='createPromo'>
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Promo</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-3">
-              <label>Gambar</label>
-              {{-- <br> --}}
-              @if ($gambar)
-                  Photo Preview:
-                  <img src="{{ $gambar->temporaryUrl() }}">
-              @endif
-              <input wire.model="gambar" type="file"><br>
-              @error('gambar') <span class="error">{{ $message }}</span> @enderror
-              {{-- <br> --}}
-
-              {{-- <div class="col-sm-6">
-                <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif"
-                      alt="preview image" width="100px" height="70px">
-              </div> --}}
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Promo</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
-              <input wire:model="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-              @error('nama')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
-              <input wire:model="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
-              @error('potongan')
-                  <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                    <input wire:model="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    @error('awal_periode')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label>Gambar</label>
+                    <br>
+                    <input type="file" wire:model="gambar">
+                    <br>
+                    @if ($gambar)
+                        <br><img src="{{ $gambar->temporaryUrl() }}" width="100px" height="70px">
+                    @endif
+                    @error('gambar') <span class="error">{{ $message }}</span> @enderror
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                    <input wire:model="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    @error('akhir_periode')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
+                <input wire:model="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('nama')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
+                <input wire:model="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
+                @error('potongan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
+                        <input wire:model="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        @error('awal_periode')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
+                        <input wire:model="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        @error('akhir_periode')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                <textarea wire:model="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
                 </div>
             </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-              <textarea wire:model="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Submit</button>
-        </div>
-      </div>
       </form>
     </div>
   </div>
@@ -165,7 +150,7 @@
             <div class="mb-3">
               <label for="" class="form-label">Gambar</label><br>
               <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
-              <br><img src="{{ asset('uploads/promos/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
+              <br><img src="{{ asset('storage/promo/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>

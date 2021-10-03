@@ -35,36 +35,38 @@ class ListPromos extends Component
 
     public function addNew()
     {
+        $this->reset();
         $this->dispatchBrowserEvent('show-form');
 
-        $this->gambar;
+        // $this->gambar;
     }
 
     public function createPromo()
     {
-        $data = [
-            // 'gambar' => $this->gambar,
-            'nama' => $this->nama,
-            'potongan' => $this->potongan,
-            'awal_periode' => $this->awal_periode,
-            'akhir_periode' => $this->akhir_periode,
-            'keterangan' => $this->keterangan
-        ];
-
-        $validateData = Validator::make($data, [
+        $this->validate([
             'gambar' => 'image|max:1024',
             'nama' => 'required',
             'potongan' => 'required|numeric',
             'awal_periode' => 'required|date',
             'akhir_periode' => 'required|date',
-            // 'keterangan' => 'required',
-        ])->validate();
+        ]);
 
-        $validateData['keterangan'] = $this->keterangan;
+        $this->gambar->store('promo','public');
+        $image = $this->gambar->hashName();
 
-        // $this->gambar->store('gambar');
+        // $image = $this->gambar;
+        // $file_name = time().'.'.$image->getClientOriginalExtension();
+        // $image_promo = Promo::make($image->getRealPath());
+        // $image_promo->save('promo/'.$file_name);
 
-        Promo::create($validateData);
+        $data = new Promo;
+        $data->gambar = $image;
+        $data->nama = $this->nama;
+        $data->potongan = $this->potongan;
+        $data->awal_periode = $this->awal_periode;
+        $data->akhir_periode = $this->akhir_periode;
+        $data->keterangan = $this->keterangan;
+        $data->save();
 
         $this->dispatchBrowserEvent('hide-form');
         $this->clear();
@@ -86,5 +88,10 @@ class ListPromos extends Component
         $this->awal_periode = null;
         $this->akhir_periode = null;
         $this->keterangan = null;
+    }
+
+    private function path_file($value)
+    {
+        return public_path($value);
     }
 }

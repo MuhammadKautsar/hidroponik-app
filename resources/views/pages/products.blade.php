@@ -40,6 +40,7 @@
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    {{-- <th class="text-center" scope="col">Harga Promo</th> --}}
                     <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
@@ -58,23 +59,37 @@
                       <td class="text-center">{{$item['nama']}}</td>
                       <td class="text-center">
                         @if ($item->promo_id=="")
-                          Tidak ada</td>
+                            Tidak ada</td>
                         @elseif ($item->promo_id!="")
                         @php($diskon = $item->promo)
-                        {{$diskon->potongan}} %</td>
+                            {{$diskon->potongan}} %</td>
                         @endif
-                      <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
+                      <td class="text-center">
+                        @if ($item->promo_id=="")
+                            Rp {{number_format($item['harga'],0,',','.')}}</td>
+                        @elseif ($item->promo_id!="")
+                        @php($diskon = $item->promo)
+                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
+                        @endif
+                      {{-- <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td> --}}
                       <td class="text-center">{{$item['stok']}}</td>
+                      {{-- <td class="text-center">
+                        @if ($item->harga_promo=="")
+                          - - -</td>
+                        @elseif ($item->harga_promo!="")
+                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
+                        @endif --}}
                       <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Edit
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                            Ubah
                         </button>
-                        <form action="/produk/{{$item->id}}/delete" method="post">
-                          <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
+                        {{-- <form action="/produk/{{$item->id}}/delete" method="post">
+                          <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit"><i class="bi-trash"></i></button>
                           @csrf
                           @method('delete')
-                        </form>
+                        </form> --}}
+                        <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                       </td>
                     </tr>
                     @endif
@@ -136,7 +151,7 @@
                 <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
                     <option value="">- Pilih -</option>
                     @foreach ($promo as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        <option value="{{ $item->id }}">{{ $item->nama }} - {{ $item->potongan }} %</option>
                     @endforeach
                 </select>
                 @error('promo_id')
@@ -215,7 +230,10 @@
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+                <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+                @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Promo</label>
@@ -223,7 +241,7 @@
                     <option value="">- Pilih -</option>
                     @php($diskon = $data->promo)
                     @foreach ($promo as $diskon)
-                        <option value="{{ $diskon->id }}" {{ old('promo_id') == $diskon->id ? 'selected' : null }}>{{ $diskon->nama }}</option>
+                        <option value="{{ $diskon->id }}" {{ old('promo_id') == $diskon->id ? 'selected' : null }}>{{ $diskon->nama }} - {{ $diskon->potongan }} %</option>
                     @endforeach
                 </select>
                 @error('promo_id')

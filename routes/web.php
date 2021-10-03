@@ -48,14 +48,14 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
      Route::get('admin/ulasan', 'App\Http\Controllers\FeedbackController@indexAdmin')->name('umpanbalik');
      Route::get('/umpanbalik/{id}/delete', 'App\Http\Controllers\FeedbackController@destroyAdmin');
 	 Route::get('admin/produk', [ProdukController::class, 'indexAdmin'])->name('produks');
-     Route::delete('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
+     Route::get('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
 });
 
 Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
 	Route::get('/produk', [ProdukController::class, 'index'])->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'edit']);
-	Route::delete('/produk/{id}/delete', [ProdukController::class, 'destroy']);
+	Route::get('/produk/{id}/delete', [ProdukController::class, 'destroy']);
 	Route::get('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
 	Route::get('/pesanan', 'App\Http\Controllers\OrderController@index')->name('orders');
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');

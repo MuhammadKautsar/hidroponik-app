@@ -58,25 +58,19 @@
                         @php($diskon = $item->promo)
                         {{$diskon->potongan}} %</td>
                         @endif
-                      <td class="text-center">Rp {{number_format($item['harga'],2,',','.')}}</td>
+                      <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
-                        @if (auth()->user()->level=="admin" || auth()->user()->level=="superadmin")
-                        <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                           Show
                         </button>
-                        @endif
-                        @if (auth()->user()->level=="penjual")
-                        <button type="button" class="btn btn-primary btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Edit
-                        </button>
-                        @endif
-                        <form action="/produks/{{$item->id}}/delete" method="post">
+                        {{-- <form action="/produks/{{$item->id}}/delete" method="post">
                           <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
                           @csrf
                           @method('delete')
-                        </form>
+                        </form> --}}
+                        <a href="/produks/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</i></a>
                       </td>
                     </tr>
                   @endforeach

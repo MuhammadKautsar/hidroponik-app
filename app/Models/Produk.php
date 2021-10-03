@@ -23,6 +23,7 @@ class Produk extends Model
         'stok',
         'total_feedback',
         'keterangan',
+        'harga_promo',
     ];
 
     protected $table = 'produks';

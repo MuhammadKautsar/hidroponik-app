@@ -10,7 +10,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                     </div>
-                    <input name="search" class="form-control" placeholder="Search" type="text">
+                    <input name="search" class="form-control" placeholder="Cari" type="text">
                 </div>
             </div>
         </form>

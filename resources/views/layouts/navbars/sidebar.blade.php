@@ -81,7 +81,7 @@
                 @elseif (auth()->user()->level=="penjual")
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('home') ? 'active' : '' }} text-white" href="{{ route('home') }}">
-                        <i class="ni ni-shop text-black"></i> {{ __('Home') }}
+                        <i class="ni ni-shop text-black"></i> {{ __('Beranda') }}
                     </a>
                 </li>
                 <li class="nav-item ">

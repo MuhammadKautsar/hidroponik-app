@@ -40,8 +40,8 @@
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],2,',','.')}}</td>
-                      <td class="text-center">Rp {{number_format($item['total_harga'],2,',','.')}}</td>
+                      <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
+                      <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
                       @if (auth()->user()->level=="penjual")
                       <td class="text-center">

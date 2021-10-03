@@ -17,7 +17,7 @@ class CreatePromosTable extends Migration
             $table->id();
             $table->string('gambar')->nullable();
             $table->string('nama');
-            $table->string('potongan');
+            $table->integer('potongan');
             $table->date('awal_periode');
             $table->date('akhir_periode');
             $table->text('keterangan')->nullable();
