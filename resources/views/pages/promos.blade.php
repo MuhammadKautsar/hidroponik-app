@@ -40,18 +40,18 @@
                   <tr>
                     <td class="text-center">{{$item['id']}}</td>
                     <td class="text-center">
-                      <img src="{{ asset('uploads/promos/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
+                      <img src="{{ $item->getPromoImage() }}" width="100px" height="70px" alt="Image">
                     </td>
                     <td class="text-center">{{$item['nama']}}</td>
                     <td class="text-center">{{$item['potongan']}} %</td>
-                    <td class="text-center">{{$item['awal_periode']}}</td>
-                    <td class="text-center">{{$item['akhir_periode']}}</td>
+                    <td class="text-center">{!! date('d-m-Y', strtotime($item->awal_periode)) !!}</td>
+                    <td class="text-center">{!! date('d-m-Y', strtotime($item->akhir_periode)) !!}</td>
                     <td class="text-center">{{$item['keterangan']}}</td>
                     <td class="text-center">
-                      <button type="button" class="btn btn-primary btn-sm float-left" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                        Edit
+                      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                        Ubah
                       </button>
-                      <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm float-right" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                      <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                     </td>
                   </tr>
                 @endforeach
@@ -146,12 +146,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/promo/{{$data->id}}/update" method="POST">
+          <form action="/promo/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
               {{csrf_field()}}
             <div class="mb-3">
               <label for="" class="form-label">Gambar</label><br>
-              <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
-              <br><img src="{{ asset('uploads/promos/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
+              <input name="gambar" type="file" id="gambar" aria-describedby="emailHelp"><br>
+              <br><img src="{{ $data->getPromoImage() }}" width="100px" height="70px" alt="Image">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>

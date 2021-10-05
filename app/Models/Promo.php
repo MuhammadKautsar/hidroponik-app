@@ -21,4 +21,13 @@ class Promo extends Model
     {
         return $this->hasMany(Produk::class);
     }
+
+    public function getPromoImage()
+    {
+        if (!$this->gambar) {
+            return asset('uploads/promos/no-image.png');
+        }
+
+        return  $this->gambar;
+    }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
@@ -28,7 +28,7 @@
                   @foreach($data_report as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{{$item['tanggal']}}</td>
+                      <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
                       <td class="text-center">{{$item['isi_laporan']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->penjual->nama_lengkap}}</td>

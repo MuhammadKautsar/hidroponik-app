@@ -16,7 +16,7 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col">Id</th>
+                    <th class="text-center" scope="col">No</th>
                     <th class="text-center" scope="col">Tanggal</th>
                     <th class="text-center" scope="col">Pembeli</th>
                     <th class="text-center" scope="col">Produk</th>
@@ -30,13 +30,15 @@
                   </tr>
                 </thead>
                 <tbody class="list">
+                  @php $no = 0 @endphp
                   @foreach($data_product as $product)
                   @if ($product->penjual->id == Auth::user()->id)
                     @foreach($data_order as $item)
                     @if ($item->produk->id == $product->id)
+                    @php $no++ @endphp
                     <tr>
-                      <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{{$item['created_at']}}</td>
+                      <td class="text-center">{{$no}}</td>
+                      <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
@@ -94,12 +96,14 @@
                 <div class="mb-3">
                   <label for="" class="form-label">Status</label>
                   <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
-                    <option value="{{$data->status_order}}" hidden selected>--Pilih--</option>
-                    <option value="Belum">Belum</option>
+                    <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
+                    @if ($data->status_order=="Belum")
                     <option value="Diproses">Diproses</option>
+                    @elseif ($data->status_order=="Diproses")
                     <option value="Dikirim">Dikirim</option>
+                    @elseif ($data->status_order=="Dikirim")
                     <option value="Selesai">Selesai</option>
-                    <option value="Batal">Batal</option>
+                    @endif
                   </select>
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>
