@@ -230,10 +230,19 @@ class ApiOrderController extends Controller
     public function getOrderByCheckout($status, User $user)
     {
         $showData = array();
+        $today = strtotime(now());
 
         $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->whereNotIn('status_order', ['Batal', 'Selesai'])->get();
         // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
         foreach ($orders as $row) {
+            // expired 2 hari kemudian
+            if ($row->status_order == 'Belum') {
+                $expiredDate =  strtotime($row->created_at->modify('+2 days'));
+                if ($today >= $expiredDate) {
+                    $row->update(["status_order" => 'Batal']);
+                    continue;
+                }
+            }
             $gambar = array();
             foreach ($row->produk->images as $image) {
                 array_push($gambar, $image->path_image);
@@ -270,11 +279,19 @@ class ApiOrderController extends Controller
     public function getOrderByCheckoutPenjual($status, User $user)
     {
         $showData = array();
+        $today = strtotime(now());
 
         foreach ($user->produks as $row) {
             foreach ($row->orders as $order) {
                 if ($order->status_checkout != $status &&  in_array($order->status_order, ['Batal', 'Selesai'])) continue;
-
+                // expired 2 hari kemudian
+                if ($order->status_order == 'Belum') {
+                    $expiredDate =  strtotime($order->created_at->modify('+2 days'));
+                    if ($today >= $expiredDate) {
+                        $order->update(["status_order" => 'Batal']);
+                        continue;
+                    }
+                }
                 $gambar = array();
                 foreach ($order->produk->images as $image) {
                     array_push($gambar, $image->path_image);
