@@ -88,13 +88,18 @@
                 {{csrf_field()}}
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
+                    {{-- @if ($data->harga_jasa_pengiriman==0) --}}
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
+                    {{-- @else
+                    <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
+                    @endif --}}
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Status</label>
+                  {{-- @if ($data->status_order!="Selesai") --}}
                   <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
@@ -105,6 +110,9 @@
                     <option value="Selesai">Selesai</option>
                     @endif
                   </select>
+                  {{-- @else
+                  <span class="form-control">{{$data->status_order}}</span>
+                  @endif --}}
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror

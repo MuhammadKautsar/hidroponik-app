@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Livewire\WithPagination;
 
@@ -19,15 +19,20 @@ class ListUsers extends Component
     public $password;
     public $level;
 
-    public function pengguna(Request $request)
+    public $perPage = 5;
+    public $sortField;
+    public $sortAsc = true;
+    public $search = '';
+
+    public function sortBy($field)
     {
-        if($request->has('search')){
-            $data_user=User::where('nama_lengkap','LIKE','%'.$request->search.'%')
-                            ->orWhere('level','LIKE','%'.$request->search.'%')->paginate(4);
-        }else{
-            $data_user=User::paginate(4);
+        if ($this->sortField === $field) {
+            $this->sortAsc = ! $this->sortAsc;
+        } else {
+            $this->sortAsc = true;
         }
-        return view('livewire.list-users', compact('data_user'));
+
+        $this->sortField = $field;
     }
 
     public function addNew()
@@ -64,7 +69,8 @@ class ListUsers extends Component
 
     public function render()
     {
-        return view('livewire.list-users', ['data_user' => User::paginate(4)])
+        return view('livewire.list-users', ['data_user' => User::search($this->search)
+        ->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

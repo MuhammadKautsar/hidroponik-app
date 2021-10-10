@@ -22,6 +22,13 @@ class Feedback extends Model
         'rating',
     ];
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('komentar', 'like', '%'.$query.'%')
+                ->orWhere('rating', 'like', '%'.$query.'%');
+    }
+
     public function produk()
     {
         return $this->belongsTo(Produk::class);

@@ -23,6 +23,13 @@ class Report extends Model
         'tanggal',
     ];
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('isi_laporan', 'like', '%'.$query.'%')
+                ->orWhere('tanggal', 'like', '%'.$query.'%');
+    }
+
     public function pembeli()
     {
         return $this->belongsTo(User::class, 'pembeli_id');

@@ -1,15 +1,21 @@
-@extends('layouts.app')
-
-@section('content')
+<div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Laporan</h3>
+                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Promo...">
+                    </div>
+                </div>
+                <h3 class="mt-2">Laporan</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -57,9 +63,4 @@
       </div>
       @include('layouts.footers.auth')
     </div>
-@endsection
-
-@push('js')
-    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
-    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
-@endpush
+</div>

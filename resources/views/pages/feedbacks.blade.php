@@ -36,14 +36,18 @@
                             <td class="text-center">{{$item->produk->nama}}</td>
                             <td class="text-center">{{ $item->user->nama_lengkap }}</td>
                             <td class="text-center">{{$item['komentar']}}</td>
-                            <td class="text-center">{{$item['rating']}}</td>
+                            <td class="text-center">
+                                @for($i = 0; $i < 5; $i++)
+                                    <span><i class="fa fa-star{{ $item->rating <= $i ? '-o' : '' }}" style="color:orange"></i></span>
+                                @endfor
+                              </td>
                             <td class="text-center">
                                 @if (auth()->user()->level=="user")
                                 <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                                 Balas
                                 </button>
                                 @endif
-                                <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                                <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                             </td>
                             </tr>
                         @endif

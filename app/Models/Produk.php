@@ -37,6 +37,14 @@ class Produk extends Model
         });
     }
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nama', 'like', '%'.$query.'%')
+                ->orWhere('harga', 'like', '%'.$query.'%')
+                ->orWhere('stok', 'like', '%'.$query.'%');
+    }
+
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
