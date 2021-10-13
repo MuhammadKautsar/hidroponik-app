@@ -12,10 +12,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>
-                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Laporan...">
+                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Pesanan...">
                     </div>
                 </div>
-                <h3 class="mt-2">Laporan</h3>
+                <h3 class="mt-2">Pesanan</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -24,26 +24,33 @@
                   <tr>
                     <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
                     <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="status">Laporan</th>
-                    <th class="text-center" scope="col">Pelapor</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Penjual</th>
-                    <th class="text-center" scope="col">aksi</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
+                    <th class="text-center" scope="col">Produk</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Jumlah</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Total Harga</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
+                    @if (auth()->user()->level=="penjual")
+                    <th class="text-center" scope="col">Aksi</th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach($data_report as $item)
+                  @foreach($data_order as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
-                      <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
-                      <td class="text-center">{{$item['isi_laporan']}}</td>
+                      <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                      <td class="text-center">{{$item->penjual->nama_lengkap}}</td>
+                      <td class="text-center">{{$item->produk->nama}}</td>
+                      <td class="text-center">{{$item['jumlah']}}</td>
+                      <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                      <td class="text-center">{{$item['status_order']}}</td>
+                      @if (auth()->user()->level=="penjual")
                       <td class="text-center">
-                        {{-- <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Balas
-                        </button> --}}
-                        <a href="/laporan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                        <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                          Tinjau
+                        </button>
                       </td>
+                      @endif
                     </tr>
                   @endforeach
                 </tbody>
@@ -53,8 +60,7 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  {{ $data_report->links() }}
-                  </li>
+                  {{ $data_order->links() }}
                 </ul>
               </nav>
             </div>

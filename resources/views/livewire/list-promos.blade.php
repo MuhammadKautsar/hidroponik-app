@@ -156,7 +156,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/promo/{{$data->id}}/update" method="POST">
+          <form action="/promo/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
               {{csrf_field()}}
             <div class="mb-3">
               <label for="" class="form-label">Gambar</label><br>

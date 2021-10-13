@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Produk;
+use App\Models\Promo;
 use Livewire\WithPagination;
 
 class ListProducts extends Component
@@ -19,7 +20,7 @@ class ListProducts extends Component
     public function render()
     {
         return view('livewire.list-products', ['data_product' => Produk::search($this->search)
-        ->paginate($this->perPage),])
+        ->paginate($this->perPage),], ['promo' => Promo::all()])
         ->extends('layouts.app')
         ->section('content');
     }

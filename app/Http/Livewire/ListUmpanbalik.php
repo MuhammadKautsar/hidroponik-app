@@ -4,10 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Feedback;
-use App\Models\Produk;
 use Livewire\WithPagination;
 
-class ListFeedbacks extends Component
+class ListUmpanbalik extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -19,8 +18,8 @@ class ListFeedbacks extends Component
 
     public function render()
     {
-        return view('livewire.list-feedbacks', ['feedbacks' => Feedback::search($this->search)
-        ->paginate($this->perPage),], ['data_product' => Produk::all()])
+        return view('livewire.admin.list-umpanbalik', ['feedbacks' => Feedback::search($this->search)
+        ->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

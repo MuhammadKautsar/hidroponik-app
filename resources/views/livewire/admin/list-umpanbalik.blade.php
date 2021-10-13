@@ -1,7 +1,7 @@
 <div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
       <div class="row">
         <div class="col">
           <div class="card">
@@ -31,34 +31,23 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                    @php $no = 0 @endphp
-                    @foreach($data_product as $product)
-                    @if ($product->penjual->id == Auth::user()->id)
-                        @foreach($feedbacks as $item)
-                        @if ($item->produk->id == $product->id)
-                        @php $no++ @endphp
-                            <tr>
-                            <td class="text-center">{{$no}}</td>
-                            <td class="text-center">{{$item->produk->nama}}</td>
-                            <td class="text-center">{{ $item->user->nama_lengkap }}</td>
-                            <td class="text-center">{{$item['komentar']}}</td>
-                            <td class="text-center">
-                                @for($i = 0; $i < 5; $i++)
-                                    <span><i class="fa fa-star{{ $item->rating <= $i ? '-o' : '' }}" style="color:orange"></i></span>
-                                @endfor
-                              </td>
-                            <td class="text-center">
-                                @if (auth()->user()->level=="user")
-                                <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                                Balas
-                                </button>
-                                @endif
-                                <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
-                            </td>
-                            </tr>
-                        @endif
-                        @endforeach
-                  @endif
+                  @php $no = 0 @endphp
+                  @foreach($feedbacks as $item)
+                  @php $no++ @endphp
+                    <tr>
+                      <td class="text-center">{{$no}}</td>
+                      <td class="text-center">{{$item->produk->nama}}</td>
+                      <td class="text-center">{{ $item->user->nama_lengkap }}</td>
+                      <td class="text-center">{{$item['komentar']}}</td>
+                      <td class="text-center">
+                        @for($i = 0; $i < 5; $i++)
+                            <span><i class="fa fa-star{{ $item->rating <= $i ? '-o' : '' }}" style="color:orange"></i></span>
+                        @endfor
+                      </td>
+                      <td class="text-center">
+                        <a href="/umpanbalik/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                      </td>
+                    </tr>
                   @endforeach
                 </tbody>
               </table>

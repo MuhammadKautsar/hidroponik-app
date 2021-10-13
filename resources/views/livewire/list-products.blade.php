@@ -1,23 +1,28 @@
 <div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--8">
+    <div class="container-fluid mt--7">
       @if(session('sukses'))
         <div class="alert alert-light" role="alert">
           {{session('sukses')}}
         </div>
       @endif
+      <style>
+        .images-preview-div img
+        {
+        padding: 10px;
+        max-width: 100px;
+        }
+      </style>
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
               <!-- Button trigger modal -->
-              @if (auth()->user()->level=="penjual")
-              <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button type="button" class="btn btn-success btn-sm mt-2 float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Tambah
               </button>
-              @endif
               <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -25,7 +30,7 @@
                     </div>
                     <input wire:model="search" class="form-control" type="text" placeholder="Cari Produk...">
                 </div>
-              </div>
+            </div>
               <h3 class="mt-2">Produk</h3>
             </div>
             <!-- Light table -->
@@ -36,10 +41,10 @@
                     <th class="text-center" scope="col">No</th>
                     <th class="text-center" scope="col">Gambar</th>
                     <th class="text-center" scope="col">Nama</th>
-                    <th class="text-center" scope="col">Penjual</th>
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    {{-- <th class="text-center" scope="col">Harga Promo</th> --}}
                     <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
@@ -47,6 +52,7 @@
                 <tbody class="list">
                   @php $no = 0 @endphp
                   @foreach($data_product as $item)
+                  @if ($item->penjual->id == Auth::user()->id)
                     @php $no++ @endphp
                     <tr>
                       <td class="text-center">{{$no}}</td>
@@ -55,30 +61,42 @@
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
                       </td>
                       <td class="text-center">{{$item['nama']}}</td>
-                      @php($seller = $item->penjual)
-                      <td class="text-center">{{$seller->username}}</td>
                       <td class="text-center">
                         @if ($item->promo_id=="")
-                          Tidak ada</td>
+                            Tidak ada</td>
                         @elseif ($item->promo_id!="")
                         @php($diskon = $item->promo)
-                        {{$diskon->potongan}} %</td>
+                            {{$diskon->potongan}} %</td>
                         @endif
-                      <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td>
+                      <td class="text-center">
+                        @if ($item->promo_id=="")
+                            Rp {{number_format($item['harga'],0,',','.')}}</td>
+                        @elseif ($item->promo_id!="")
+                        @php($diskon = $item->promo)
+                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
+                        @endif
+                      {{-- <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td> --}}
                       <td class="text-center">{{$item['stok']}}</td>
+                      {{-- <td class="text-center">
+                        @if ($item->harga_promo=="")
+                          - - -</td>
+                        @elseif ($item->harga_promo!="")
+                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
+                        @endif --}}
                       <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
-                          Show
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                            Ubah
                         </button>
-                        {{-- <form action="/produks/{{$item->id}}/delete" method="post">
-                          <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
+                        {{-- <form action="/produk/{{$item->id}}/delete" method="post">
+                          <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit"><i class="bi-trash"></i></button>
                           @csrf
                           @method('delete')
                         </form> --}}
-                        <a href="/produks/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</i></a>
+                        <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                       </td>
                     </tr>
+                    @endif
                   @endforeach
                 </tbody>
               </table>
@@ -97,30 +115,185 @@
       @include('layouts.footers.auth')
     </div>
 
-    @foreach($data_product as $data)
-    <!-- Modal Show-->
-    <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+    <!-- Modal Add-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Detail Produk</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Produk</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+            <form action="/produk/create" method="POST" enctype="multipart/form-data">
+              @csrf
+              {{-- <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Cover</label><br>
+                <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
+              </div> --}}
               <div class="mb-3">
                 <label for="" class="form-label">Gambar</label><br>
-                <br>@foreach ($data->images as $img)
-                    <img src="{{ $img->path_image }}" width="150px" height="110px" alt="Image">
-                  @endforeach
+                <input name="gambar[]" multiple type="file" class="@error('gambar') is-invalid @enderror" id="images" aria-describedby="emailHelp"><br>
+                @error('gambar')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+                <br>
+                <div class="col-md-12">
+                  <div class="mt-1 text-center">
+                  <div class="images-preview-div"> </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
+                <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Promo</label>
+                <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                    <option value="">- Pilih -</option>
+                    @foreach ($promo as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama }} - {{ $item->potongan }} %</option>
+                    @endforeach
+                </select>
+                @error('promo_id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Harga</label>
+                <input name="harga" type="number" class="form-control @error('harga') is-invalid @enderror" id="exampleInputEmail1">
+                @error('harga')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Stok</label>
+                <input name="stok" type="number" class="form-control @error('stok') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                @error('stok')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                <textarea name="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" id="exampleInputEmail1" rows="3"></textarea>
+                @error('keterangan')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
               </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @foreach($data_product as $data)
+    <!-- Modal Edit-->
+    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Produk</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('put')
+              <div class="mb-3">
+                <label for="" class="form-label">Gambar</label><br>
+                <input name="images[]" multiple type="file" id="image" aria-describedby="emailHelp"><br>
+                <br>{{-- <div class="col-lg-3"> --}}
+                  @if (count($data->images)>0)
+                  @foreach ($data->images as $img)
+                  <img src="{{ $img->path_image }}" width="100px" height="70px" alt="">
+                  <a href="/deleteimage/{{ $img->id }}"
+                     class="text-red"> X
+
+                    {{-- @csrf
+                    @method('delete') --}}
+                    </a>
+                  @endforeach
+                  @endif
+                {{-- </div> --}}
+                {{-- <br>@foreach ($data->images as $img)
+                    <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
+                  @endforeach
+                  <div class="col-md-12">
+                    <div class="mt-1 text-center">
+                    <div class="images-preview"> </div>
+                    </div>
+                  </div> --}}
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
+                <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+                @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Promo</label>
+                <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                    <option value="">- Pilih -</option>
+                    @php($diskon = $data->promo)
+                    @foreach ($promo as $diskon)
+                        <option value="{{ $diskon->id }}" {{ old('promo_id') == $diskon->id ? 'selected' : null }}>{{ $diskon->nama }} - {{ $diskon->potongan }} %</option>
+                    @endforeach
+                </select>
+                @error('promo_id')
+                  <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Harga</label>
+                <input name="harga" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->harga}}">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Stok</label>
+                <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3">{{$data->keterangan}}</textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
             </form>
           </div>
         </div>
       </div>
     </div>
     @endforeach
+
+<script >
+$(function() {
+// Multiple images preview with JavaScript
+var previewImages = function(input, imgPreviewPlaceholder) {
+if (input.files) {
+var filesAmount = input.files.length;
+for (i = 0; i < filesAmount; i++) {
+var reader = new FileReader();
+reader.onload = function(event) {
+$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+}
+reader.readAsDataURL(input.files[i]);
+}
+}
+};
+$('#images').on('change', function() {
+previewImages(this, 'div.images-preview-div');
+});
+});
+
+  </script>
 </div>

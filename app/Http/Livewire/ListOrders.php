@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Order;
+use App\Models\Produk;
 use Livewire\WithPagination;
 
 class ListOrders extends Component
@@ -19,7 +20,7 @@ class ListOrders extends Component
     public function render()
     {
         return view('livewire.list-orders', ['data_order' => Order::search($this->search)
-        ->paginate($this->perPage),])
+        ->paginate($this->perPage),], ['data_product' => Produk::all()])
         ->extends('layouts.app')
         ->section('content');
     }

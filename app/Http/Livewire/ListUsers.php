@@ -24,6 +24,8 @@ class ListUsers extends Component
     public $sortAsc = true;
     public $search = '';
 
+    protected $queryString = ['search' => ['except' => '']];
+
     public function sortBy($field)
     {
         if ($this->sortField === $field) {
@@ -65,6 +67,11 @@ class ListUsers extends Component
         $this->dispatchBrowserEvent('hide-form');
         $this->clear();
         return redirect()->back();
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
     }
 
     public function render()
