@@ -34,7 +34,7 @@
                     @php $no = 0 @endphp
                     @foreach($data_product as $product)
                     @if ($product->penjual->id == Auth::user()->id)
-                        @foreach($feedbacks as $item)
+                        @forelse($feedbacks as $item)
                         @if ($item->produk->id == $product->id)
                         @php $no++ @endphp
                             <tr>
@@ -59,7 +59,14 @@
                         @endif
                         @endforeach
                   @endif
-                  @endforeach
+                  @empty
+                    <tr class="text-center">
+                        <td colspan="10">
+                            <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                        </td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>

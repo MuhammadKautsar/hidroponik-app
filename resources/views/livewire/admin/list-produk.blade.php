@@ -41,7 +41,7 @@
                 </thead>
                 <tbody class="list">
                   @php $no = 0 @endphp
-                  @foreach($data_product as $item)
+                  @forelse($data_product as $item)
                     @php $no++ @endphp
                     <tr>
                       <td class="text-center">{{$no}}</td>
@@ -74,7 +74,14 @@
                         <a href="/produks/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</i></a>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr class="text-center">
+                        <td colspan="10">
+                            <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                        </td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>

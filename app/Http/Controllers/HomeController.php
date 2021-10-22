@@ -7,6 +7,8 @@ use App\Models\Promo;
 use App\Models\Report;
 use App\Models\User;
 use App\Models\Feedback;
+use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -34,12 +36,21 @@ class HomeController extends Controller
         $jumlah_user = User::all()->count();
         $jumlah_ulasan = Feedback::all()->count();
 
-        $belum = Order::where('status_order', 'Belum')->count();
-        $diproses = Order::where('status_order', 'Diproses')->count();
-        $dikirim = Order::where('status_order', 'Dikirim')->count();
-        $selesai = Order::where('status_order', 'Selesai')->count();
-        $batal = Order::where('status_order', 'Batal')->count();
-        $ulasan = Feedback::all()->count();
+        $orders = DB::table('orders')
+            ->join('produks', 'orders.produk_id', '=', 'produks.id')
+            ->where('penjual_id', '=', Auth::user()->id)->get();
+
+        $belum = $orders->where('status_order', 'Belum')->count();
+        $diproses = $orders->where('status_order', 'Diproses')->count();
+        $dikirim = $orders->where('status_order', 'Dikirim')->count();
+        $selesai = $orders->where('status_order', 'Selesai')->count();
+        $batal = $orders->where('status_order', 'Batal')->count();
+
+        $feedbacks = DB::table('feedbacks')
+            ->join('produks', 'feedbacks.produk_id', '=', 'produks.id')
+            ->where('penjual_id', '=', Auth::user()->id);
+
+        $ulasan = $feedbacks->count();
 
         return view('dashboard', compact(
             'jumlah_produk',

@@ -31,7 +31,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach($data_report as $item)
+                  @forelse($data_report as $item)
                     <tr>
                       <td class="text-center">{{$item['id']}}</td>
                       <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
@@ -45,7 +45,14 @@
                         <a href="/laporan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr class="text-center">
+                        <td colspan="10">
+                            <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                        </td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
