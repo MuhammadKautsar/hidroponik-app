@@ -254,6 +254,7 @@ class ApiOrderController extends Controller
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
                 'tanggal' => $row->created_at->format('Y-m-d'),
+                'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
                 'produk' => [
                     'id' => $row->produk_id . '',
