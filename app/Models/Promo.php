@@ -17,6 +17,13 @@ class Promo extends Model
     protected $table = 'promos';
     protected $fillable = ['nama', 'potongan', 'awal_periode', 'akhir_periode', 'keterangan'];
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nama', 'like', '%'.$query.'%')
+                ->orWhere('potongan', 'like', '%'.$query.'%');
+    }
+
     public function produks()
     {
         return $this->hasMany(Produk::class);

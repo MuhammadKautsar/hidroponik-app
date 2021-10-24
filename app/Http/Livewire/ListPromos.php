@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Promo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
@@ -15,12 +14,18 @@ class ListPromos extends Component
     use WithFileUploads;
     protected $paginationTheme = 'bootstrap';
 
+    public $ids;
     public $gambar;
     public $nama;
     public $potongan;
     public $awal_periode;
     public $akhir_periode;
     public $keterangan;
+
+    public $perPage = 5;
+    public $sortField;
+    public $sortAsc = true;
+    public $search = '';
 
     public function pengguna(Request $request)
     {
@@ -35,10 +40,8 @@ class ListPromos extends Component
 
     public function addNew()
     {
-        $this->reset();
+        $this->clear();
         $this->dispatchBrowserEvent('show-form');
-
-        // $this->gambar;
     }
 
     public function createPromo()
@@ -51,16 +54,10 @@ class ListPromos extends Component
             'akhir_periode' => 'required|date',
         ]);
 
-        $this->gambar->store('promo','public');
-        $image = $this->gambar->hashName();
-
-        // $image = $this->gambar;
-        // $file_name = time().'.'.$image->getClientOriginalExtension();
-        // $image_promo = Promo::make($image->getRealPath());
-        // $image_promo->save('promo/'.$file_name);
+        $path = $this->gambar->store('promo','public');
 
         $data = new Promo;
-        $data->gambar = $image;
+        $data->gambar = asset('storage/' . $path);
         $data->nama = $this->nama;
         $data->potongan = $this->potongan;
         $data->awal_periode = $this->awal_periode;
@@ -69,13 +66,23 @@ class ListPromos extends Component
         $data->save();
 
         $this->dispatchBrowserEvent('hide-form');
+        session()->flash('sukses','Data berhasil diinput');
         $this->clear();
         return redirect()->back();
     }
 
+    // public function deletePromo()
+    // {
+    //     unlink(public_path('storage/'.$this->gambar));
+    //     Promo::where('id', $this->ids)->delete();
+    //     session()->flash('sukses','Data berhasil dihapus');
+    //     $this->emit('deletepromo');
+    // }
+
     public function render()
     {
-        return view('livewire.list-promos', ['promo' => Promo::paginate(4)])
+        return view('livewire.list-promos', ['promo' => Promo::search($this->search)
+        ->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

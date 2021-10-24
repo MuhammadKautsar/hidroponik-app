@@ -2,24 +2,35 @@
 
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success btn-sm float-right" data-bs-toggle="modal" data-bs-target="#form">
+                <button type="button" class="btn btn-success btn-sm mt-2 float-right" data-bs-toggle="modal" data-bs-target="#form">
                   @if (auth()->user()->level=="superadmin")
                   Tambah Admin
                   @elseif (auth()->user()->level=="admin")
                   Tambah Penjual
                   @endif
                 </button>
-                <h3 class="mb-0">Pengguna</h3>
-              </div>
+                {{-- <form class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right" method="GET" > --}}
+                    <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Pengguna...">
+                        </div>
+                    </div>
+                {{-- </form> --}}
+                <h3 class="mt-2">Pengguna</h3>
+            </div>
+
               <!-- Light table -->
-              <div class="table-responsive">
+            <div class="table-responsive">
                 <table class="table align-items-center table-flush table-hover">
                   <thead class="thead-light">
                     <tr>
@@ -35,7 +46,7 @@
                     </tr>
                   </thead>
                   <tbody class="list">
-                    @foreach($data_user as $item)
+                    @forelse($data_user as $item)
                       <tr>
                         <td class="text-center">{{$item['id']}}</td>
                         <td class="text-center">
@@ -61,21 +72,28 @@
                           @endif
                         </td>
                       </tr>
-                    @endforeach
+                    @empty
+                      <tr class="text-center">
+                          <td colspan="10">
+                              <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                              <p class="mt-2">Pencarian tidak ditemukan</p>
+                          </td>
+                      </tr>
+                    @endforelse
                   </tbody>
                 </table>
-              </div>
+            </div>
               <!-- Card footer -->
-              <div class="card-footer py-4">
+            <div class="card-footer py-4">
                 <nav aria-label="...">
                   <ul class="pagination justify-content-end mb-0">
                     {{ $data_user->links() }}
                   </ul>
                 </nav>
-              </div>
-          </div>
+            </div>
         </div>
       </div>
+    </div>
       @include('layouts.footers.auth')
     </div>
 

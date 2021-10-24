@@ -2,22 +2,30 @@
 
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
       <div class="row">
-        {{-- @if(session('sukses'))
+        @if(session('sukses'))
         <div class="alert alert-light" role="alert">
           {{session('sukses')}}
         </div>
-        @endif --}}
+        @endif
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
                 <!-- Button trigger modal -->
-                <button wire:click.prevent='addNew' type="button" class="btn btn-success btn-sm float-right">
+                <button wire:click.prevent='addNew' type="button" class="btn btn-success mt-2 btn-sm float-right">
                     Tambah
                 </button>
-                <h3 class="mb-0">Promo</h3>
+                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Promo...">
+                    </div>
+                </div>
+                <h3 class="mt-2">Promo</h3>
               </div>
               <!-- Light table -->
               <div class="table-responsive">
@@ -35,25 +43,32 @@
                     </tr>
                   </thead>
                   <tbody class="list">
-                    @foreach($promo as $item)
+                    @forelse($promo as $item)
                       <tr>
                         <td class="text-center">{{$item['id']}}</td>
                         <td class="text-center">
-                        <img src="{{ asset('storage/promo/'.$item->gambar) }}" width="100px" height="70px" alt="Image">
+                        <img src="{{ $item->getPromoImage() }}" width="100px" height="70px" alt="Image">
                         </td>
                         <td class="text-center">{{$item['nama']}}</td>
                         <td class="text-center">{{$item['potongan']}} %</td>
-                        <td class="text-center">{{$item['awal_periode']}}</td>
-                        <td class="text-center">{{$item['akhir_periode']}}</td>
+                        <td class="text-center">{!! date('d-m-Y', strtotime($item->awal_periode)) !!}</td>
+                        <td class="text-center">{!! date('d-m-Y', strtotime($item->akhir_periode)) !!}</td>
                         <td class="text-center">{{$item['keterangan']}}</td>
                         <td class="text-center">
-                        <button type="button" class="btn btn-primary btn-sm float-left" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                            Edit
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                            Ubah
                         </button>
-                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm float-right" onclick="return confirm('Yakin mau dihapus ?')">Delete</a>
+                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                         </td>
                       </tr>
-                    @endforeach
+                    @empty
+                      <tr class="text-center">
+                          <td colspan="10">
+                              <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                              <p class="mt-2">Pencarian tidak ditemukan</p>
+                          </td>
+                      </tr>
+                    @endforelse
                   </tbody>
                 </table>
               </div>
@@ -84,12 +99,15 @@
                 <div class="mb-3">
                     <label>Gambar</label>
                     <br>
-                    <input type="file" wire:model="gambar">
+                    <input type="file" wire:model="gambar" class="@error('gambar') is-invalid @enderror">
                     <br>
+                    <div wire:loading wire:target="gambar">Loading...</div>
                     @if ($gambar)
                         <br><img src="{{ $gambar->temporaryUrl() }}" width="100px" height="70px">
                     @endif
-                    @error('gambar') <span class="error">{{ $message }}</span> @enderror
+                    @error('gambar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
@@ -145,12 +163,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="/promo/{{$data->id}}/update" method="POST">
+          <form action="/promo/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
               {{csrf_field()}}
             <div class="mb-3">
               <label for="" class="form-label">Gambar</label><br>
               <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp"><br>
-              <br><img src="{{ asset('storage/promo/'.$data->gambar) }}" width="100px" height="70px" alt="Image">
+              <br><img src="{{ $data->getPromoImage() }}" width="100px" height="70px" alt="Image">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>

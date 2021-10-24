@@ -45,6 +45,15 @@ class User extends Authenticatable
             $user->notificationTokens()->delete();
         });
     }
+
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('nama_lengkap', 'like', '%'.$query.'%')
+                ->orWhere('email', 'like', '%'.$query.'%')
+                ->orWhere('level', 'like', '%'.$query.'%');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

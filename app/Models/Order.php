@@ -26,6 +26,13 @@ class Order extends Model
         'harga_jasa_pengiriman',
     ];
 
+    public static function search($query)
+    {
+        return empty($query) ? static::query()
+            : static::where('jumlah', 'like', '%'.$query.'%')
+                ->orWhere('status_order', 'like', '%'.$query.'%');
+    }
+
     public function pembeli()
     {
         return $this->belongsTo(User::class);

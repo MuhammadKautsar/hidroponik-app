@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<div>
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
@@ -9,7 +7,15 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Pesanan</h3>
+                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Pesanan...">
+                    </div>
+                </div>
+                <h3 class="mt-2">Pesanan</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -33,7 +39,7 @@
                   @php $no = 0 @endphp
                   @foreach($data_product as $product)
                   @if ($product->penjual->id == Auth::user()->id)
-                    @foreach($data_order as $item)
+                    @forelse($data_order as $item)
                     @if ($item->produk->id == $product->id)
                     @php $no++ @endphp
                     <tr>
@@ -56,7 +62,14 @@
                     @endif
                     @endforeach
                   @endif
-                  @endforeach
+                  @empty
+                    <tr class="text-center">
+                        <td colspan="10">
+                            <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                        </td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -127,10 +140,4 @@
       </div>
     </div>
     @endforeach
-@endsection
-
-@push('js')
-    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
-    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-@endpush
+</div>
