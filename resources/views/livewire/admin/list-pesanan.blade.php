@@ -44,19 +44,16 @@
                       <td class="text-center">{{$item['jumlah']}}</td>
                       <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
-                      @if (auth()->user()->level=="penjual")
-                      <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Tinjau
-                        </button>
-                      </td>
-                      @endif
                     </tr>
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            @if ($data_order != null)
                             <p class="mt-2">Pencarian tidak ditemukan</p>
+                            @else
+                            <p class="mt-2">Tidak ada data</p>
+                            @endif
                         </td>
                     </tr>
                   @endforelse

@@ -64,21 +64,25 @@
                       <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
-                          Show
+                          Lihat
                         </button>
                         {{-- <form action="/produks/{{$item->id}}/delete" method="post">
                           <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit">Delete</button>
                           @csrf
                           @method('delete')
                         </form> --}}
-                        <a href="/produks/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Delete</i></a>
+                        <a href="/produks/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</i></a>
                       </td>
                     </tr>
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
+                            @if ($data_product != null)
                             <p class="mt-2">Pencarian tidak ditemukan</p>
+                            @else
+                            <p class="mt-2">Tidak ada data</p>
+                            @endif
                         </td>
                     </tr>
                   @endforelse

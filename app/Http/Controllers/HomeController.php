@@ -36,9 +36,11 @@ class HomeController extends Controller
         $jumlah_user = User::all()->count();
         $jumlah_ulasan = Feedback::all()->count();
 
-        $orders = DB::table('orders')
-            ->join('produks', 'orders.produk_id', '=', 'produks.id')
-            ->where('penjual_id', '=', Auth::user()->id)->get();
+        $orders = DB::table('produks')
+            ->where('penjual_id', '=', Auth::user()->id)
+            ->where('produks.deleted_at', '=', null)
+            ->join('orders', 'orders.produk_id', '=', 'produks.id')
+            ->where('orders.deleted_at', '=', null)->get();
 
         $belum = $orders->where('status_order', 'Belum')->count();
         $diproses = $orders->where('status_order', 'Diproses')->count();
@@ -46,9 +48,12 @@ class HomeController extends Controller
         $selesai = $orders->where('status_order', 'Selesai')->count();
         $batal = $orders->where('status_order', 'Batal')->count();
 
-        $feedbacks = DB::table('feedbacks')
-            ->join('produks', 'feedbacks.produk_id', '=', 'produks.id')
-            ->where('penjual_id', '=', Auth::user()->id);
+        $feedbacks = DB::table('produks')
+            ->where('penjual_id', '=', Auth::user()->id)
+            ->where('produks.deleted_at', '=', null)
+            ->join('feedbacks', 'feedbacks.produk_id', '=', 'produks.id')
+            ->where('feedbacks.deleted_at', '=', null)->get();
+
 
         $ulasan = $feedbacks->count();
 
