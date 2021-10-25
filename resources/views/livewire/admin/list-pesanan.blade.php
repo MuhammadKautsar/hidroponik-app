@@ -49,11 +49,7 @@
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            @if ($data_order != null)
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
-                            @else
                             <p class="mt-2">Tidak ada data</p>
-                            @endif
                         </td>
                     </tr>
                   @endforelse
