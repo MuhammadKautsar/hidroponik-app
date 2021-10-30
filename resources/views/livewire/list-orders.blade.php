@@ -2,6 +2,11 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
+        @if(session('status'))
+        <div class="alert alert-danger" role="alert">
+          {{session('status')}}
+        </div>
+        @endif
       <div class="row">
         <div class="col">
           <div class="card">
@@ -30,43 +35,40 @@
                     <th class="text-center" scope="col">Ongkir</th>
                     <th class="text-center" scope="col">Total Harga</th>
                     <th class="text-center" scope="col">Status</th>
-                    @if (auth()->user()->level=="penjual")
                     <th class="text-center" scope="col">Aksi</th>
-                    @endif
                   </tr>
                 </thead>
                 <tbody class="list">
                   @php $no = 0 @endphp
-                  @foreach($data_product as $product)
-                  @if ($product->penjual->id == Auth::user()->id)
-                    @forelse($data_order as $item)
-                    @if ($item->produk->id == $product->id)
-                    @php $no++ @endphp
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
-                      <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                      <td class="text-center">{{$item->produk->nama}}</td>
-                      <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
-                      <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
-                      <td class="text-center">{{$item['status_order']}}</td>
-                      @if (auth()->user()->level=="penjual")
-                      <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Tinjau
-                        </button>
-                      </td>
-                      @endif
-                    </tr>
+                  @forelse($data_order as $item)
+                    @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
+
+                        {{-- @foreach($data_product as $product)
+                            @if ($product->penjual->id == Auth::user()->id) --}}
+                            @php $no++ @endphp
+                            <tr>
+                                <td class="text-center">{{$no}}</td>
+                                <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
+                                <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                                <td class="text-center">{{$item->produk->nama}}</td>
+                                <td class="text-center">{{$item['jumlah']}}</td>
+                                <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
+                                <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                                <td class="text-center">{{$item['status_order']}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                                    Tinjau
+                                    </button>
+                                </td>
+                            </tr>
+                            {{-- @endif
+                        @endforeach --}}
                     @endif
-                    @endforeach
-                  @endif
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                         </td>
                     </tr>
                   @endforelse
@@ -77,7 +79,7 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  {{-- {{ $data_order->links() }} --}}
+                  {{ $data_order->links() }}
                 </ul>
               </nav>
             </div>

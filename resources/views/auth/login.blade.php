@@ -3,11 +3,11 @@
 @section('content')
     @include('layouts.headers.guest')
 
-    <div class="container mt--8 pb-5">
+    <div class="container mt--9 pb-5">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
-                    <div class="card-body px-lg-5 py-lg-5">
+                    <div class="card-body px-lg-5 py-lg-4">
                         <div class="text-center text-muted mb-4">
                             <small>
                                     Sign in with these credentials :
@@ -45,12 +45,22 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}" class="text-warning">
+                                            <small>{{ __('Lupa password?') }}</small>
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success my-4">{{ __('Sign in') }}</button>
+                                <button type="submit" class="btn btn-success my-3">{{ __('Sign in') }}</button>
                             </div>
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

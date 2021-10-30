@@ -28,6 +28,7 @@
                     <th class="text-center" scope="col">Produk</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Jumlah</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Total Harga</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Penjual</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
                     @if (auth()->user()->level=="penjual")
                     <th class="text-center" scope="col">Aksi</th>
@@ -43,20 +44,14 @@
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
                       <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                      <td class="text-center">{{$item->produk->penjual->username}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
-                      @if (auth()->user()->level=="penjual")
-                      <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                          Tinjau
-                        </button>
-                      </td>
-                      @endif
                     </tr>
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                         </td>
                     </tr>
                   @endforelse

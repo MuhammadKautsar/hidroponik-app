@@ -1,8 +1,8 @@
-@extends('layouts.app', ['class' => 'bg-default'])
+@extends('layouts.app', ['class' => 'bg-silver'])
 
 @section('content')
     @include('layouts.headers.guest')
-    
+
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">{{ __('Reset Password') }}</button>
+                                <button type="submit" class="btn btn-success my-4">{{ __('Reset Password') }}</button>
                             </div>
                         </form>
                     </div>

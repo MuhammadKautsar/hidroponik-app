@@ -27,6 +27,7 @@
                     <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
                     <th class="text-center" scope="col">Komentar</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Rating</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Penjual</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -44,6 +45,7 @@
                             <span><i class="fa fa-star{{ $item->rating <= $i ? '-o' : '' }}" style="color:orange"></i></span>
                         @endfor
                       </td>
+                      <td class="text-center">{{ $item->produk->penjual->username }}</td>
                       <td class="text-center">
                         <a href="/umpanbalik/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                       </td>
@@ -52,7 +54,7 @@
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                         </td>
                     </tr>
                   @endforelse

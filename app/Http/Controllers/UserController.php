@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect('/pengguna')->with('sukses','Data berhasil dihapus');
+        return redirect('/admin/pengguna')->with('sukses','Data berhasil dihapus');
     }
 
     /**

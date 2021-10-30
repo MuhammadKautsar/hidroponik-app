@@ -14,7 +14,7 @@
             <!-- Card header -->
             <div class="card-header border-0">
                 <!-- Button trigger modal -->
-                <button wire:click.prevent='addNew' type="button" class="btn btn-success mt-2 btn-sm float-right">
+                <button type="button" class="btn btn-success mt-2 btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Tambah
                 </button>
                 <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
@@ -65,7 +65,7 @@
                       <tr class="text-center">
                           <td colspan="10">
                               <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                              <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                           </td>
                       </tr>
                     @endforelse
@@ -87,71 +87,68 @@
     </div>
 
     <!-- Modal add -->
-  <div class="modal fade" id="form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
-    <div class="modal-dialog">
-      <form wire:submit.prevent='createPromo'>
-        <div class="modal-content">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tambah Promo</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="exampleModalLabel">Tambah Promo</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              <form action="/promo/create" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="mb-3">
-                    <label>Gambar</label>
-                    <br>
-                    <input type="file" wire:model="gambar" class="@error('gambar') is-invalid @enderror">
-                    <br>
-                    <div wire:loading wire:target="gambar">Loading...</div>
-                    @if ($gambar)
-                        <br><img src="{{ $gambar->temporaryUrl() }}" width="100px" height="70px">
-                    @endif
-                    @error('gambar')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                  <label for="exampleInputEmail1" class="form-label">Gambar</label>
+                  <br>
+                  <input name="gambar" type="file" id="image" aria-describedby="emailHelp"><br>
+                  <br>
+                  <div class="col-sm-6">
+                    <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="preview image" width="100px" height="70px">
+                  </div>
                 </div>
                 <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
-                <input wire:model="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
-                @error('nama')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                  <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
+                  <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  @error('nama')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
-                <input wire:model="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
-                @error('potongan')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                  <label for="exampleInputEmail1" class="form-label">Potongan(%)</label>
+                  <input name="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1">
+                  @error('potongan')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                        <input wire:model="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
                         @error('awal_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                        <input wire:model="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
                         @error('akhir_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
                 <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                <textarea wire:model="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
+                  <label for="exampleInputEmail1" class="form-label">Keterangan</label>
+                  <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Submit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Submit</button>
+              </form>
             </div>
+          </div>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
   @foreach($promo as $data)
   <!-- Modal edit -->
@@ -172,11 +169,17 @@
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nama Promo</label>
-              <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+              <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+              @error('nama')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Potongan (%)</label>
-              <input name="potongan" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->potongan}}">
+              <input name="potongan" type="number" class="form-control @error('potongan') is-invalid @enderror" id="exampleInputEmail1" value="{{$data->potongan}}">
+              @error('potongan')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -208,5 +211,17 @@
     </div>
   </div>
   @endforeach
+
+  <script>
+    $('#image').change(function(){
+
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        $('#preview-image').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(this.files[0]);
+
+     });
+     </script>
 
 </div>

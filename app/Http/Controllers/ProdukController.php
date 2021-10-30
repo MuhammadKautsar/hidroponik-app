@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 // use Illuminate\Support\Facades\Validator;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
@@ -41,7 +41,7 @@ class ProdukController extends Controller
     {
 
         $request->validate([
-            'nama' => 'required|min:3',
+            'nama' => 'required|min:3|max:20',
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
             // 'promo_id' => 'required',
@@ -72,36 +72,34 @@ class ProdukController extends Controller
                 $imageName=time().'_'.$file->getClientOriginalName();
                 $request['produk_id']=$produk->id;
                 $request['path_image']=$imageName;
-                $file->move($this->path_file('/gambar'),$imageName);
+                $file->move($this->path_file('/uploads'),$imageName);
                 Image::create([
                     'produk_id' => $produk->id,
-                    'path_image' => asset('gambar/' . $imageName),
+                    'path_image' => asset('uploads/' . $imageName),
                 ]);
             }
         }
         return redirect('/produk')->with('sukses','Data berhasil diinput');
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        // $request->validate([
-        //     'nama' => 'required|min:3',
-        //     'harga' => 'required|numeric|digits_between:1,6',
-        //     'stok' => 'required|numeric',
-        //     // 'promo_id' => 'required',
-        //     'gambar' => 'required|max:5000'
-        // ]);
+        $data_product = Produk::findOrFail($id);
+        $promo = Promo::all();
+        return view('pages.edit', compact('data_product','promo'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|min:3',
+            'harga' => 'required|numeric|digits_between:1,6',
+            'stok' => 'required|numeric',
+            // 'promo_id' => 'required',
+            // 'gambar' => 'required|max:5000'
+        ]);
 
         $produk = Produk::findOrFail($id);
-        if ($request->hasFile("gambar")) {
-            if (File::exists($this->path_file("/gambar/" . $produk->gambar))) {
-                File::delete($this->path_file("/gambar/" . $produk->gambar));
-            }
-            $file = $request->file("gambar");
-            $produk->gambar = time() . "_" . $file->getClientOriginalName();
-            $file->move($this->path_file("/gambar"), $produk->gambar);
-            $request['gambar'] = asset('/gambar' . $produk->gambar);
-        }
 
         $produk->update([
             "nama" => $request->nama,
@@ -110,7 +108,7 @@ class ProdukController extends Controller
             "stok" => $request->stok,
             "harga_promo" => $request->harga_promo,
             "keterangan" => $request->keterangan,
-            "gambar" => asset('/gambar' . $produk->gambar),
+            // "gambar" => asset('/gambar' . $produk->gambar),
         ]);
 
         if ($request->promo_id!=""){
@@ -121,13 +119,13 @@ class ProdukController extends Controller
 
         $produk->save();
 
-        if ($request->hasFile("images")) {
-            $files = $request->file("images");
+        if ($request->hasFile("gambar")) {
+            $files = $request->file("gambar");
             foreach ($files as $file) {
                 $imageName = time() . "_" . $file->getClientOriginalName();
                 $request["produk_id"] = $id;
-                $request["path_image"] = asset('images/' . $imageName);
-                $file->move($this->path_file("/images"), $imageName);
+                $request["path_image"] = asset('uploads/' . $imageName);
+                $file->move($this->path_file("/uploads"), $imageName);
                 Image::create($request->all());
             }
         }
@@ -138,13 +136,10 @@ class ProdukController extends Controller
     {
         $produks = Produk::findOrFail($id);
 
-        if (File::exists($this->path_file("/gambar/" . $produks->gambar))) {
-            File::delete($this->path_file("/gambar/" . $produks->gambar));
-        }
         $images = Image::where("produk_id", $produks->id)->get();
         foreach ($images as $image) {
-            if (File::exists($this->path_file("/images/" . $image->image))) {
-                File::delete($this->path_file("/images/" . $image->image));
+            if (File::exists($this->path_file("uploads/" . $image->path_image))) {
+                File::delete($this->path_file("uploads/" . $image->path_image));
             }
         }
         $produks->delete();
@@ -155,13 +150,10 @@ class ProdukController extends Controller
     {
         $produks = Produk::findOrFail($id);
 
-        if (File::exists($this->path_file("/gambar/" . $produks->gambar))) {
-            File::delete($this->path_file("/gambar/" . $produks->gambar));
-        }
         $images = Image::where("produk_id", $produks->id)->get();
         foreach ($images as $image) {
-            if (File::exists($this->path_file("/images/" . $image->image))) {
-                File::delete($this->path_file("/images/" . $image->image));
+            if (File::exists($this->path_file("uploads/" . $image->path_image))) {
+                File::delete($this->path_file("uploads/" . $image->path_image));
             }
         }
         $produks->delete();
@@ -171,8 +163,8 @@ class ProdukController extends Controller
     public function deleteimage($id)
     {
         $images=Image::findOrFail($id);
-        if(File::exists($this->path_file("/gambar/".$images->image))) {
-            File::delete($this->path_file("/gambar/".$images->image));
+        if(File::exists("/uploads/".$images->path_image)) {
+            File::delete("/uploads/".$images->path_image);
         }
 
         Image::find($id)->delete();

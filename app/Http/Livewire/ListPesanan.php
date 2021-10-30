@@ -11,7 +11,7 @@ class ListPesanan extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $perPage = 5;
+    public $perPage = 10;
     public $sortField;
     public $sortAsc = true;
     public $search = '';

@@ -32,10 +32,10 @@
                 </thead>
                 <tbody class="list">
                     @php $no = 0 @endphp
-                    @foreach($data_product as $product)
-                    @if ($product->penjual->id == Auth::user()->id)
-                        @forelse($feedbacks as $item)
-                        @if ($item->produk->id == $product->id)
+                  @forelse($feedbacks as $item)
+                    @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
+                        {{-- @foreach($data_product as $product)
+                        @if ($product->penjual->id == Auth::user()->id) --}}
                         @php $no++ @endphp
                             <tr>
                             <td class="text-center">{{$no}}</td>
@@ -56,14 +56,14 @@
                                 <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                             </td>
                             </tr>
-                        @endif
-                        @endforeach
-                  @endif
+                        {{-- @endif
+                        @endforeach --}}
+                    @endif
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                         </td>
                     </tr>
                   @endforelse

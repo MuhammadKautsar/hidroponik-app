@@ -59,17 +59,18 @@
                         <td class="text-center">{{$item['alamat']}}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                          @if ($item->status == 1)
+                          {{-- @if ($item->status == 1)
                           <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
-                            class="btn btn-danger m-2">
-                              <i class="fa fa-ban"></i>
+                            class="btn btn-warning btn-sm m-2">
+                              <i class="fa fa-ban"></i> Blokir
                           </a>
                           @else
                           <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
-                            class="btn btn-success m-2">
-                              <i class="fa fa-check"></i>
+                            class="btn btn-success btn-sm m-2">
+                              <i class="fa fa-check"></i> Izinkan
                           </a>
-                          @endif
+                          @endif --}}
+                          <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                         </td>
                       </tr>
                     @empty

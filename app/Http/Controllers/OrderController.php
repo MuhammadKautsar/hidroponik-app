@@ -37,7 +37,16 @@ class OrderController extends Controller
         ]);
 
         $data_order = Order::find($id);
-        $data_order->harga_jasa_pengiriman = $request->input('harga_jasa_pengiriman');
+        if($request->input('harga_jasa_pengiriman') > 10000){
+            return back()->with('status', 'harga melebihi batas maksimum');
+        }
+        elseif ($request->input('harga_jasa_pengiriman') < 0) {
+            return back()->with('status', 'harga tidak mencapai minimal');
+        }
+        else{
+            $data_order->harga_jasa_pengiriman = $request->input('harga_jasa_pengiriman');
+        }
+
         $data_order->status_order = $request->input('status_order');
         $data_order->update();
         return redirect('/pesanan');

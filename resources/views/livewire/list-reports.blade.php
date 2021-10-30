@@ -37,7 +37,7 @@
                       <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
                       <td class="text-center">{{$item['isi_laporan']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                      <td class="text-center">{{$item->penjual->nama_lengkap}}</td>
+                      <td class="text-center">{{$item->penjual->username}}</td>
                       <td class="text-center">
                         {{-- <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Balas
@@ -49,7 +49,7 @@
                     <tr class="text-center">
                         <td colspan="10">
                             <img src="{{asset('images/not_found.svg')}}" alt="" width="100px" height="70px">
-                            <p class="mt-2">Pencarian tidak ditemukan</p>
+                            <p class="mt-2">Tidak ada data</p>
                         </td>
                     </tr>
                   @endforelse
