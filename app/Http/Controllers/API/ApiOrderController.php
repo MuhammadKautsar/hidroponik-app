@@ -236,10 +236,12 @@ class ApiOrderController extends Controller
         foreach ($orders as $row) {
             // expired 2 hari kemudian
             if ($row->status_order == 'Belum') {
-                $expiredDate =  strtotime($row->created_at->modify('+2 days'));
-                if ($today >= $expiredDate) {
-                    $row->update(["status_order" => 'Batal']);
-                    continue;
+                if ($row->status_checkout == 'Beli') {
+                    $expiredDate =  strtotime($row->created_at->modify('+2 days'));
+                    if ($today >= $expiredDate) {
+                        $row->update(["status_order" => 'Batal']);
+                        continue;
+                    }
                 }
             }
             $gambar = array();
@@ -286,10 +288,12 @@ class ApiOrderController extends Controller
                 if ($order->status_checkout != $status &&  in_array($order->status_order, ['Batal', 'Selesai'])) continue;
                 // expired 2 hari kemudian
                 if ($order->status_order == 'Belum') {
-                    $expiredDate =  strtotime($order->created_at->modify('+2 days'));
-                    if ($today >= $expiredDate) {
-                        $order->update(["status_order" => 'Batal']);
-                        continue;
+                    if ($row->status_checkout == 'Beli') {
+                        $expiredDate =  strtotime($order->created_at->modify('+2 days'));
+                        if ($today >= $expiredDate) {
+                            $order->update(["status_order" => 'Batal']);
+                            continue;
+                        }
                     }
                 }
                 $gambar = array();
