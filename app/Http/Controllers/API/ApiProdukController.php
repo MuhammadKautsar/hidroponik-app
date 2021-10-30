@@ -146,7 +146,7 @@ class ApiProdukController extends Controller
             $produk->delete();
             return response()->json(['message' => 'berhasil mendelete produk']);
         }
-        if ($produk->orders()->whereNotIn('status_order', ['Belum', 'Diproses', 'Dikirim'])->first()) {
+        if ($produk->orders()->where('status_checkout', '=', 'Beli')->whereNotIn('status_order', ['Belum', 'Diproses', 'Dikirim'])->first()) {
             $produk->delete();
             return response()->json(['message' => 'berhasil mendelete produk']);
         } else {
