@@ -78,6 +78,7 @@ class ApiOrderController extends Controller
         $data['harga_jasa_pengiriman'] = 0;
 
         $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->first();
+        dd($prevOrder);
         if ($prevOrder) {
             $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
         } else
