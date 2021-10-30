@@ -77,8 +77,7 @@ class ApiOrderController extends Controller
         $data['status_order'] = 'Belum';
         $data['harga_jasa_pengiriman'] = 0;
 
-        $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->first();
-        dd($prevOrder);
+        $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
         if ($prevOrder) {
             $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
         } else
