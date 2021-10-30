@@ -371,43 +371,44 @@ class ApiOrderController extends Controller
     public function getOrderByCheckoutSelesaiPenjual($status, User $user)
     {
         $showData = array();
-        foreach ($user->produks as $row) {
-            $orders = Order::where('produk_id', '=', $row->id)->orderBy('updated_at', 'DESC')->get();
-            foreach ($orders as $order) {
-                if ($order->status_checkout != $status &&  in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
+        $orders = Order::select('orders.*')
+            ->join('produks', 'orders.produk_id', '=', 'produks.id')
+            ->where('produks.penjual_id', $user->id)->orderBy('orders.updated_at', 'DESC')->get();
 
-                $gambar = array();
-                foreach ($order->produk->images as $image) {
-                    array_push($gambar, $image->path_image);
-                }
-                array_push($showData, [
-                    'id' => $order->id . '',
-                    'produk_id' => $order->produk_id,
-                    'jumlah' => $order->jumlah,
-                    'total_harga' => $order->total_harga,
-                    'status_checkout' => $order->status_checkout,
-                    'status_order' => $order->status_order,
-                    'tanggal' => $order->created_at->format('Y-m-d'),
-                    'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
-                    'pembeli' => $order->pembeli->nama_lengkap,
-                    'produk' => [
-                        'id' => $order->produk_id . '',
-                        'penjual' => $order->produk->penjual->nama_lengkap,
-                        'nama' => $order->produk->nama,
-                        'harga' => $order->produk->harga,
-                        'stok' => $order->produk->stok,
-                        'keterangan' => $order->produk->keterangan,
-                        'total_feedback' => $order->produk->total_feedback,
-                        'gambar' => $gambar,
-                        'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
-                        'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
-                        'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
-                        'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
-                        'promo_id' => $order->produk->promo_id,
+        foreach ($orders as $order) {
+            if ($order->status_checkout != $status &&  in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
 
-                    ]
-                ]);
+            $gambar = array();
+            foreach ($order->produk->images as $image) {
+                array_push($gambar, $image->path_image);
             }
+            array_push($showData, [
+                'id' => $order->id . '',
+                'produk_id' => $order->produk_id,
+                'jumlah' => $order->jumlah,
+                'total_harga' => $order->total_harga,
+                'status_checkout' => $order->status_checkout,
+                'status_order' => $order->status_order,
+                'tanggal' => $order->created_at->format('Y-m-d'),
+                'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
+                'pembeli' => $order->pembeli->nama_lengkap,
+                'produk' => [
+                    'id' => $order->produk_id . '',
+                    'penjual' => $order->produk->penjual->nama_lengkap,
+                    'nama' => $order->produk->nama,
+                    'harga' => $order->produk->harga,
+                    'stok' => $order->produk->stok,
+                    'keterangan' => $order->produk->keterangan,
+                    'total_feedback' => $order->produk->total_feedback,
+                    'gambar' => $gambar,
+                    'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
+                    'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
+                    'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
+                    'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
+                    'promo_id' => $order->produk->promo_id,
+
+                ]
+            ]);
         }
         return response()->json($showData);
     }
