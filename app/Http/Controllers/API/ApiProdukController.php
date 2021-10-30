@@ -142,7 +142,11 @@ class ApiProdukController extends Controller
 
     public function destroy(Produk $produk)
     {
-        if ($produk->orders()->whereIn('status_order', ['Batal', 'Selesai'])->first()) {
+        if ($produk->orders->count() == 0) {
+            $produk->delete();
+            return response()->json(['message' => 'berhasil mendelete produk']);
+        }
+        if ($produk->orders()->whereNotIn('status_order', ['Belum', 'Diproses', 'Dikirim'])->first()) {
             $produk->delete();
             return response()->json(['message' => 'berhasil mendelete produk']);
         } else {
