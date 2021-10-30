@@ -28,6 +28,7 @@
                     <th class="text-center" scope="col">Produk</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Jumlah</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Total Harga</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="status">Penjual</th>
                     <th class="text-center" scope="col" class="sort" data-sort="completion">Status</th>
                     @if (auth()->user()->level=="penjual")
                     <th class="text-center" scope="col">Aksi</th>
@@ -43,6 +44,7 @@
                       <td class="text-center">{{$item->produk->nama}}</td>
                       <td class="text-center">{{$item['jumlah']}}</td>
                       <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                      <td class="text-center">{{$item->produk->penjual->username}}</td>
                       <td class="text-center">{{$item['status_order']}}</td>
                     </tr>
                   @empty

@@ -37,7 +37,7 @@
                       <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
                       <td class="text-center">{{$item['isi_laporan']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                      <td class="text-center">{{$item->penjual->nama_lengkap}}</td>
+                      <td class="text-center">{{$item->penjual->username}}</td>
                       <td class="text-center">
                         {{-- <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                           Balas
