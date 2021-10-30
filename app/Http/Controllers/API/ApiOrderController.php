@@ -285,7 +285,8 @@ class ApiOrderController extends Controller
 
         foreach ($user->produks as $row) {
             foreach ($row->orders as $order) {
-                if ($order->status_checkout != $status &&  in_array($order->status_order, ['Batal', 'Selesai'])) continue;
+                if($order->status_checkout != $status) continue;
+                if (in_array($order->status_order, ['Batal', 'Selesai'])) continue;
                 // expired 2 hari kemudian
                 if ($order->status_order == 'Belum') {
                     if ($row->status_checkout == 'Beli') {
