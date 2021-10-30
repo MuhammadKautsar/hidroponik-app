@@ -21,6 +21,9 @@ class ApiProdukController extends Controller
         $today = strtotime(now());
         $data = Produk::orderBy('updated_at', 'DESC')->get();
         foreach ($data as $row) {
+
+            if ($row->penjual->status != 1) continue;
+
             $gambar = array();
             foreach ($row->images as $image) {
                 array_push($gambar, $image->path_image);
@@ -139,8 +142,12 @@ class ApiProdukController extends Controller
 
     public function destroy(Produk $produk)
     {
-        $produk->delete();
-        return response()->json(['message' => 'berhasil mendelete produk']);
+        if ($produk->orders->whereIn('status_order', ['Batal', 'Selesai'])->first()) {
+            $produk->delete();
+            return response()->json(['message' => 'berhasil mendelete produk']);
+        } else {
+            return response()->json(['message' => 'tidak dapat menghapus']);
+        }
     }
 
     public function update(Produk $produk)

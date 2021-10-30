@@ -141,7 +141,6 @@ class ApiOrderController extends Controller
     public function getOrderByPembeliId(User $user)
     {
         $showData = array();
-
         foreach ($user->orders as $row) {
             $gambar = array();
             foreach ($row->produk->images as $image) {
@@ -332,7 +331,7 @@ class ApiOrderController extends Controller
     {
         $showData = array();
 
-        $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->get();
+        $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->orderBy('updated_at', 'DESC')->get();
         foreach ($orders as $row) {
             $gambar = array();
             foreach ($row->produk->images as $image) {
@@ -372,9 +371,9 @@ class ApiOrderController extends Controller
     public function getOrderByCheckoutSelesaiPenjual($status, User $user)
     {
         $showData = array();
-
         foreach ($user->produks as $row) {
-            foreach ($row->orders as $order) {
+            $data = $row->orders->orderBy('updated_at', 'DESC')->get();
+            foreach ($data as $order) {
                 if ($order->status_checkout != $status &&  in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
 
                 $gambar = array();
@@ -535,6 +534,14 @@ class ApiOrderController extends Controller
         );
 
         $order->update($data);
+        if ($data['status_order'] == 'Selesai') {
+            if ($order->pembeli->notificationTokens) {
+                foreach ($order->pembeli->notificationTokens as $notif) {
+                    $this->sendNotification($notif->notificationToken, 'Pesanan Selesai', 'Terima Kasih ' . $order->pembeli->nama_lengkap . ', Pesanan telah diselesaikan');
+                }
+            }
+        }
+
         return response()->json(['message' => 'berhasil merubah status order']);
     }
 
