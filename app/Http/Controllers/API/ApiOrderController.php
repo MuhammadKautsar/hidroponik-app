@@ -372,8 +372,8 @@ class ApiOrderController extends Controller
     {
         $showData = array();
         foreach ($user->produks as $row) {
-            $data = $row->orders->orderBy('updated_at', 'DESC')->get();
-            foreach ($data as $order) {
+            $orders = Order::where('produk_id', '=', $row->id)->orderBy('updated_at', 'DESC')->get();
+            foreach ($orders as $order) {
                 if ($order->status_checkout != $status &&  in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
 
                 $gambar = array();
