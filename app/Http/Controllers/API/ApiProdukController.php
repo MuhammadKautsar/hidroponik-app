@@ -85,7 +85,7 @@ class ApiProdukController extends Controller
         );
         $data['total_feedback'] = 0;
         $produk = Produk::create($data);
-
+        dd($request->file('gambar'));
         if ($request->hasFile('gambar')) {
             $files = $request->file('gambar');
             foreach ($files as $file) {
