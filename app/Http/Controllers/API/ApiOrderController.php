@@ -29,6 +29,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
@@ -75,6 +76,7 @@ class ApiOrderController extends Controller
         );
         $data['status_checkout'] = 'keranjang';
         $data['status_order'] = 'Belum';
+        $data['status_feedback'] = 0;
         $data['harga_jasa_pengiriman'] = 0;
 
         $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
@@ -102,6 +104,7 @@ class ApiOrderController extends Controller
             'tanggal' => $order->created_at->format('Y-m-d'),
             'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
             'pembeli' => $order->pembeli->nama_lengkap,
+            'status_feedback' => $order->status_feedback,
             'produk' => [
                 'id' => $order->produk_id . '',
                 'penjual' => $order->produk->penjual->nama_lengkap,
@@ -155,6 +158,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
@@ -204,6 +208,7 @@ class ApiOrderController extends Controller
                     'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
+                    'status_feedback' => $order->status_feedback,
                     'produk' => [
                         'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
@@ -257,6 +262,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
@@ -285,7 +291,7 @@ class ApiOrderController extends Controller
 
         foreach ($user->produks as $row) {
             foreach ($row->orders as $order) {
-                if(strtolower($order->status_checkout) != $status) continue;
+                if (strtolower($order->status_checkout) != $status) continue;
                 if (in_array($order->status_order, ['Batal', 'Selesai'])) continue;
                 // expired 2 hari kemudian
                 if ($order->status_order == 'Belum') {
@@ -310,6 +316,7 @@ class ApiOrderController extends Controller
                     'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
+                    'status_feedback' => $order->status_feedback,
                     'produk' => [
                         'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
@@ -352,6 +359,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
@@ -397,6 +405,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $order->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                 'pembeli' => $order->pembeli->nama_lengkap,
+                'status_feedback' => $order->status_feedback,
                 'produk' => [
                     'id' => $order->produk_id . '',
                     'penjual' => $order->produk->penjual->nama_lengkap,
@@ -437,6 +446,7 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,

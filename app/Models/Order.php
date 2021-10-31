@@ -24,13 +24,14 @@ class Order extends Model
         'status_checkout',
         'status_order',
         'harga_jasa_pengiriman',
+        'status_feedback',
     ];
 
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('jumlah', 'like', '%'.$query.'%')
-                ->orWhere('status_order', 'like', '%'.$query.'%');
+            : static::where('jumlah', 'like', '%' . $query . '%')
+            ->orWhere('status_order', 'like', '%' . $query . '%');
     }
 
     public function pembeli()

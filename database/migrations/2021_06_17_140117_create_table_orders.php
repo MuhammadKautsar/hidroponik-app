@@ -22,6 +22,7 @@ class CreateTableOrders extends Migration
             $table->integer('total_harga')->nullable();
             $table->string('status_checkout')->nullable();
             $table->string('status_order')->nullable();
+            $table->integer('status_feedback')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
