@@ -29,6 +29,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
                 'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
@@ -104,6 +107,9 @@ class ApiOrderController extends Controller
             'tanggal' => $order->created_at->format('Y-m-d'),
             'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
             'pembeli' => $order->pembeli->nama_lengkap,
+            'nomor_hp_pembeli' => $order->pembeli->nomor_hp,
+            'email_pembeli' => $order->pembeli->email,
+            'alamat_pembeli' => $order->pembeli->alamat,
             'status_feedback' => $order->status_feedback,
             'produk' => [
                 'id' => $order->produk_id . '',
@@ -158,6 +164,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
                 'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
@@ -208,6 +217,9 @@ class ApiOrderController extends Controller
                     'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
+                    'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                    'email_pembeli' => $row->pembeli->email,
+                    'alamat_pembeli' => $row->pembeli->alamat,
                     'status_feedback' => $order->status_feedback,
                     'produk' => [
                         'id' => $order->produk_id . '',
@@ -262,6 +274,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
                 'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
@@ -316,6 +331,9 @@ class ApiOrderController extends Controller
                     'tanggal' => $order->created_at->format('Y-m-d'),
                     'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                     'pembeli' => $order->pembeli->nama_lengkap,
+                    'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                    'email_pembeli' => $row->pembeli->email,
+                    'alamat_pembeli' => $row->pembeli->alamat,
                     'status_feedback' => $order->status_feedback,
                     'produk' => [
                         'id' => $order->produk_id . '',
@@ -359,6 +377,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
                 'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
@@ -405,6 +426,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $order->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
                 'pembeli' => $order->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $order->pembeli->nomor_hp,
+                'email_pembeli' => $order->pembeli->email,
+                'alamat_pembeli' => $order->pembeli->alamat,
                 'status_feedback' => $order->status_feedback,
                 'produk' => [
                     'id' => $order->produk_id . '',
@@ -446,6 +470,9 @@ class ApiOrderController extends Controller
                 'tanggal' => $row->created_at->format('Y-m-d'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
                 'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
                 'status_feedback' => $row->status_feedback,
                 'produk' => [
                     'id' => $row->produk_id . '',
