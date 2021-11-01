@@ -70,7 +70,23 @@ class ApiAuthController extends Controller
 
     public function updateProfil(User $user)
     {
-        $data = request()->all();
+        $validator = Validator::make(request()->all(), [
+            'email' => 'required|string|email',
+            'alamat' => 'required|string',
+            'nomor_hp' => 'required|max:13',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()]);
+        }
+
+        $data = request()->validate([
+            'email' => 'required|string|email',
+            'alamat' => 'required|string',
+            'nomor_hp' => 'required|max:13',
+        ]);
+
         $user->update($data);
 
         if (request()->hasFile('gambar')) {
