@@ -55,7 +55,7 @@ class ApiAuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()]);
+            return response()->json(['message' => $validator->errors(), 'type' => 'failed',]);
         }
 
         $data = request()->validate([
@@ -65,7 +65,7 @@ class ApiAuthController extends Controller
 
         $user->update($data);
 
-        return response()->json(['message' => 'Berhasil melengkapi akun']);
+        return response()->json(['message' => 'Berhasil melengkapi akun', 'type' => 'success',]);
     }
 
     public function updateProfil(User $user)
