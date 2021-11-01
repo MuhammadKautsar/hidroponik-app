@@ -59,7 +59,7 @@
                         <td class="text-center">{{$item['alamat']}}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                          {{-- @if ($item->status == 1)
+                          @if ($item->status == 1)
                           <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
                             class="btn btn-warning btn-sm m-2">
                               <i class="fa fa-ban"></i> Blokir
@@ -69,8 +69,8 @@
                             class="btn btn-success btn-sm m-2">
                               <i class="fa fa-check"></i> Izinkan
                           </a>
-                          @endif --}}
-                          <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                          @endif
+                          {{-- <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a> --}}
                         </td>
                       </tr>
                     @empty
@@ -136,11 +136,25 @@
               @enderror
             </div>
             <div class="mb-3">
-              <label for="" class="form-label">Password</label>
-              <input wire:model="password" type="password" class="form-control @error('password') is-invalid @enderror">
-              @error('password')
+              <label for="" class="form-label">Nomor Hp</label>
+              <input wire:model="nomor_hp" type="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror">
+              @error('nomor_hp')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Alamat</label>
+                <input wire:model="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror">
+                @error('alamat')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">Password</label>
+                <input wire:model="password" type="password" class="form-control @error('password') is-invalid @enderror">
+                @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Level</label>

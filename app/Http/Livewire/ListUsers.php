@@ -18,6 +18,8 @@ class ListUsers extends Component
     public $email;
     public $password;
     public $level;
+    public $nomor_hp;
+    public $alamat;
 
     public $perPage = 5;
     public $sortField;
@@ -49,15 +51,19 @@ class ListUsers extends Component
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->password,
-            'level' => $this->level
+            'level' => $this->level,
+            'nomor_hp' => $this->nomor_hp,
+            'alamat' => $this->alamat,
         ];
 
         $validateData = Validator::make($data, [
             'nama_lengkap' => 'required',
             'username' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'level' => 'required',
+            'nomor_hp' => 'required|numeric',
+            'alamat' => 'required',
         ])->validate();
 
         $validateData['password'] = bcrypt($validateData['password']);
@@ -65,6 +71,7 @@ class ListUsers extends Component
         User::create($validateData);
 
         $this->dispatchBrowserEvent('hide-form');
+        $this->resetValidation();
         $this->clear();
         return redirect()->back();
     }
@@ -89,5 +96,7 @@ class ListUsers extends Component
         $this->email = null;
         $this->password = null;
         $this->level = null;
+        $this->nomor_hp = null;
+        $this->alamat = null;
     }
 }
