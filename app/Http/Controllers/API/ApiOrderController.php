@@ -281,6 +281,10 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
+                    'username_penjual' => $row->produk->penjual->username,
+                    'nomor_hp_penjual' => $row->produk->penjual->nomor_hp,
+                    'email_penjual' => $row->produk->penjual->email,
+                    'alamat_penjual' => $row->produk->penjual->alamat,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
                     'stok' => $row->produk->stok,
@@ -338,6 +342,10 @@ class ApiOrderController extends Controller
                     'produk' => [
                         'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
+                        'username_penjual' => $order->produk->penjual->username,
+                        'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
+                        'email_penjual' => $order->produk->penjual->email,
+                        'alamat_penjual' => $order->produk->penjual->alamat,
                         'nama' => $order->produk->nama,
                         'harga' => $order->produk->harga,
                         'stok' => $order->produk->stok,
@@ -384,6 +392,10 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
+                    'username_penjual' => $row->produk->penjual->username,
+                    'nomor_hp_penjual' => $row->produk->penjual->nomor_hp,
+                    'email_penjual' => $row->produk->penjual->email,
+                    'alamat_penjual' => $row->produk->penjual->alamat,
                     'nama' => $row->produk->nama,
                     'harga' => $row->produk->harga,
                     'stok' => $row->produk->stok,
@@ -433,6 +445,10 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $order->produk_id . '',
                     'penjual' => $order->produk->penjual->nama_lengkap,
+                    'username_penjual' => $order->produk->penjual->username,
+                    'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
+                    'email_penjual' => $order->produk->penjual->email,
+                    'alamat_penjual' => $order->produk->penjual->alamat,
                     'nama' => $order->produk->nama,
                     'harga' => $order->produk->harga,
                     'stok' => $order->produk->stok,
