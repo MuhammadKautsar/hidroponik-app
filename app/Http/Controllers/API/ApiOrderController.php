@@ -281,6 +281,7 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
+                    'id_penjual' => $row->produk->penjual_id,
                     'username_penjual' => $row->produk->penjual->username,
                     'nomor_hp_penjual' => $row->produk->penjual->nomor_hp,
                     'email_penjual' => $row->produk->penjual->email,
@@ -342,6 +343,7 @@ class ApiOrderController extends Controller
                     'produk' => [
                         'id' => $order->produk_id . '',
                         'penjual' => $order->produk->penjual->nama_lengkap,
+                        'id_penjual' => $order->produk->penjual_id,
                         'username_penjual' => $order->produk->penjual->username,
                         'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
                         'email_penjual' => $order->produk->penjual->email,
@@ -392,6 +394,7 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $row->produk_id . '',
                     'penjual' => $row->produk->penjual->nama_lengkap,
+                    'id_penjual' => $row->produk->penjual_id,
                     'username_penjual' => $row->produk->penjual->username,
                     'nomor_hp_penjual' => $row->produk->penjual->nomor_hp,
                     'email_penjual' => $row->produk->penjual->email,
@@ -445,6 +448,7 @@ class ApiOrderController extends Controller
                 'produk' => [
                     'id' => $order->produk_id . '',
                     'penjual' => $order->produk->penjual->nama_lengkap,
+                    'id_penjual' => $order->produk->penjual_id,
                     'username_penjual' => $order->produk->penjual->username,
                     'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
                     'email_penjual' => $order->produk->penjual->email,
