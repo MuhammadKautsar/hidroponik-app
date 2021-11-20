@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Order;
 use Livewire\Component;
 use App\Models\User;
 // use Illuminate\Http\Request;
@@ -84,7 +85,7 @@ class ListUsers extends Component
     public function render()
     {
         return view('livewire.list-users', ['data_user' => User::search($this->search)
-        ->paginate($this->perPage),])
+        ->paginate($this->perPage),], ['data_order' => Order::all()])
         ->extends('layouts.app')
         ->section('content');
     }

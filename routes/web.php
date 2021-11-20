@@ -34,6 +34,10 @@ Route::get('/informasi', function () {
     return view('informasi');
 });
 
+Route::get('/privacy-policy', function () {
+    return view('privacy_policy');
+});
+
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
