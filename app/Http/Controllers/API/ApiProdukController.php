@@ -32,7 +32,7 @@ class ApiProdukController extends Controller
             if ($row->promo_id) {
                 $end =  strtotime($row->promo->akhir_periode);
                 if ($today > $end) {
-                    $row->promo->delete();
+
                     $row->update(['promo_id' => NULL]);
                 }
             }
@@ -115,7 +115,7 @@ class ApiProdukController extends Controller
         if ($produk->promo_id) {
             $end =  strtotime($produk->promo->akhir_periode);
             if ($today > $end) {
-                $produk->promo->delete();
+
                 $produk->update(['promo_id' => NULL]);
             }
         }
@@ -152,7 +152,6 @@ class ApiProdukController extends Controller
         } else {
             $produk->delete();
             return response()->json(['message' => 'berhasil mendelete produk']);
-
         }
     }
 
@@ -198,7 +197,7 @@ class ApiProdukController extends Controller
             if ($produk->promo_id) {
                 $end =  strtotime($produk->promo->akhir_periode);
                 if ($today > $end) {
-                    $produk->promo->delete();
+
                     $produk->update(['promo_id' => NULL]);
                 }
             }

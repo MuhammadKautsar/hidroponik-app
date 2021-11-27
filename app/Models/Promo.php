@@ -17,11 +17,22 @@ class Promo extends Model
     protected $table = 'promos';
     protected $fillable = ['nama', 'potongan', 'awal_periode', 'akhir_periode', 'keterangan'];
 
+    // saat delete. akan delete childnya juga
+    protected static function booted()
+    {
+        static::deleting(function ($promo) {
+            foreach ($promo->produks as $produk) {
+                $produk->update(array('promo_id' => NULL));
+            }
+        });
+    }
+    // 
+
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('nama', 'like', '%'.$query.'%')
-                ->orWhere('potongan', 'like', '%'.$query.'%');
+            : static::where('nama', 'like', '%' . $query . '%')
+            ->orWhere('potongan', 'like', '%' . $query . '%');
     }
 
     public function produks()
