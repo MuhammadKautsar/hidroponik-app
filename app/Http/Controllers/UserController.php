@@ -70,32 +70,21 @@ class UserController extends Controller
      * @param  Integer $status_code
      * @return Success Response.
      */
-    public function updateStatus($user_id, $status_code, User $user)
+    public function updateStatus($user_id, $status_code)
     {
-        // $user = User::all();
+        try {
+            $update_user = User::whereId($user_id)->update([
+                'status' => $status_code
+            ]);
 
-        $showData = array();
-        $orders = Order::select('orders.*')
-            ->join('produks', 'orders.produk_id', '=', 'produks.id')
-            ->where('produks.penjual_id', $user->id)->orderBy('orders.updated_at', 'DESC')->get();
-
-        foreach ($orders as $order) {
-            if (in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
-
-            try {
-                $update_user = User::whereId($user_id)->update([
-                    'status' => $status_code
-                ]);
-
-                if($update_user){
-                    return redirect()->route('users')->with('success', 'User Status Update Successfully.');
-                }
-
-                return redirect()->route('users')->with('error', 'Fail to Update User Status.');
-
-            } catch (\Throwable $th) {
-                throw $th;
+            if($update_user){
+                return redirect()->route('users')->with('success', 'User Status Update Successfully.');
             }
+
+            return redirect()->route('users')->with('error', 'Fail to Update User Status.');
+
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

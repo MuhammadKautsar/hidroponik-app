@@ -75,25 +75,10 @@
                         @php($diskon = $item->promo)
                             Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
                         @endif
-                      {{-- <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td> --}}
                       <td class="text-center">{{$item['stok']}}</td>
-                      {{-- <td class="text-center">
-                        @if ($item->harga_promo=="")
-                          - - -</td>
-                        @elseif ($item->harga_promo!="")
-                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
-                        @endif --}}
                       <td class="text-center">{{$item['keterangan']}}</td>
                       <td class="text-center">
-                        {{-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                            Ubah
-                        </button> --}}
                         <a href="/produk/{{$item->id}}/edit" class="btn btn-primary btn-sm">Ubah</a>
-                        {{-- <form action="/produk/{{$item->id}}/delete" method="post">
-                          <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?');" type="submit"><i class="bi-trash"></i></button>
-                          @csrf
-                          @method('delete')
-                        </form> --}}
                         <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
                       </td>
                     </tr>
@@ -224,21 +209,9 @@
                     <img src="{{ $img->path_image }}" width="100px" height="70px" alt="">
                     <a href="/deleteimage/{{ $img->id }}"
                        class="text-red"> X
-
-                      {{-- @csrf
-                      @method('delete') --}}
                       </a>
                     @endif
                     @endforeach
-                  {{-- </div> --}}
-                  {{-- <br>@foreach ($data->images as $img)
-                      <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
-                    @endforeach
-                    <div class="col-md-12">
-                      <div class="mt-1 text-center">
-                      <div class="images-preview"> </div>
-                      </div>
-                    </div> --}}
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Nama Produk</label>

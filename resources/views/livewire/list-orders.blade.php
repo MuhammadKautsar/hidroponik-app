@@ -42,27 +42,22 @@
                   @php $no = 0 @endphp
                   @forelse($data_order as $item)
                     @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
-
-                        {{-- @foreach($data_product as $product)
-                            @if ($product->penjual->id == Auth::user()->id) --}}
-                            @php $no++ @endphp
-                            <tr>
-                                <td class="text-center">{{$no}}</td>
-                                <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
-                                <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                                <td class="text-center">{{$item->produk->nama}}</td>
-                                <td class="text-center">{{$item['jumlah']}}</td>
-                                <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
-                                <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
-                                <td class="text-center">{{$item['status_order']}}</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                                    Tinjau
-                                    </button>
-                                </td>
-                            </tr>
-                            {{-- @endif
-                        @endforeach --}}
+                        @php $no++ @endphp
+                        <tr>
+                            <td class="text-center">{{$no}}</td>
+                            <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
+                            <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                            <td class="text-center">{{$item->produk->nama}}</td>
+                            <td class="text-center">{{$item['jumlah']}}</td>
+                            <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
+                            <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                            <td class="text-center">{{$item['status_order']}}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                                Tinjau
+                                </button>
+                            </td>
+                        </tr>
                     @endif
                   @empty
                     <tr class="text-center">
@@ -103,18 +98,13 @@
                 {{csrf_field()}}
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
-                    {{-- @if ($data->harga_jasa_pengiriman==0) --}}
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
-                    {{-- @else
-                    <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
-                    @endif --}}
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Status</label>
-                  {{-- @if ($data->status_order!="Selesai") --}}
                   <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
@@ -125,9 +115,6 @@
                     <option value="Selesai">Selesai</option>
                     @endif
                   </select>
-                  {{-- @else
-                  <span class="form-control">{{$data->status_order}}</span>
-                  @endif --}}
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
