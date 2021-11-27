@@ -20,7 +20,7 @@ class ListFeedbacks extends Component
     public function render()
     {
         return view('livewire.list-feedbacks', ['feedbacks' => Feedback::search($this->search)
-        ->paginate($this->perPage),], ['data_product' => Produk::all()])
+        ->get(),], ['data_product' => Produk::all()])
         ->extends('layouts.app')
         ->section('content');
     }

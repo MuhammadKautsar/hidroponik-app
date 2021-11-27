@@ -29,7 +29,7 @@ class ListProducts extends Component
     public $keterangan;
     public $total_feedback;
 
-    public $perPage = 5;
+    public $perPage = 10;
     public $sortField;
     public $sortAsc = true;
     public $search = '';
@@ -87,7 +87,7 @@ class ListProducts extends Component
     public function render()
     {
         return view('livewire.list-products', ['data_product' => Produk::search($this->search)
-        ->paginate($this->perPage),], ['promo' => Promo::all()])
+        ->get(),], ['promo' => Promo::all()])
         ->extends('layouts.app')
         ->section('content');
     }
