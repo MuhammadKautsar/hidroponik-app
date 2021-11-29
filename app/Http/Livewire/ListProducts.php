@@ -87,7 +87,7 @@ class ListProducts extends Component
     public function render()
     {
         return view('livewire.list-products', ['data_product' => Produk::search($this->search)
-        ->get(),], ['promo' => Promo::all()])
+        ->orderBy('created_at', 'desc')->get(),], ['promo' => Promo::all()])
         ->extends('layouts.app')
         ->section('content');
     }

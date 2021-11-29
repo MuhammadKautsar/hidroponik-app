@@ -78,8 +78,8 @@
                           </div>
                       </div>
                       <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right">Update</button>
-                        <a href="/produk" type="button" class="btn btn-secondary float-right mr-2">Close</a>
+                        <button type="submit" class="btn btn-primary float-right"><i class="fa fa-save"></i> Update</button>
+                        <a href="/produk" type="button" class="btn btn-secondary float-right mr-2"><i class="fa fa-times"></i> Close</a>
                         </form>
                       </div>
                       {{-- @endforeach --}}

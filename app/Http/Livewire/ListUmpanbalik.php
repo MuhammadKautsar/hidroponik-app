@@ -19,7 +19,7 @@ class ListUmpanbalik extends Component
     public function render()
     {
         return view('livewire.admin.list-umpanbalik', ['feedbacks' => Feedback::search($this->search)
-        ->paginate($this->perPage),])
+        ->orderBy('created_at', 'desc')->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

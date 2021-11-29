@@ -15,7 +15,7 @@
             <div class="card-header border-0">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success mt-2 btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Tambah
+                    <i class="fa fa-plus"></i> Tambah
                 </button>
                 <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
                     <div class="input-group input-group-alternative">
@@ -32,7 +32,7 @@
                 <table class="table align-items-center table-flush table-hover">
                   <thead class="thead-light">
                     <tr>
-                        <th class="text-center" scope="col">Id</th>
+                        <th class="text-center" scope="col">No</th>
                         <th class="text-center" scope="col">Gambar</th>
                         <th class="text-center" scope="col">Nama</th>
                         <th class="text-center" scope="col">Potongan</th>
@@ -43,9 +43,11 @@
                     </tr>
                   </thead>
                   <tbody class="list">
+                    @php $no = 0 @endphp
                     @forelse($promo as $item)
+                      @php $no++ @endphp
                       <tr>
-                        <td class="text-center">{{$item['id']}}</td>
+                        <td class="text-center">{{$no}}</td>
                         <td class="text-center">
                         <img src="{{ $item->getPromoImage() }}" width="100px" height="70px" alt="Image">
                         </td>
@@ -56,9 +58,9 @@
                         <td class="text-center">{{$item['keterangan']}}</td>
                         <td class="text-center">
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                            Ubah
+                            <i class="fa fa-edit"></i> Ubah
                         </button>
-                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                        <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                         </td>
                       </tr>
                     @empty
@@ -142,8 +144,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
               </form>
             </div>
           </div>
@@ -203,8 +205,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
           </form>
         </div>
       </div>

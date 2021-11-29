@@ -53,9 +53,11 @@
                             <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
                             <td class="text-center">{{$item['status_order']}}</td>
                             <td class="text-center">
+                                @if ($item->status_order != "Selesai" && $item->status_order != "Batal")
                                 <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                                Tinjau
+                                    <i class="fa fa-edit"></i> Tinjau
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @endif
@@ -98,7 +100,12 @@
                 {{csrf_field()}}
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
+                    @if (($data->harga_jasa_pengiriman==0))
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
+                    {{-- <small>Setelah diisi tidak dapat diubah lagi</small> --}}
+                    @else
+                    <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
+                    @endif
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -121,8 +128,8 @@
                 </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-warning">Update</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Update</button>
             </form>
           </div>
         </div>

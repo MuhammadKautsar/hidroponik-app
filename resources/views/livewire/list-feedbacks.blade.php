@@ -48,12 +48,7 @@
                                 @endfor
                               </td>
                             <td class="text-center">
-                                @if (auth()->user()->level=="user")
-                                <button type="button" class="btn btn-light btn-sm float-right" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
-                                Balas
-                                </button>
-                                @endif
-                                <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                                <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                             </td>
                             </tr>
                         {{-- @endif

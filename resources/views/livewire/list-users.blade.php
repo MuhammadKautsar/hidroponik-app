@@ -11,9 +11,9 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" data-bs-toggle="modal" data-bs-target="#form">
                   @if (auth()->user()->level=="superadmin")
-                  Tambah Admin
+                  <i class="fa fa-plus"></i> Tambah Admin
                   @elseif (auth()->user()->level=="admin")
-                  Tambah Penjual
+                  <i class="fa fa-plus"></i> Tambah Penjual
                   @endif
                 </button>
                 {{-- <form class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right" method="GET" > --}}
@@ -46,9 +46,11 @@
                     </tr>
                   </thead>
                   <tbody class="list">
+                    @php $no = 0 @endphp
                     @forelse($data_user as $item)
+                      @php $no++ @endphp
                       <tr>
-                        <td class="text-center">{{$item['id']}}</td>
+                        <td class="text-center">{{$no}}</td>
                         <td class="text-center">
                           <img src="{{ $item->getProfileImage() }}" class="avatar avatar-sm rounded-circle" alt="Image">
                         </td>
@@ -59,18 +61,20 @@
                         <td class="text-center">{{$item['alamat']}}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                            @if ($item->status == 1)
-                                <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
-                                class="btn btn-warning btn-sm m-2">
-                                    <i class="fa fa-ban"></i> Blokir
-                                </a>
-                            @else
-                                <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
-                                class="btn btn-success btn-sm m-2">
-                                    <i class="fa fa-check"></i> Izinkan
-                                </a>
+                            @if ($item->level != "superadmin" && $item->level != "admin")
+                                @if ($item->status == 1)
+                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
+                                    class="btn btn-warning btn-sm m-2">
+                                        <i class="fa fa-ban"></i> Blokir
+                                    </a>
+                                @else
+                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
+                                    class="btn btn-success btn-sm m-2">
+                                        <i class="fa fa-check"></i> Izinkan
+                                    </a>
+                                @endif
                             @endif
-                          <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                          {{-- <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a> --}}
                         </td>
                       </tr>
                     @empty
@@ -172,8 +176,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
         </div>
       </div>
       </form>

@@ -19,7 +19,7 @@ class ListPesanan extends Component
     public function render()
     {
         return view('livewire.admin.list-pesanan', ['data_order' => Order::search($this->search)
-        ->paginate($this->perPage),])
+        ->orderBy('created_at', 'desc')->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

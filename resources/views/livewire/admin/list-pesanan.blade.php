@@ -22,7 +22,7 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
+                    <th class="text-center" scope="col" class="sort" data-sort="name">No</th>
                     <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
                     <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
                     <th class="text-center" scope="col">Produk</th>
@@ -36,9 +36,11 @@
                   </tr>
                 </thead>
                 <tbody class="list">
+                  @php $no = 0 @endphp
                   @forelse($data_order as $item)
+                    @php $no++ @endphp
                     <tr>
-                      <td class="text-center">{{$item['id']}}</td>
+                      <td class="text-center">{{$no}}</td>
                       <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                       <td class="text-center">{{$item->produk->nama}}</td>

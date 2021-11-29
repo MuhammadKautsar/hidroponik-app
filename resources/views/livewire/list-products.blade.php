@@ -21,7 +21,7 @@
             <div class="card-header border-0">
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-success mt-2 btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah
+                <i class="fa fa-plus"></i> Tambah
               </button>
               <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
                 <div class="input-group input-group-alternative">
@@ -76,10 +76,10 @@
                             Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
                         @endif
                       <td class="text-center">{{$item['stok']}}</td>
-                      <td class="text-center">{{$item['keterangan']}}</td>
+                      <td class="text-center">{{ Str::limit($item->keterangan, 25) }}</td>
                       <td class="text-center">
-                        <a href="/produk/{{$item->id}}/edit" class="btn btn-primary btn-sm">Ubah</a>
-                        <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                        <a href="/produk/{{$item->id}}/edit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Ubah</a>
+                        <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                       </td>
                     </tr>
                     @endif
@@ -178,8 +178,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success">Submit</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
               </form>
             </div>
           </div>

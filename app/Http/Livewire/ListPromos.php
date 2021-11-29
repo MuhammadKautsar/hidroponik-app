@@ -82,7 +82,7 @@ class ListPromos extends Component
     public function render()
     {
         return view('livewire.list-promos', ['promo' => Promo::search($this->search)
-        ->paginate($this->perPage),])
+        ->orderBy('created_at', 'desc')->paginate($this->perPage),])
         ->extends('layouts.app')
         ->section('content');
     }

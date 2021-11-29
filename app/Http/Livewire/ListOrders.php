@@ -20,7 +20,7 @@ class ListOrders extends Component
     public function render()
     {
         return view('livewire.list-orders', ['data_order' => Order::search($this->search)
-        ->get(),], ['data_product' => Produk::all()])
+        ->orderBy('created_at', 'desc')->get(),], ['data_product' => Produk::all()])
         ->extends('layouts.app')
         ->section('content');
     }

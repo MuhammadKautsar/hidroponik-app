@@ -47,7 +47,7 @@
                       </td>
                       <td class="text-center">{{ $item->produk->penjual->username }}</td>
                       <td class="text-center">
-                        <a href="/umpanbalik/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a>
+                        <a href="/umpanbalik/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                       </td>
                     </tr>
                   @empty
