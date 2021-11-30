@@ -49,6 +49,8 @@
                     @php $no = 0 @endphp
                     @forelse($data_user as $item)
                       @php $no++ @endphp
+                      @php $tidak = 0 @endphp
+                      @php $boleh = 0 @endphp
                       <tr>
                         <td class="text-center">{{$no}}</td>
                         <td class="text-center">
@@ -58,15 +60,24 @@
                         <td class="text-center">{{$item['username']}}</td>
                         <td class="text-center">{{$item['email']}}</td>
                         <td class="text-center">{{$item['nomor_hp']}}</td>
-                        <td class="text-center">{{$item['alamat']}}</td>
+                        <td class="text-center">{{ Str::limit($item->alamat, 25) }}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                            @if ($item->level != "superadmin" && $item->level != "admin")
+                            @foreach ($item->produks as $produk)
+                                @foreach ($produk->orders as $pesanan)
+                                    @if($pesanan->status_order == "Belum" || $pesanan->status_order == "Diproses" || $pesanan->status_order == "Dikirim")
+                                        @php $tidak++ @endphp
+                                    @else
+                                        @php $boleh++ @endphp
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            @if ($tidak == 0 && $item->level != "superadmin" && $item->level != "admin")
                                 @if ($item->status == 1)
-                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
-                                    class="btn btn-warning btn-sm m-2">
-                                        <i class="fa fa-ban"></i> Blokir
-                                    </a>
+                                <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
+                                class="btn btn-warning btn-sm m-2">
+                                    <i class="fa fa-ban"></i> Blokir
+                                </a>
                                 @else
                                     <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
                                     class="btn btn-success btn-sm m-2">
