@@ -38,17 +38,19 @@
                 <tbody class="list">
                   @php $no = 0 @endphp
                   @forelse($data_order as $item)
-                    @php $no++ @endphp
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
-                      <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
-                      <td class="text-center">{{$item->produk->nama}}</td>
-                      <td class="text-center">{{$item['jumlah']}}</td>
-                      <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
-                      <td class="text-center">{{$item->produk->penjual->username}}</td>
-                      <td class="text-center">{{$item['status_order']}}</td>
-                    </tr>
+                    @if ($item->status_checkout == "Beli")
+                        @php $no++ @endphp
+                        <tr>
+                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
+                        <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                        <td class="text-center">{{$item->produk->nama}}</td>
+                        <td class="text-center">{{$item['jumlah']}}</td>
+                        <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                        <td class="text-center">{{$item->produk->penjual->username}}</td>
+                        <td class="text-center">{{$item['status_order']}}</td>
+                        </tr>
+                    @endif
                   @empty
                     <tr class="text-center">
                         <td colspan="10">

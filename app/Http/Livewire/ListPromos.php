@@ -81,6 +81,14 @@ class ListPromos extends Component
 
     public function render()
     {
+        $data = Promo::all();
+        $today = strtotime(now());
+        foreach ($data as $row) {
+            $end =  strtotime($row->akhir_periode. " +1 days");
+            if ($today > $end)
+                $row->delete();
+        }
+
         return view('livewire.list-promos', ['promo' => Promo::search($this->search)
         ->orderBy('created_at', 'desc')->paginate($this->perPage),])
         ->extends('layouts.app')

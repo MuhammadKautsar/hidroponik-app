@@ -105,7 +105,7 @@
                   <input name="gambar" type="file" id="image" aria-describedby="emailHelp"><br>
                   <br>
                   <div class="col-sm-6">
-                    <img id="preview-image" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="preview image" width="100px" height="70px">
+                    <img id="preview-image" src="/uploads/promos/no-image.png" alt="preview image" width="100px" height="70px">
                   </div>
                 </div>
                 <div class="mb-3">
@@ -193,7 +193,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                    <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
+                    <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->akhir_periode}}">
                     @error('akhir_periode')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -38,6 +38,9 @@ Route::get('/privacy-policy', function () {
     return view('privacy_policy');
 });
 
+Route::get('/images_upload', 'App\Http\Controllers\ImagesController@index');
+Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
+
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -64,7 +67,7 @@ Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
     Route::get('/produk', ListProducts::class)->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'update']);
-    Route::get('/produk/{id}/edit', [ProdukController::class, 'edit']);
+    Route::get('/produk/{id}/edit', [ProdukController::class, 'edit'])->name('edits');
 	Route::get('/produk/{id}/delete', [ProdukController::class, 'destroy']);
 	Route::get('/deleteimage/{id}', [ProdukController::class, 'deleteimage']);
     Route::get('/pesanan', ListOrders::class)->name('orders');

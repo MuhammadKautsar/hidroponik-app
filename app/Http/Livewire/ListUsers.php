@@ -63,7 +63,7 @@ class ListUsers extends Component
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'level' => 'required',
-            'nomor_hp' => 'required|numeric',
+            'nomor_hp' => 'required|numeric|digits_between:11,13',
             'alamat' => 'required',
         ])->validate();
 

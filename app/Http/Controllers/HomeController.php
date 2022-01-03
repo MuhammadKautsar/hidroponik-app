@@ -40,6 +40,7 @@ class HomeController extends Controller
             ->where('penjual_id', '=', Auth::user()->id)
             ->where('produks.deleted_at', '=', null)
             ->join('orders', 'orders.produk_id', '=', 'produks.id')
+            ->where('orders.status_checkout', 'Beli')
             ->where('orders.deleted_at', '=', null)->get();
 
         $belum = $orders->where('status_order', 'Belum')->count();

@@ -41,7 +41,7 @@
                 <tbody class="list">
                   @php $no = 0 @endphp
                   @forelse($data_order as $item)
-                    @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
+                    @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id && $item->status_checkout == "Beli")
                         @php $no++ @endphp
                         <tr>
                             <td class="text-center">{{$no}}</td>

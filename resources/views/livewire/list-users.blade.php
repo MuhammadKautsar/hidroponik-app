@@ -60,7 +60,7 @@
                         <td class="text-center">{{$item['username']}}</td>
                         <td class="text-center">{{$item['email']}}</td>
                         <td class="text-center">{{$item['nomor_hp']}}</td>
-                        <td class="text-center">{{ Str::limit($item->alamat, 25) }}</td>
+                        <td class="text-center">{{ Str::limit($item->alamat, 20) }}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
                             @foreach ($item->produks as $produk)
@@ -152,7 +152,7 @@
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Nomor Hp</label>
-              <input wire:model="nomor_hp" type="nomor_hp" class="form-control @error('nomor_hp') is-invalid @enderror">
+              <input wire:model="nomor_hp" type="number" class="form-control @error('nomor_hp') is-invalid @enderror">
               @error('nomor_hp')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror

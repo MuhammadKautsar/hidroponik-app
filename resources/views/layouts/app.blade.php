@@ -25,6 +25,20 @@
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
 
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.6/css/fileinput.css" integrity="sha512-w4YRxykwdQkfr2lvfCNQC6i5OGIh7KryY5w1ySPFJnT47nYsA3gHimW2IS9+pHvNummw0z4wR5Ic5aJN7WkC/g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.6/themes/explorer-fas/theme.css" integrity="sha512-k9YUtENzqvJZVHHlE9p4MXSdyyuMA33G9PTIgFy0xi4nJyRkDQbORynzYnRYcKSIIX/L7WQyY+gUMcxGsHZQzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+
+        <style>
+            .main-section{
+                padding: 20px;
+                /* margin-top: 200px; */
+                background: #fff;
+                box-shadow: 0 0 20px #c1c1c1;
+            }
+        </style>
+
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
         @livewireStyles
@@ -57,6 +71,8 @@
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+
 
         @yield('scripts')
 
