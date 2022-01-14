@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function index()
     {
         $jumlah_produk = Produk::all()->count();
-        $jumlah_pesanan = Order::all()->count();
+        $jumlah_pesanan = Order::all()->where('status_checkout', 'Beli')->count();
         $jumlah_promo = Promo::all()->count();
         $jumlah_laporan = Report::all()->count();
         $jumlah_user = User::all()->count();

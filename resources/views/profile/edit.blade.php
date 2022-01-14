@@ -50,7 +50,8 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('username') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-username">{{ __('Username') }}</label>
-                                    <input type="text" name="username" id="input-username" class="form-control form-control-alternative{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('Username') }}" value="{{ old('username', auth()->user()->username) }}" required autofocus>
+                                    <span class="form-control">{{ old('username', auth()->user()->username) }}</span>
+                                    {{-- <input type="text" name="username" id="input-username" class="form-control form-control-alternative{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('Username') }}" value="{{ old('username', auth()->user()->username) }}" required autofocus> --}}
 
                                     @if ($errors->has('username'))
                                         <span class="invalid-feedback" role="alert">

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,8 @@ Route::get('/privacy-policy', function () {
 
 Route::get('/images_upload', 'App\Http\Controllers\ImagesController@index');
 Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
+
+Route::get('/upload', 'App\Http\Controllers\CobaController@index');
 
 Auth::routes();
 

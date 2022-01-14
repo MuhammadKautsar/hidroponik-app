@@ -125,7 +125,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                        <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror">
                         @error('awal_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -213,6 +213,20 @@
     </div>
   </div>
   @endforeach
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+
+<script>
+
+    $(".tm").on("change", function() {
+    this.setAttribute(
+        "data-date",
+        moment(this.value, "YYYY-MM-DD")
+        .format( this.getAttribute("data-date-format") )
+    )
+    }).trigger("change")
+
+</script>
 
   <script>
     $('#image').change(function(){

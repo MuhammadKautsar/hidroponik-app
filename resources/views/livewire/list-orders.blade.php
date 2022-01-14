@@ -103,8 +103,9 @@
                     @if (($data->harga_jasa_pengiriman==0))
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
                     {{-- <small>Setelah diisi tidak dapat diubah lagi</small> --}}
-                    @else
+                    @elseif (($data->harga_jasa_pengiriman!=0))
                     <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
+                    <input name="harga_jasa_pengiriman" type="hidden" class="form-control" value="{{$data->harga_jasa_pengiriman}}">
                     @endif
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
@@ -116,10 +117,13 @@
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
                     <option value="Diproses">Diproses</option>
+                    <option value="Batal">Batal</option>
                     @elseif ($data->status_order=="Diproses")
                     <option value="Dikirim">Dikirim</option>
+                    <option value="Batal">Batal</option>
                     @elseif ($data->status_order=="Dikirim")
                     <option value="Selesai">Selesai</option>
+                    <option value="Batal">Batal</option>
                     @endif
                   </select>
                   @error('status_order')
