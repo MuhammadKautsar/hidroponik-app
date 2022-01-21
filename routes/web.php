@@ -44,11 +44,11 @@ Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
 
 Route::get('/upload', 'App\Http\Controllers\CobaController@index');
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
-Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function () {
+Route::group(['middleware' => ['auth','verified','cekLevel:admin,superadmin']], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
      Route::get('admin/pengguna', ListUsers::class)->name('users');
 	 Route::get('pengguna/{id}/delete', [UserController::class, 'destroy']);
@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth','cekLevel:admin,superadmin']], function ()
      Route::get('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
 });
 
-Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
+Route::group(['middleware' => ['auth','verified','cekLevel:penjual']], function () {
     Route::get('/produk', ListProducts::class)->name('products');
 	Route::post('/produk/create', [ProdukController::class, 'store']);
 	Route::put('/produk/{id}/update', [ProdukController::class, 'update']);
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth','cekLevel:penjual']], function () {
     Route::get('/ulasan/{id}/delete', 'App\Http\Controllers\FeedbackController@destroy');
 });
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);

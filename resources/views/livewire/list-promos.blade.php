@@ -125,14 +125,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                        <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror">
+                        <input name="awal_periode" type="text" class="date form-control @error('awal_periode') is-invalid @enderror">
                         @error('awal_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                        <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input name="akhir_periode" type="text" class="date form-control @error('akhir_periode') is-invalid @enderror">
                         @error('akhir_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -186,14 +186,14 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                    <input name="awal_periode" type="date" class="form-control @error('awal_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->awal_periode}}">
+                    <input name="awal_periode" type="text" class="date form-control @error('awal_periode') is-invalid @enderror" value="{!! date('d-m-Y', strtotime($data->awal_periode)) !!}">
                     @error('awal_periode')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                    <input name="akhir_periode" type="date" class="form-control @error('akhir_periode') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->akhir_periode}}">
+                    <input name="akhir_periode" type="text" class="date form-control @error('akhir_periode') is-invalid @enderror" value="{!! date('d-m-Y', strtotime($data->akhir_periode)) !!}">
                     @error('akhir_periode')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -214,7 +214,7 @@
   </div>
   @endforeach
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 

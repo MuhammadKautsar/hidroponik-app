@@ -1,7 +1,7 @@
-@extends('layouts.app', ['class' => 'bg-default'])
+@extends('layouts.app', ['class' => 'bg-silver'])
 
 @section('content')
-    @include('layouts.headers.guest')
+    @include('layouts.headers.cards')
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
@@ -9,19 +9,23 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>{{ __('Verify Your Email Address') }}</small>
+                            <small>{{ __('Verifikasi Alamat Email Anda') }}</small>
                         </div>
                         <div>
                             @if (session('resent'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ __('A fresh verification link has been sent to your email address.') }}
+                                <div class="alert alert-light" role="alert">
+                                    {{ __('Tautan verifikasi baru telah dikirim ke alamat email Anda.') }}
                                 </div>
                             @endif
-                            
-                            {{ __('Before proceeding, please check your email for a verification link.') }}
-                            
+
+                            {{ __('Sebelum melanjutkan, harap periksa email Anda untuk tautan verifikasi.') }}
+
                             @if (Route::has('verification.resend'))
-                                {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>
+                                {{ __('Jika Anda tidak menerima email, klik tombol di bawah ini.') }}
+                                <form method="POST" action="{{ route('verification.resend') }}" class="text-center mt-4">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning">Mengirim ulang email verifikasi</button>
+                                </form>
                             @endif
                         </div>
                     </div>

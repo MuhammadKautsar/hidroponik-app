@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Produk;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ class Promo extends Model
     protected $hidden = ['created_at', 'updated_at'];
 
     protected $table = 'promos';
+    protected $dates = ['awal_periode', 'akhir_periode'];
     protected $fillable = ['nama', 'potongan', 'awal_periode', 'akhir_periode', 'keterangan'];
 
     // saat delete. akan delete childnya juga
@@ -26,7 +28,7 @@ class Promo extends Model
             }
         });
     }
-    // 
+    //
 
     public static function search($query)
     {
@@ -47,5 +49,11 @@ class Promo extends Model
         }
 
         return  $this->gambar;
+    }
+
+    public function setPromoDateAttribute($value)
+    {
+        $this->attributes['awal_periode'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+        $this->attributes['akhir_periode'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
     }
 }

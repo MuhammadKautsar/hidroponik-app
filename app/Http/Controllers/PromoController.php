@@ -23,8 +23,8 @@ class PromoController extends Controller
         $request->validate([
             'nama' => 'required',
             'potongan' => 'required|numeric',
-            'awal_periode' => 'required',
-            'akhir_periode' => 'required',
+            'awal_periode' => 'required|date',
+            'akhir_periode' => 'required|date',
         ]);
 
         $promo = new Promo;

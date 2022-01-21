@@ -18,10 +18,8 @@
                             </div>
                         @endif
 
-                        @if (session('info'))
-                            <div class="alert alert-info" role="alert">
-                                {{ session('info') }}
-                            </div>
+                        @if (session('error'))
+                            <span class="text-danger"> {{session('error')}} </span>
                         @endif
 
                         <form role="form" method="POST" action="{{ route('password.email') }}">
@@ -35,7 +33,7 @@
                                     <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" type="email" name="email" value="{{ old('email') }}" required autofocus>
                                 </div>
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
