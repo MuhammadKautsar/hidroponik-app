@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\User;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
 use Livewire\WithPagination;
 
 class ListUsers extends Component
@@ -69,7 +70,9 @@ class ListUsers extends Component
 
         $validateData['password'] = bcrypt($validateData['password']);
 
-        User::create($validateData);
+        $user = User::create($validateData);
+
+        event(new Registered($user));
 
         $this->dispatchBrowserEvent('hide-form');
         $this->resetValidation();
