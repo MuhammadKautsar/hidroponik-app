@@ -24,12 +24,14 @@ class ApiFeedbackController extends Controller
             }
             array_push($showData, [
                 'id' => $row->id . '',
+                'tanggal' => $row->created_at->format('d-m-Y'),
                 'produk' => [
                     'id' => $row->produk->id,
                     'nama' => $row->produk->nama,
                     'gambar' => $gambar
                 ],
                 'pembeli' => $row->user->nama_lengkap,
+                'foto_profil' => $row->user->profile_image,
                 'komentar' => $row->komentar,
                 'rating' => $row->rating
             ]);
@@ -93,12 +95,14 @@ class ApiFeedbackController extends Controller
         }
         $showData = [
             'id' => $feedback->id . '',
+            'tanggal' => $feedback->created_at->format('d-m-Y'),
             'produk' => [
                 'id' => $feedback->produk->id,
                 'nama' => $feedback->produk->nama,
                 'gambar' => $gambar
             ],
             'pembeli' => $feedback->user->nama_lengkap,
+            'foto_profil' => $feedback->user->profile_image,
             'komentar' => $feedback->komentar,
             'rating' => $feedback->rating
         ];
@@ -140,12 +144,14 @@ class ApiFeedbackController extends Controller
             }
             array_push($showData, [
                 'id' => $row->id . '',
+                'tanggal' => $row->created_at->format('d-m-Y'),
                 'produk' => [
                     'id' => $produk->id,
                     'nama' => $produk->nama,
                     'gambar' => $gambar
                 ],
                 'pembeli' => $row->user->nama_lengkap,
+                'foto_profil' => $row->user->profile_image,
                 'komentar' => $row->komentar,
                 'rating' => $row->rating
             ]);

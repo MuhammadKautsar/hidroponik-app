@@ -188,6 +188,7 @@ class ApiProdukController extends Controller
     {
         $showData = [];
         $today = strtotime(now());
+        $profile_image = ($user->profile_image);
         foreach ($user->produks as $produk) {
             # code...
             $gambar = array();
@@ -216,7 +217,8 @@ class ApiProdukController extends Controller
                 'periode_awal' => $produk->promo_id ? $produk->promo->awal_periode : '',
                 'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
                 'total_feedback' => $produk->total_feedback,
-                'penjual_id' => $produk->penjual_id . ''
+                'penjual_id' => $produk->penjual_id . '',
+                'foto_profil' => $profile_image,
             ]);
         }
         return response()->json($showData);
