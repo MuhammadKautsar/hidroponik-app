@@ -44,6 +44,7 @@ class ApiProdukController extends Controller
                 'stok' => $row->stok, // number
                 'keterangan' => $row->keterangan, // string
                 'penjual' => $row->penjual->username, // string
+                'foto_penjual' => $row->penjual->profile_image,
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
                 'potongan' => $row->promo_id ? $row->promo->potongan : 0,
                 'periode_awal' => $row->promo_id ? $row->promo->awal_periode : '',
@@ -127,6 +128,7 @@ class ApiProdukController extends Controller
             'stok' => $produk->stok, // number
             'keterangan' => $produk->keterangan, // string
             'penjual' => $produk->penjual->username, // string
+            'foto_penjual' => $produk->penjual->profile_image, // string         
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
             'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
             'promo_nama' => $produk->promo_id ? $produk->promo->nama : '',
@@ -209,7 +211,6 @@ class ApiProdukController extends Controller
                 'stok' => $produk->stok, // number
                 'keterangan' => $produk->keterangan, // string
                 'penjual' => $produk->penjual->username, // string
-                'foto_profil' => $produk->penjual->profile_image, // string
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
                 'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
