@@ -188,7 +188,6 @@ class ApiProdukController extends Controller
     {
         $showData = [];
         $today = strtotime(now());
-        $profile_image = ($user->profile_image);
         foreach ($user->produks as $produk) {
             # code...
             $gambar = array();
@@ -210,6 +209,7 @@ class ApiProdukController extends Controller
                 'stok' => $produk->stok, // number
                 'keterangan' => $produk->keterangan, // string
                 'penjual' => $produk->penjual->username, // string
+                'foto_profil' => $produk->penjual->profile_image, // string
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
                 'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
@@ -218,7 +218,6 @@ class ApiProdukController extends Controller
                 'periode_akhir' => $produk->promo_id ? $produk->promo->akhir_periode : '',
                 'total_feedback' => $produk->total_feedback,
                 'penjual_id' => $produk->penjual_id . '',
-                'foto_profil' => $profile_image,
             ]);
         }
         return response()->json($showData);
