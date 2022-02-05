@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
@@ -38,6 +39,12 @@ Route::get('/informasi', function () {
 Route::get('/privacy-policy', function () {
     return view('privacy_policy');
 });
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::get('/images_upload', 'App\Http\Controllers\ImagesController@index');
 Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
