@@ -20,8 +20,10 @@ class CreateProduksTable extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->integer('stok');
-            $table->integer('total_feedback')->nullable();
+            $table->integer('total_feedback')->default(0);
             $table->string('keterangan')->nullable();
+            $table->string('satuan')->nullable();
+            $table->integer('jumlah_per_satuan')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CobaController extends Controller
 {
@@ -11,6 +13,57 @@ class CobaController extends Controller
     {
         return view('images.coba');
     }
+
+    public function storeData(Request $request)
+	{
+		try {
+			$produk = new Produk;
+            $produk->penjual_id = Auth::user()->id;
+            $produk->nama = $request->nama;
+            $produk->promo_id = null;
+            $produk->harga = $request->harga;
+            $produk->stok = $request->stok;
+            $produk->keterangan = $request->keterangan;
+            $produk->total_feedback = 0;
+            $produk->harga_promo = null;
+            $produk->save();
+            $produk_id = $produk->id; // this give us the last inserted record id
+		}
+		catch (\Exception $e) {
+			return response()->json(['status'=>'exception', 'msg'=>$e->getMessage()]);
+		}
+		return response()->json(['status'=>"success", 'produk_id'=>$produk_id]);
+	}
+
+    public function storeImage(Request $request)
+	{
+		if($request->file('file')){
+
+            $img = $request->file('file');
+
+            //here we are geeting produkid alogn with an image
+            $produkid = $request->produkid;
+
+            // $produk = new Produk;
+
+            $imageName = strtotime(now()).rand(11111,99999).'.'.$img->getClientOriginalExtension();
+            $produk_image = new Image;
+            $produk_image->produk_id = $produkid;
+            $original_name = $img->getClientOriginalName();
+            $produk_image->path_image = $imageName;
+
+            if(!is_dir(public_path() . '/uploads/images/')){
+                mkdir(public_path() . '/uploads/images/', 0777, true);
+            }
+
+        $request->file('file')->move(public_path() . '/uploads/images/', $imageName);
+
+        // we are updating our image column with the help of produk id
+        // $produk_image->where('id', $produkid)->update(['path_image'=>$imageName]);
+
+        return response()->json(['status'=>"success",'imgdata'=>$original_name,'produkid'=>$produkid]);
+        }
+	}
 
     public function post(Request $request)
     {

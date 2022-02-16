@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Models\User;
-use App\Models\Order;
 use App\Models\Promo;
 use App\Models\Feedback;
+use App\Models\OrderMapping;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +24,8 @@ class Produk extends Model
         'total_feedback',
         'keterangan',
         'harga_promo',
+        'satuan',
+        'jumlah_per_satuan',
     ];
 
     protected $table = 'produks';
@@ -50,9 +52,9 @@ class Produk extends Model
         return $this->hasMany(Feedback::class);
     }
 
-    public function orders()
+    public function order_mappings()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderMapping::class);
     }
 
     public function images()

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Produk;
 use App\Models\Report;
 use App\Models\Feedback;
+use App\Models\OrderMapping;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -99,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function orders()
     {
         return $this->hasMany(Order::class, 'pembeli_id');
+    }
+
+    public function order_mappings()
+    {
+        return $this->hasMany(OrderMapping::class, 'pembeli_id');
     }
 
     public function notificationTokens()

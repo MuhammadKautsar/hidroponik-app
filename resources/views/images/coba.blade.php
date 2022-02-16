@@ -8,28 +8,45 @@
 			<div class="col-lg-8 offset-lg-2">
 				<div class="form-wrapper py-5">
 					<!-- form starts -->
-					<form action="#" name="demoform" id="demoform" method="POST" class="dropzone" enctype="multipart/form-data">
+					<form action="{{ route('form.data') }}" name="demoform" id="demoform" method="POST" class="dropzone" enctype="multipart/form-data">
 
 						@csrf
+                        <div class="form-group">
+                            <div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
+                                <span>Upload file</span>
+                            </div>
+                            <div class="dropzone-previews"></div>
+                        </div>
 						<div class="form-group">
 
-							<input type="hidden" class="userid" name="userid" id="userid" value="">
+							<input type="hidden" class="produkid" name="produkid" id="produkid" value="">
 
-							<label for="name">Name</label>
-							<input type="text" name="name" id="name" placeholder="Enter your name" class="form-control" required autocomplete="off">
+							<label for="nama">Nama Produk</label>
+							<input type="text" name="nama" id="nama" class="form-control" required autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label for="email">Email</label>
-							<input type="email" name="email" id="email" placeholder="Enter your email" class="form-control" required autocomplete="off">
+							<label for="promo_id">Promo</label>
+							<select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                                <option value="">- Pilih -</option>
+                                {{-- @foreach ($promo as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama }} - {{ $item->potongan }} %</option>
+                                @endforeach --}}
+                            </select>
 						</div>
-						<div class="form-group">
-                  			<div id="dropzoneDragArea" class="dz-default dz-message dropzoneDragArea">
-                  				<span>Upload file</span>
-                  			</div>
-                  			<div class="dropzone-previews"></div>
-                  		</div>
+                        <div class="form-group">
+							<label for="harga">Harga</label>
+							<input type="number" name="harga" id="harga" class="form-control" required autocomplete="off">
+						</div>
+                        <div class="form-group">
+							<label for="stok">Stok</label>
+							<input type="number" name="stok" id="stok" class="form-control" required autocomplete="off">
+						</div>
+                        <div class="form-group">
+							<label for="keterangan">Keterangan</label>
+							<textarea type="text" name="keterangan" id="keterangan" class="form-control" required autocomplete="off" rows="3"></textarea>
+						</div>
                   		<div class="form-group">
-	        				<button type="submit" class="btn btn-md btn-primary">create</button>
+	        				<button type="submit" class="btn btn-md btn-success">Simpan</button>
 	        			</div>
 					</form>
 					<!-- form end -->
@@ -39,17 +56,8 @@
 	</div>
 
 
-
-
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script> --}}
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.6/js/fileinput.js" integrity="sha512-HmOH2WRS8drNeqkJULE3NIu32PDpJ5gbHRjccop7PgzuxbeyBco3tizvNQ5DVrXM9NTtcMfNhlW4lHt+iSW/Tg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.2.6/themes/explorer-fas/theme.js" integrity="sha512-ZY8Ju2x1jtJ5kGiPjgo+v4yzWtufr0AFTFdK8AENoo7zfaLneJpG7XOCNMpkRbp/kn6Fbf8qaWWeeLXW+qCOjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
@@ -66,7 +74,7 @@
     $(function() {
     var myDropzone = new Dropzone("div#dropzoneDragArea", {
         paramName: "file",
-        url: "{{ url('/storeimgae') }}",
+        url: "{{ url('/storeimage') }}",
         previewsContainer: 'div.dropzone-previews',
         addRemoveLinks: true,
         autoProcessQueue: false,
@@ -92,8 +100,8 @@
                     success: function(result){
                         if(result.status == "success"){
                             // fetch the useid
-                            var userid = result.user_id;
-                            $("#userid").val(userid); // inseting userid into hidden input field
+                            var produkid = result.produk_id;
+                            $("#produkid").val(produkid); // inseting produkid into hidden input field
                             //process the queue
                             myDropzone.processQueue();
                         }else{
@@ -104,9 +112,9 @@
             });
             //Gets triggered when we submit the image.
             this.on('sending', function(file, xhr, formData){
-            //fetch the user id from hidden input field and send that userid with our image
-              let userid = document.getElementById('userid').value;
-               formData.append('userid', userid);
+            //fetch the user id from hidden input field and send that produkid with our image
+              let produkid = document.getElementById('produkid').value;
+               formData.append('produkid', produkid);
             });
 
             this.on("success", function (file, response) {
@@ -138,7 +146,7 @@
         }
         });
     });
-    </script>
+</script>
 
 @endsection
 

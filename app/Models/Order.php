@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
-use App\Models\Produk;
+use App\Models\OrderMapping;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,13 +18,10 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = [
         'pembeli_id',
-        'produk_id',
-        'jumlah',
+        'penjual_id',
         'total_harga',
-        'status_checkout',
         'status_order',
         'harga_jasa_pengiriman',
-        'status_feedback',
     ];
 
     public static function search($query)
@@ -36,11 +33,16 @@ class Order extends Model
 
     public function pembeli()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'pembeli_id');
     }
 
-    public function produk()
+    public function penjual()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(User::class, 'penjual_id');
+    }
+
+    public function order_mappings()
+    {
+        return $this->hasMany(OrderMapping::class);
     }
 }

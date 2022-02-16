@@ -39,9 +39,9 @@ class HomeController extends Controller
         $orders = DB::table('produks')
             ->where('penjual_id', '=', Auth::user()->id)
             ->where('produks.deleted_at', '=', null)
-            ->join('orders', 'orders.produk_id', '=', 'produks.id')
-            ->where('orders.status_checkout', 'Beli')
-            ->where('orders.deleted_at', '=', null)->get();
+            ->join('order_mappings', 'order_mappings.produk_id', '=', 'produks.id')
+            ->where('order_mappings.status_checkout', 'Beli')
+            ->where('order_mappings.deleted_at', '=', null)->get();
 
         $belum = $orders->where('status_order', 'Belum')->count();
         $diproses = $orders->where('status_order', 'Diproses')->count();
