@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderMapping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use Illuminate\Support\Facades\Validator;
 
 class ApiOrderController extends Controller
@@ -57,43 +58,52 @@ class ApiOrderController extends Controller
 
     public function store(Request $request)
     {
+        // pengecekan
         $validator = Validator::make($request->all(), [
-            'penjual_id' => 'required',
             'pembeli_id' => 'required',
-            'jumlah' => 'required|numeric',
-            'total_harga' => 'required|numeric',
-            'order_mapping_id' => 'required|array'
-
+            'order_mapping_id' => 'required|array',
+            'order_mapping_id.*' => 'required|distinct',
         ]);
+        //  (id amount produk_id)-> produk -> penjual_id
 
-        $om = OrderMapping::whereIn('id', $data['order_mapping_id']);
-
-
+        // jika gagal keluar pemberitahuan
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()]);
         }
 
+        // mencari order mapping berdassarkan id
+        $om = OrderMapping::with('produk')->whereIn('id', $request->order_mapping_id);
 
+        // mengambil data id pembeli
         $data = $request->validate(
-            [
-                'produk_id' => 'required',
-                'pembeli_id' => 'required',
-                'jumlah' => 'required|numeric',
-                'total_harga' => 'required|numeric',
-                'order_mapping_id' => 'required|array'
-            ]
+            ['pembeli_id' => 'required',]
         );
         $data['status_order'] = 'Belum';
-        $data['status_feedback'] = 0;
         $data['harga_jasa_pengiriman'] = 0;
+        $data['penjual_id'] = $om->get()[0]->produk->penjual_id;
+        $data['total_harga'] = collect($om->get())
+            ->reduce(
+                function ($p, $item) {
+                    $harga = $item->produk->harga;
+                    $harga *= $item->jumlah;
+                    $harga = $harga - ($harga * ($item->produk->promo_id ? $item->produk->promo->potongan : 0) / 100);
+                    return $p + $harga;
+                },
+                0
+            );
 
-        // $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
-        // if ($prevOrder) {
-        //     $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
-        // } else
-            $order = Order::create($data);
-            $om->update(['order_id' => $order->id, 'status_checkout' => 'Beli']);
+        $order = Order::create($data);
+        $om->update(['order_id' => $order->id, 'status_checkout' => 'Beli']);
 
+        foreach ($om->get() as $row) {
+            $row->produk->update([
+                'stok' => $row->produk->stok - $row->jumlah
+            ]);
+
+            if ($row->produk->stok == 0) {
+                $row->produk->order_mappings()->where('status_checkout', 'Keranjang')->delete();
+            }
+        }
         return response()->json(['message' => 'berhasil menambahkan Order']);
     }
 
@@ -154,8 +164,10 @@ class ApiOrderController extends Controller
         return response()->json(['message' => 'berhasil mengupdate order']);
     }
 
+
     public function getOrderByPembeliId(User $user)
     {
+
         $showData = array();
         foreach ($user->orders as $row) {
             $gambar = array();
