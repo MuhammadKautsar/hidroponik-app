@@ -63,15 +63,23 @@
                         <td class="text-center">{{ Str::limit($item->alamat, 20) }}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                            @foreach ($item->produks as $produk)
-                                @foreach ($produk->orders as $pesanan)
+                            @if ($item->level == "pembeli")
+                                @foreach ($item->orderpembelis as $pesanan)
                                     @if($pesanan->status_order == "Belum" || $pesanan->status_order == "Diproses" || $pesanan->status_order == "Dikirim")
                                         @php $tidak++ @endphp
                                     @else
                                         @php $boleh++ @endphp
                                     @endif
                                 @endforeach
-                            @endforeach
+                            @elseif ($item->level == "penjual")
+                                @foreach ($item->orderpenjuals as $pesanan)
+                                    @if($pesanan->status_order == "Belum" || $pesanan->status_order == "Diproses" || $pesanan->status_order == "Dikirim")
+                                        @php $tidak++ @endphp
+                                    @else
+                                        @php $boleh++ @endphp
+                                    @endif
+                                @endforeach
+                            @endif
                             @if ($tidak == 0 && $item->level != "superadmin" && $item->level != "admin")
                                 @if ($item->status == 1)
                                 <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
