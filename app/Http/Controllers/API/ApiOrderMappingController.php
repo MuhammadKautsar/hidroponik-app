@@ -85,37 +85,37 @@ class ApiOrderMappingController extends Controller
 
 
 
-	public function show(OrderMapping $orderMap)
+	public function show(OrderMapping $orderMapping)
 	{
 		$gambar = array();
-		foreach ($orderMap->produk->images as $image) {
+		foreach ($orderMapping->produk->images as $image) {
 			array_push($gambar, $image->path_image);
 		}
 		$showData = [
-			'id' => $orderMap->id . '',
-			'jumlah' => $orderMap->jumlah,
-			'status_checkout' => $orderMap->status_checkout,
-			'tanggal' => $orderMap->created_at->format('d-m-Y'),
-			'jam' => $orderMap->created_at->format('H:i'),
-			'pembeli' => $orderMap->pembeli->nama_lengkap,
-			'nomor_hp_pembeli' => $orderMap->pembeli->nomor_hp,
-			'email_pembeli' => $orderMap->pembeli->email,
-			'alamat_pembeli' => $orderMap->pembeli->alamat,
-			'status_feedback' => $orderMap->status_feedback,
+			'id' => $orderMapping->id . '',
+			'jumlah' => $orderMapping->jumlah,
+			'status_checkout' => $orderMapping->status_checkout,
+			'tanggal' => $orderMapping->created_at->format('d-m-Y'),
+			'jam' => $orderMapping->created_at->format('H:i'),
+			'pembeli' => $orderMapping->pembeli->nama_lengkap,
+			'nomor_hp_pembeli' => $orderMapping->pembeli->nomor_hp,
+			'email_pembeli' => $orderMapping->pembeli->email,
+			'alamat_pembeli' => $orderMapping->pembeli->alamat,
+			'status_feedback' => $orderMapping->status_feedback,
 			'produk' => [
-				'id' => $orderMap->produk_id . '',
-				'penjual' => $orderMap->produk->penjual->nama_lengkap,
-				'nama' => $orderMap->produk->nama,
-				'harga' => $orderMap->produk->harga,
-				'stok' => $orderMap->produk->stok,
-				'keterangan' => $orderMap->produk->keterangan,
-				'total_feedback' => $orderMap->produk->total_feedback,
+				'id' => $orderMapping->produk_id . '',
+				'penjual' => $orderMapping->produk->penjual->nama_lengkap,
+				'nama' => $orderMapping->produk->nama,
+				'harga' => $orderMapping->produk->harga,
+				'stok' => $orderMapping->produk->stok,
+				'keterangan' => $orderMapping->produk->keterangan,
+				'total_feedback' => $orderMapping->produk->total_feedback,
 				'gambar' => $gambar,
-				'potongan' => $orderMap->produk->promo_id ? $orderMap->produk->promo->potongan : 0,
-				'periode_awal' => $orderMap->produk->promo_id ? $orderMap->produk->promo->awal_periode : '',
-				'periode_akhir' => $orderMap->produk->promo_id ? $orderMap->produk->promo->akhir_periode : '',
-				'promo_nama' => $orderMap->produk->promo_id ? $orderMap->produk->promo->nama : '',
-				'promo_id' => $orderMap->produk->promo_id,
+				'potongan' => $orderMapping->produk->promo_id ? $orderMapping->produk->promo->potongan : 0,
+				'periode_awal' => $orderMapping->produk->promo_id ? $orderMapping->produk->promo->awal_periode : '',
+				'periode_akhir' => $orderMapping->produk->promo_id ? $orderMapping->produk->promo->akhir_periode : '',
+				'promo_nama' => $orderMapping->produk->promo_id ? $orderMapping->produk->promo->nama : '',
+				'promo_id' => $orderMapping->produk->promo_id,
 
 			]
 		];
@@ -123,17 +123,17 @@ class ApiOrderMappingController extends Controller
 	}
 
 
-	public function destroy(OrderMapping $order)
+	public function destroy(OrderMapping $orderMapping)
 	{
 		// if ($order->status_checkout === 'Keranjang')
-			$order->delete();
+			$orderMapping->delete();
 		return response()->json(['message' => 'berhasil mendelete dari keranjang']);
 	}
 
-	public function update(OrderMapping $order)
+	public function update(OrderMapping $orderMapping)
 	{
 		$data = request()->all();
-		$order->update($data);
+		$orderMapping->update($data);
 
 		return response()->json(['message' => 'berhasil mengupdate order']);
 	}
