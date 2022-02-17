@@ -144,6 +144,7 @@ class ApiProdukController extends Controller
 
     public function destroy(Produk $produk)
     {
+        // TODO:(yaumil) disini orders udah ganti sama order_mappings
         if ($produk->orders->count() == 0) {
             $produk->delete();
             return response()->json(['message' => 'berhasil mendelete produk']);

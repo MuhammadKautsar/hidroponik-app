@@ -58,10 +58,11 @@ class ApiOrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'produk_id' => 'required',
+            'penjual_id' => 'required',
             'pembeli_id' => 'required',
             'jumlah' => 'required|numeric',
             'total_harga' => 'required|numeric'
+
         ]);
 
 
@@ -530,65 +531,6 @@ class ApiOrderController extends Controller
         return response()->json(['total' => count($user->orders->where('status_checkout', '=', 'keranjang')->all())]);
     }
 
-    public function addQuantity(Order $order)
-    {
-        if ($order->jumlah + 1 <= $order->produk->stok) {
-            $order->update(['jumlah' => $order->jumlah + 1, 'total_harga' => $order->total_harga + $order->produk->harga]);
-        } else
-            return response()->json(['message' => 'stok terbatas']);
-
-        return response()->json(['message' => 'jumlah ditambah 1']);
-    }
-
-    public function minusQuantity(Order $order)
-    {
-
-
-        if ($order->jumlah - 1 <= $order->produk->stok && $order->jumlah - 1 >= 1) {
-
-            $order->update(['jumlah' => $order->jumlah - 1, 'total_harga' => $order->total_harga - $order->produk->harga]);
-        } else
-            return response()->json(['message' => 'gagal']);
-
-        return response()->json(['message' => 'jumlah dikurang 1']);
-    }
-
-    public function changeCheckoutStatus(Order $order)
-    {
-        $validator = Validator::make(request()->all(), [
-            'status_checkout' => 'required'
-        ]);
-
-
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()]);
-        }
-        $data = request()->validate(
-            [
-                'status_checkout' => 'required'
-            ]
-        );
-
-        $order->update($data);
-        if ($data['status_checkout'] == 'Beli') {
-            // hitung harga checkout
-            $hargaTotalProduk = $order->jumlah * $order->produk->harga;
-            if ($order->produk->promo_id) {
-                $promo = $hargaTotalProduk * ((float) $order->produk->promo->potongan) / 100;
-                $hargaTotalProduk = $hargaTotalProduk - $promo;
-            }
-            $order->update(['total_harga' => $hargaTotalProduk]);
-            $order->produk->update(['stok' => ($order->produk->stok - $order->jumlah)]);
-
-            if ($order->produk->penjual->notificationTokens) {
-                foreach ($order->produk->penjual->notificationTokens as $notif) {
-                    $this->sendNotification($notif->notificationToken, 'Pesanan Datang', 'Hai ' . $order->produk->penjual->nama_lengkap . ', Pesanan baru diterima');
-                }
-            }
-        }
-
-        return response()->json(['message' => 'berhasil merubah status checkout']);
-    }
     public function changeOrderStatus(Order $order)
     {
         $validator = Validator::make(request()->all(), [
