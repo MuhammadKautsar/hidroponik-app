@@ -79,11 +79,6 @@ class ApiOrderMappingController extends Controller
 		);
 		$data['status_checkout'] = 'Keranjang';
 		$data['status_feedback'] = 0;
-
-		$prevOrder = OrderMapping::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
-		if ($prevOrder) {
-			$prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah']]);
-		} else
 			$order = OrderMapping::create($data);
 
 		return response()->json(['message' => 'berhasil menambahkan Order']);
@@ -133,7 +128,7 @@ class ApiOrderMappingController extends Controller
 
 	public function destroy(OrderMapping $order)
 	{
-		if ($order->status_checkout === 'Beli')
+		// if ($order->status_checkout === 'Keranjang')
 			$order->delete();
 		return response()->json(['message' => 'berhasil mendelete dari keranjang']);
 	}

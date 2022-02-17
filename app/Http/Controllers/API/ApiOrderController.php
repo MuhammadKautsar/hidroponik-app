@@ -61,9 +61,12 @@ class ApiOrderController extends Controller
             'penjual_id' => 'required',
             'pembeli_id' => 'required',
             'jumlah' => 'required|numeric',
-            'total_harga' => 'required|numeric'
+            'total_harga' => 'required|numeric',
+            'order_mapping_id' => 'required|array'
 
         ]);
+
+        $om = OrderMapping::whereIn('id', $data['order_mapping_id']);
 
 
         if ($validator->fails()) {
@@ -76,19 +79,20 @@ class ApiOrderController extends Controller
                 'produk_id' => 'required',
                 'pembeli_id' => 'required',
                 'jumlah' => 'required|numeric',
-                'total_harga' => 'required|numeric'
+                'total_harga' => 'required|numeric',
+                'order_mapping_id' => 'required|array'
             ]
         );
-        $data['status_checkout'] = 'keranjang';
         $data['status_order'] = 'Belum';
         $data['status_feedback'] = 0;
         $data['harga_jasa_pengiriman'] = 0;
 
-        $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
-        if ($prevOrder) {
-            $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
-        } else
+        // $prevOrder = Order::where('produk_id', '=', $data['produk_id'])->where('pembeli_id', '=', $data['pembeli_id'])->where('status_checkout', '=', 'keranjang')->whereNotIn('status_order', ['Batal', 'Selesai'])->first();
+        // if ($prevOrder) {
+        //     $prevOrder->update(['jumlah' => $prevOrder->jumlah + $data['jumlah'], 'total_harga' => $prevOrder->total_harga + $data['total_harga']]);
+        // } else
             $order = Order::create($data);
+            $om->update(['order_id' => $order->id, 'status_checkout' => 'Beli']);
 
         return response()->json(['message' => 'berhasil menambahkan Order']);
     }
