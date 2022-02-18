@@ -264,6 +264,66 @@ class ApiOrderController extends Controller
         return response()->json($showData);
     }
 
+    public function getOrder(User $user)
+    {
+        $showData = array();
+        $today = strtotime(now());
+
+        $orders = Order::where('pembeli_id', '=', $user->id)->whereNotIn('status_order', ['Batal', 'Selesai'])->get();
+        // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
+        foreach ($orders as $row) {
+            // expired 2 hari kemudian
+            if ($row->status_order == 'Belum') {
+
+                $expiredDate =  strtotime($row->created_at->modify('+2 days'));
+                if ($today >= $expiredDate) {
+                    $row->update(["status_order" => 'Batal']);
+                    continue;
+                }
+            }
+            $tempOrderMapping = [];
+            foreach ($row->order_mappings as $om) {
+                $gambar = array();
+                foreach ($om->produk->images as $image) {
+                    array_push($gambar, $image->path_image);
+                }
+                array_push($tempOrderMapping, [
+                    'id' => $om->id . '',
+                    'produk_id' => $om->produk_id . '',
+                    'status_feedback' => $om->status_feedback,
+                    'nama' => $om->produk->nama,
+                    'jumlah' => $om->jumlah,
+                    'harga' => $om->produk->harga,
+                    'gambar' => $gambar,
+                ]);
+            }
+
+
+
+            array_push($showData, [
+                'id' => $row->id . '',
+                'total_harga' => $row->total_harga,
+                'status_order' => $row->status_order,
+                'tanggal' => $row->created_at->format('d-m-Y'),
+                'jam' => $row->created_at->format('H:i'),
+                'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
+                'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
+                'penjual' => $row->penjual->nama_lengkap,
+                'id_penjual' => $row->penjual_id,
+                'nomor_hp_penjual' => $row->penjual->nomor_hp,
+                'email_penjual' => $row->penjual->email,
+                'alamat_penjual' => $row->penjual->alamat,
+                'order_mapping' => $tempOrderMapping,
+
+
+            ]);
+        }
+        return response()->json($showData);
+    }
+
     public function getOrderByCheckout($status, User $user)
     {
         $showData = array();
