@@ -8,6 +8,7 @@ use App\Models\Feedback;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\OrderMapping;
 use Illuminate\Support\Facades\Validator;
 
 class ApiFeedbackController extends Controller
@@ -64,7 +65,7 @@ class ApiFeedbackController extends Controller
             ]
         );
 
-        $order = Order::find($request->order_mapping_id);
+        $order = OrderMapping::find($request->order_mapping_id);
         $order->update(['status_feedback' => 1]);
         $feedback = Feedback::create($data);
 
