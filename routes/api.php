@@ -68,6 +68,7 @@ Route::prefix('order')->group(function () {
     // Route::get('total/{user}', [ApiOrderController::class, 'getJumlahOrderPembeli'])->name('getJumlahOrderPembeli');
     Route::prefix('status')->group(function () {
         Route::get('checkout/beli/{user}', [ApiOrderController::class, 'getOrder'])->name('getOrder');
+        Route::get('checkout/beli/{user}/selesai', [ApiOrderController::class, 'getOrderSelesai'])->name('getOrderSelesai');
 
         // Route::get('checkout/penjual/{status}/{user}', [ApiOrderController::class, 'getOrderByCheckoutPenjual'])->name('getOrderByCheckoutPenjual');
         // Route::get('checkout/{status}/selesai/{user}', [ApiOrderController::class, 'getOrderByCheckoutSelesai'])->name('getOrderByCheckoutSelesai');
