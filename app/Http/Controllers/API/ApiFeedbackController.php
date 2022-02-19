@@ -45,7 +45,7 @@ class ApiFeedbackController extends Controller
         $validator = Validator::make($request->all(), [
             'produk_id' => 'required',
             'user_id' => 'required',
-            'order_id' => 'required',
+            'order_mapping_id' => 'required',
             'komentar' => 'required',
             'rating' => 'required|numeric'
         ]);
@@ -54,7 +54,6 @@ class ApiFeedbackController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()]);
         }
-
 
         $data = $request->validate(
             [
@@ -65,12 +64,7 @@ class ApiFeedbackController extends Controller
             ]
         );
 
-        $idOrder = $request->validate(
-            [
-                'order_id' => 'required',
-            ]
-        );
-        $order = Order::find($idOrder['order_id']);
+        $order = Order::find($request->order_mapping_id);
         $order->update(['status_feedback' => 1]);
         $feedback = Feedback::create($data);
 
