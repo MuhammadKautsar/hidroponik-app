@@ -30,24 +30,24 @@ class HomeController extends Controller
     public function index()
     {
         $jumlah_produk = Produk::all()->count();
-        $jumlah_pesanan = Order::all()->where('status_checkout', 'Beli')->count();
+        $jumlah_pesanan = Order::all()->count();
         $jumlah_promo = Promo::all()->count();
         $jumlah_laporan = Report::all()->count();
         $jumlah_user = User::all()->count();
         $jumlah_ulasan = Feedback::all()->count();
 
-        $orders = DB::table('produks')
-            ->where('penjual_id', '=', Auth::user()->id)
-            ->where('produks.deleted_at', '=', null)
-            ->join('order_mappings', 'order_mappings.produk_id', '=', 'produks.id')
-            ->where('order_mappings.status_checkout', 'Beli')
-            ->where('order_mappings.deleted_at', '=', null)->get();
+        // $orders = DB::table('produks')
+        //     ->where('penjual_id', '=', Auth::user()->id)
+        //     ->where('produks.deleted_at', '=', null)
+        //     ->join('order_mappings', 'order_mappings.produk_id', '=', 'produks.id')
+        //     ->where('order_mappings.status_checkout', 'Beli')
+        //     ->where('order_mappings.deleted_at', '=', null)->get();
 
-        $belum = $orders->where('status_order', 'Belum')->count();
-        $diproses = $orders->where('status_order', 'Diproses')->count();
-        $dikirim = $orders->where('status_order', 'Dikirim')->count();
-        $selesai = $orders->where('status_order', 'Selesai')->count();
-        $batal = $orders->where('status_order', 'Batal')->count();
+        $belum = Order::all()->where('status_order', 'Belum')->count();
+        $diproses = Order::all()->where('status_order', 'Diproses')->count();
+        $dikirim = Order::all()->where('status_order', 'Dikirim')->count();
+        $selesai = Order::all()->where('status_order', 'Selesai')->count();
+        $batal = Order::all()->where('status_order', 'Batal')->count();
 
         $feedbacks = DB::table('produks')
             ->where('penjual_id', '=', Auth::user()->id)

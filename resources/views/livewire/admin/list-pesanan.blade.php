@@ -37,21 +37,35 @@
                 </thead>
                 <tbody class="list">
                   @php $no = 0 @endphp
+                  @php $i = 0 @endphp
+                  @php $j = 0 @endphp
+                  @php $k = 0 @endphp
                   @forelse($data_order as $item)
                     {{-- @if ($item->status_checkout == "Beli") --}}
                         @php $no++ @endphp
                         <tr>
                         <td class="text-center">{{$no}}</td>
-                        <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
+                        <td class="text-center">{{$item['created_at']->format('d-m-Y H:i')}}</td>
                         <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                            @foreach ($item->order_mappings as $pesanan)
+                                @php $i++ @endphp
+                            @endforeach
                         <td class="text-center">
                             @foreach ($item->order_mappings as $pesanan)
+                                @php $j++ @endphp
                                 {{$pesanan->produk->nama}}
+                                @if($j < $i)
+                                    ,
+                                @endif
                             @endforeach
                         </td>
                         <td class="text-center">
                             @foreach ($item->order_mappings as $pesanan)
+                                @php $k++ @endphp
                                 {{$pesanan->jumlah}}
+                                @if($k < $i)
+                                    ,
+                                @endif
                             @endforeach
                         </td>
                         <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
