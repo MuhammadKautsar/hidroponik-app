@@ -77,7 +77,15 @@ class ApiOrderMappingController extends Controller
 		);
 		$data['status_checkout'] = 'Keranjang';
 		$data['status_feedback'] = 0;
-			$order = OrderMapping::create($data);
+		$om = OrderMapping::where('pembeli_id', $data['pembeli_id'])->where('produk_id', $data['produk_id'])->where('status_checkout', 'Keranjang');
+		if ($om->exists()) {
+			$jumlah = $om->first()->jumlah;
+			$om->update([
+				'jumlah' => $jumlah + $data['jumlah'],
+			]);
+			return response()->json(['message' => 'berhasil menambahkan Order']);
+		}
+		$order = OrderMapping::create($data);
 
 		return response()->json(['message' => 'berhasil menambahkan Order']);
 	}
@@ -126,7 +134,7 @@ class ApiOrderMappingController extends Controller
 	public function destroy(OrderMapping $orderMap)
 	{
 		// if ($order->status_checkout === 'Keranjang')
-			$orderMap->delete();
+		$orderMap->delete();
 		return response()->json(['message' => 'berhasil mendelete dari keranjang']);
 	}
 
