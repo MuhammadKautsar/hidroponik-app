@@ -43,11 +43,11 @@ class HomeController extends Controller
         //     ->where('order_mappings.status_checkout', 'Beli')
         //     ->where('order_mappings.deleted_at', '=', null)->get();
 
-        $belum = Order::all()->where('status_order', 'Belum')->count();
-        $diproses = Order::all()->where('status_order', 'Diproses')->count();
-        $dikirim = Order::all()->where('status_order', 'Dikirim')->count();
-        $selesai = Order::all()->where('status_order', 'Selesai')->count();
-        $batal = Order::all()->where('status_order', 'Batal')->count();
+        $belum = Order::all()->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Belum')->count();
+        $diproses = Order::all()->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Diproses')->count();
+        $dikirim = Order::all()->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Dikirim')->count();
+        $selesai = Order::all()->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
+        $batal = Order::all()->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
 
         $feedbacks = DB::table('produks')
             ->where('penjual_id', '=', Auth::user()->id)
