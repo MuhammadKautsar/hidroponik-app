@@ -336,7 +336,7 @@ class ApiOrderController extends Controller
     {
         $showData = array();
 
-        $orders = Order::where('pembeli_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->get();
+        $orders = Order::where('pembeli_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->orderBy('updated_at', 'DESC')->get();
         // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
         foreach ($orders as $row) {
             // expired 2 hari kemudian
@@ -562,7 +562,7 @@ class ApiOrderController extends Controller
     {
         $showData = array();
 
-        $orders = Order::where('penjual_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->get();
+        $orders = Order::where('penjual_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->orderBy('updated_at', 'DESC')->get();
         // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
         foreach ($orders as $row) {
             // expired 2 hari kemudian
