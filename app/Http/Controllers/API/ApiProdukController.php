@@ -43,8 +43,8 @@ class ApiProdukController extends Controller
                 'harga' => $row->harga, // number
                 'stok' => $row->stok, // number
                 'keterangan' => $row->keterangan, // string
-                'satuan' => $row->keterangan, // string
-                'jumlah_per_satuan' => $row->keterangan, // string
+                'satuan' => $row->satuan, // string
+                'jumlah_per_satuan' => $row->jumlah_per_satuan, // string
                 'penjual' => $row->penjual->username, // string
                 'foto_penjual' => $row->penjual->profile_image,
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
@@ -72,7 +72,7 @@ class ApiProdukController extends Controller
             'keterangan' => 'string',
             'jumlah_per_satuan' => 'numeric',
             'satuan' => 'string',
-            //gambar
+            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:5128',
         ]);
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()]);
@@ -87,6 +87,7 @@ class ApiProdukController extends Controller
                 'keterangan' => 'string',
                 'jumlah_per_satuan' => 'numeric',
                 'satuan' => 'string',
+                'gambar' => 'required|image|mimes:jpeg,png,jpg|max:5128',
                 //gambar
             ]
         );
@@ -133,8 +134,8 @@ class ApiProdukController extends Controller
             'harga' => $produk->harga, // number
             'stok' => $produk->stok, // number
             'keterangan' => $produk->keterangan, // string
-            'satuan' => $produk->keterangan, // string
-            'jumlah_per_satuan' => $produk->keterangan, // string
+            'satuan' => $produk->satuan, // string
+            'jumlah_per_satuan' => $produk->jumlah_per_satuan,  // string
             'penjual' => $produk->penjual->username, // string
             'foto_penjual' => $produk->penjual->profile_image, // string         
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
@@ -219,8 +220,8 @@ class ApiProdukController extends Controller
                 'harga' => $produk->harga, // number
                 'stok' => $produk->stok, // number
                 'keterangan' => $produk->keterangan, // string
-                'satuan' => $produk->keterangan, // string
-                'jumlah_per_satuan' => $produk->keterangan, // string
+                'satuan' => $produk->satuan, // string
+                'jumlah_per_satuan' => $produk->jumlah_per_satuan,  // string
                 'penjual' => $produk->penjual->username, // string
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
