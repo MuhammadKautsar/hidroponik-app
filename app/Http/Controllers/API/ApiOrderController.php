@@ -17,9 +17,23 @@ class ApiOrderController extends Controller
         $data = Order::orderBy('updated_at', 'DESC')->get();
 
         foreach ($data as $row) {
-            $gambar = array();
-            foreach ($row->produk->images as $image) {
-                array_push($gambar, $image->path_image);
+
+            $tempOrderMapping = [];
+
+            foreach ($row->order_mappings as $om) {
+                $gambar = array();
+                foreach ($om->produk->images as $image) {
+                    array_push($gambar, $image->path_image);
+                }
+                array_push($tempOrderMapping, [
+                    'id' => $om->id . '',
+                    'produk_id' => $om->produk_id . '',
+                    'status_feedback' => $om->status_feedback,
+                    'nama' => $om->produk->nama,
+                    'jumlah' => $om->jumlah,
+                    'harga' => $om->produk->harga,
+                    'gambar' => $gambar,
+                ]);
             }
             array_push($showData, [
                 'id' => $row->id . '',
@@ -110,10 +124,25 @@ class ApiOrderController extends Controller
 
     public function show(Order $order)
     {
-        $gambar = array();
-        foreach ($order->produk->images as $image) {
-            array_push($gambar, $image->path_image);
+
+        $tempOrderMapping = [];
+
+        foreach ($order->order_mappings as $om) {
+            $gambar = array();
+            foreach ($om->produk->images as $image) {
+                array_push($gambar, $image->path_image);
+            }
+            array_push($tempOrderMapping, [
+                'id' => $om->id . '',
+                'produk_id' => $om->produk_id . '',
+                'status_feedback' => $om->status_feedback,
+                'nama' => $om->produk->nama,
+                'jumlah' => $om->jumlah,
+                'harga' => $om->produk->harga,
+                'gambar' => $gambar,
+            ]);
         }
+
         $showData = [
             'id' => $order->id . '',
             'jumlah' => $order->jumlah,
