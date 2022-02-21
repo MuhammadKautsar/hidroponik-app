@@ -550,7 +550,7 @@ class ApiOrderController extends Controller
         return response()->json($showData);
     }
 
-    public function getOrderPenjualSelesai($status, User $user)
+    public function getOrderPenjualSelesai(User $user)
     {
         $showData = array();
 
