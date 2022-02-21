@@ -87,7 +87,6 @@ class ApiProdukController extends Controller
                 'keterangan' => 'string',
                 'jumlah_per_satuan' => 'numeric',
                 'satuan' => 'string',
-                'gambar' => 'required|array',
                 //gambar
             ]
         );
