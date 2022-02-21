@@ -72,7 +72,7 @@ class ApiProdukController extends Controller
             'keterangan' => 'string',
             'jumlah_per_satuan' => 'numeric',
             'satuan' => 'string',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:5128',
+            'gambar' => 'required|array',
         ]);
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()]);
@@ -87,7 +87,7 @@ class ApiProdukController extends Controller
                 'keterangan' => 'string',
                 'jumlah_per_satuan' => 'numeric',
                 'satuan' => 'string',
-                'gambar' => 'required|image|mimes:jpeg,png,jpg|max:5128',
+                'gambar' => 'required|array',
                 //gambar
             ]
         );
