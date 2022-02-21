@@ -438,67 +438,64 @@ class ApiOrderController extends Controller
         return response()->json($showData);
     }
 
-    public function getOrderByCheckoutPenjual($status, User $user)
+    public function getOrderPenjual(User $user)
     {
         $showData = array();
         $today = strtotime(now());
 
-        foreach ($user->produks as $row) {
-            foreach ($row->orders as $order) {
-                if (strtolower($order->status_checkout) != $status) continue;
-                if (in_array($order->status_order, ['Batal', 'Selesai'])) continue;
-                // expired 2 hari kemudian
-                if ($order->status_order == 'Belum') {
-                    if ($row->status_checkout == 'Beli') {
-                        $expiredDate =  strtotime($order->created_at->modify('+2 days'));
-                        if ($today >= $expiredDate) {
-                            $order->update(["status_order" => 'Batal']);
-                            continue;
-                        }
-                    }
+        $orders = Order::where('penjual_id', '=', $user->id)->whereNotIn('status_order', ['Batal', 'Selesai'])->get();
+
+        foreach ($orders as $row) {
+            // expired 2 hari kemudian
+            if ($row->status_order == 'Belum') {
+
+                $expiredDate =  strtotime($row->created_at->modify('+2 days'));
+                if ($today >= $expiredDate) {
+                    $row->update(["status_order" => 'Batal']);
+                    continue;
                 }
+            }
+            $tempOrderMapping = [];
+            foreach ($row->order_mappings as $om) {
                 $gambar = array();
-                foreach ($order->produk->images as $image) {
+                foreach ($om->produk->images as $image) {
                     array_push($gambar, $image->path_image);
                 }
-                array_push($showData, [
-                    'id' => $order->id . '',
-                    'jumlah' => $order->jumlah,
-                    'total_harga' => $order->total_harga,
-                    'status_checkout' => $order->status_checkout,
-                    'status_order' => $order->status_order,
-                    'tanggal' => $order->created_at->format('d-m-Y'),
-                    'jam' => $order->created_at->format('H:i'),
-                    'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
-                    'pembeli' => $order->pembeli->nama_lengkap,
-                    'nomor_hp_pembeli' => $order->pembeli->nomor_hp,
-                    'email_pembeli' => $order->pembeli->email,
-                    'alamat_pembeli' => $order->pembeli->alamat,
-                    'status_feedback' => $order->status_feedback,
-                    'produk' => [
-                        'id' => $order->produk_id . '',
-                        'penjual' => $order->produk->penjual->nama_lengkap,
-                        'id_penjual' => $order->produk->penjual_id,
-                        'username_penjual' => $order->produk->penjual->username,
-                        'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
-                        'email_penjual' => $order->produk->penjual->email,
-                        'alamat_penjual' => $order->produk->penjual->alamat,
-                        'nama' => $order->produk->nama,
-                        'harga' => $order->produk->harga,
-                        'stok' => $order->produk->stok,
-                        'keterangan' => $order->produk->keterangan,
-                        'total_feedback' => $order->produk->total_feedback,
-                        'gambar' => $gambar,
-                        'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
-                        'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
-                        'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
-                        'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
-                        'promo_id' => $order->produk->promo_id,
-
-                    ]
+                array_push($tempOrderMapping, [
+                    'id' => $om->id . '',
+                    'produk_id' => $om->produk_id . '',
+                    'status_feedback' => $om->status_feedback,
+                    'nama' => $om->produk->nama,
+                    'jumlah' => $om->jumlah,
+                    'harga' => $om->produk->harga,
+                    'gambar' => $gambar,
                 ]);
             }
+
+
+
+            array_push($showData, [
+                'id' => $row->id . '',
+                'total_harga' => $row->total_harga,
+                'status_order' => $row->status_order,
+                'tanggal' => $row->created_at->format('d-m-Y'),
+                'jam' => $row->created_at->format('H:i'),
+                'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
+                'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
+                'penjual' => $row->penjual->nama_lengkap,
+                'id_penjual' => $row->penjual_id,
+                'nomor_hp_penjual' => $row->penjual->nomor_hp,
+                'email_penjual' => $row->penjual->email,
+                'alamat_penjual' => $row->penjual->alamat,
+                'order_mapping' => $tempOrderMapping,
+
+
+            ]);
         }
+
         return response()->json($showData);
     }
 
@@ -553,56 +550,53 @@ class ApiOrderController extends Controller
         return response()->json($showData);
     }
 
-    public function getOrderByCheckoutSelesaiPenjual($status, User $user)
+    public function getOrderPenjualSelesai($status, User $user)
     {
         $showData = array();
-        $orders = Order::select('orders.*')
-            ->join('produks', 'orders.produk_id', '=', 'produks.id')
-            ->where('produks.penjual_id', $user->id)->orderBy('orders.updated_at', 'DESC')->get();
 
-        foreach ($orders as $order) {
-            if ($order->status_checkout != $status &&  in_array($order->status_order, ['Belum', 'Dikirim', 'Diproses'])) continue;
+        $orders = Order::where('penjual_id', '=', $user->id)->whereIn('status_order', ['Batal', 'Selesai'])->get();
+        // $orders = Order::where('status_checkout', '=', $status)->where('pembeli_id', '=', $user->id)->get();
+        foreach ($orders as $row) {
+            // expired 2 hari kemudian
 
-            $gambar = array();
-            foreach ($order->produk->images as $image) {
-                array_push($gambar, $image->path_image);
-            }
-            array_push($showData, [
-                'id' => $order->id . '',
-                'produk_id' => $order->produk_id,
-                'jumlah' => $order->jumlah,
-                'total_harga' => $order->total_harga,
-                'status_checkout' => $order->status_checkout,
-                'status_order' => $order->status_order,
-                'tanggal' => $order->created_at->format('d-m-Y'),
-                'jam' => $order->created_at->format('H:i'),
-                'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
-                'pembeli' => $order->pembeli->nama_lengkap,
-                'nomor_hp_pembeli' => $order->pembeli->nomor_hp,
-                'email_pembeli' => $order->pembeli->email,
-                'alamat_pembeli' => $order->pembeli->alamat,
-                'status_feedback' => $order->status_feedback,
-                'produk' => [
-                    'id' => $order->produk_id . '',
-                    'penjual' => $order->produk->penjual->nama_lengkap,
-                    'id_penjual' => $order->produk->penjual_id,
-                    'username_penjual' => $order->produk->penjual->username,
-                    'nomor_hp_penjual' => $order->produk->penjual->nomor_hp,
-                    'email_penjual' => $order->produk->penjual->email,
-                    'alamat_penjual' => $order->produk->penjual->alamat,
-                    'nama' => $order->produk->nama,
-                    'harga' => $order->produk->harga,
-                    'stok' => $order->produk->stok,
-                    'keterangan' => $order->produk->keterangan,
-                    'total_feedback' => $order->produk->total_feedback,
+            $tempOrderMapping = [];
+            foreach ($row->order_mappings as $om) {
+                $gambar = array();
+                foreach ($om->produk->images as $image) {
+                    array_push($gambar, $image->path_image);
+                }
+                array_push($tempOrderMapping, [
+                    'id' => $om->id . '',
+                    'produk_id' => $om->produk_id . '',
+                    'status_feedback' => $om->status_feedback,
+                    'nama' => $om->produk->nama,
+                    'jumlah' => $om->jumlah,
+                    'harga' => $om->produk->harga,
                     'gambar' => $gambar,
-                    'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
-                    'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
-                    'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
-                    'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
-                    'promo_id' => $order->produk->promo_id,
+                ]);
+            }
 
-                ]
+
+
+            array_push($showData, [
+                'id' => $row->id . '',
+                'total_harga' => $row->total_harga,
+                'status_order' => $row->status_order,
+                'tanggal' => $row->created_at->format('d-m-Y'),
+                'jam' => $row->created_at->format('H:i'),
+                'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
+                'pembeli' => $row->pembeli->nama_lengkap,
+                'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
+                'email_pembeli' => $row->pembeli->email,
+                'alamat_pembeli' => $row->pembeli->alamat,
+                'penjual' => $row->penjual->nama_lengkap,
+                'id_penjual' => $row->penjual_id,
+                'nomor_hp_penjual' => $row->penjual->nomor_hp,
+                'email_penjual' => $row->penjual->email,
+                'alamat_penjual' => $row->penjual->alamat,
+                'order_mapping' => $tempOrderMapping,
+
+
             ]);
         }
         return response()->json($showData);

@@ -69,10 +69,10 @@ Route::prefix('order')->group(function () {
     Route::prefix('status')->group(function () {
         Route::get('checkout/beli/{user}', [ApiOrderController::class, 'getOrder'])->name('getOrder');
         Route::get('checkout/beli/{user}/selesai', [ApiOrderController::class, 'getOrderSelesai'])->name('getOrderSelesai');
-
-        // Route::get('checkout/penjual/{status}/{user}', [ApiOrderController::class, 'getOrderByCheckoutPenjual'])->name('getOrderByCheckoutPenjual');
+        Route::get('checkout/beli/penjual/{user}', [ApiOrderController::class, 'getOrderPenjual'])->name('getOrderPenjual');
+        Route::get('checkout/beli/penjual/{user}/selesai', [ApiOrderController::class, 'getOrderPenjualSelesai'])->name('getOrderPenjualSelesai');
         // Route::get('checkout/{status}/selesai/{user}', [ApiOrderController::class, 'getOrderByCheckoutSelesai'])->name('getOrderByCheckoutSelesai');
-        // Route::get('checkout/penjual/{status}/selesai/{user}', [ApiOrderController::class, 'getOrderByCheckoutSelesaiPenjual'])->name('getOrderByCheckoutSelesaiPenjual');
+
         // Route::get('order/{status}/{user}', [ApiOrderController::class, 'getOrderByOrder'])->name('getOrderByOrder');
         Route::post('order/{order}', [ApiOrderController::class, 'changeOrderStatus'])->name('changeOrderStatus');
     });
