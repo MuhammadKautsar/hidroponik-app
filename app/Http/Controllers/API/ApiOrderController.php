@@ -48,22 +48,12 @@ class ApiOrderController extends Controller
                 'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
                 'email_pembeli' => $row->pembeli->email,
                 'alamat_pembeli' => $row->pembeli->alamat,
-                'status_feedback' => $row->status_feedback,
-                'produk' => [
-                    'id' => $row->produk_id . '',
-                    'penjual' => $row->produk->penjual->nama_lengkap,
-                    'nama' => $row->produk->nama,
-                    'harga' => $row->produk->harga,
-                    'stok' => $row->produk->stok,
-                    'keterangan' => $row->produk->keterangan,
-                    'total_feedback' => $row->produk->total_feedback,
-                    'gambar' => $gambar,
-                    'potongan' => $row->produk->promo_id ? $row->produk->promo->potongan : 0,
-                    'periode_awal' => $row->produk->promo_id ? $row->produk->promo->awal_periode : '',
-                    'periode_akhir' => $row->produk->promo_id ? $row->produk->promo->akhir_periode : '',
-                    'promo_nama' => $row->produk->promo_id ? $row->produk->promo->nama : '',
-                    'promo_id' => $row->produk->promo_id,
-                ]
+                'penjual' => $row->penjual->nama_lengkap,
+                'id_penjual' => $row->penjual_id,
+                'nomor_hp_penjual' => $row->penjual->nomor_hp,
+                'email_penjual' => $row->penjual->email,
+                'alamat_penjual' => $row->penjual->alamat,
+                'order_mapping' => $tempOrderMapping,
             ]);
         }
 
@@ -156,23 +146,12 @@ class ApiOrderController extends Controller
             'nomor_hp_pembeli' => $order->pembeli->nomor_hp,
             'email_pembeli' => $order->pembeli->email,
             'alamat_pembeli' => $order->pembeli->alamat,
-            'status_feedback' => $order->status_feedback,
-            'produk' => [
-                'id' => $order->produk_id . '',
-                'penjual' => $order->produk->penjual->nama_lengkap,
-                'nama' => $order->produk->nama,
-                'harga' => $order->produk->harga,
-                'stok' => $order->produk->stok,
-                'keterangan' => $order->produk->keterangan,
-                'total_feedback' => $order->produk->total_feedback,
-                'gambar' => $gambar,
-                'potongan' => $order->produk->promo_id ? $order->produk->promo->potongan : 0,
-                'periode_awal' => $order->produk->promo_id ? $order->produk->promo->awal_periode : '',
-                'periode_akhir' => $order->produk->promo_id ? $order->produk->promo->akhir_periode : '',
-                'promo_nama' => $order->produk->promo_id ? $order->produk->promo->nama : '',
-                'promo_id' => $order->produk->promo_id,
-
-            ]
+            'penjual' => $order->penjual->nama_lengkap,
+            'id_penjual' => $order->penjual_id,
+            'nomor_hp_penjual' => $order->penjual->nomor_hp,
+            'email_penjual' => $order->penjual->email,
+            'alamat_penjual' => $order->penjual->alamat,
+            'order_mapping' => $tempOrderMapping,
         ];
         return response()->json($showData);
     }
