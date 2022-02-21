@@ -70,7 +70,8 @@ class ApiProdukController extends Controller
             'penjual_id' => 'required',
             'promo_id' => 'numeric',
             'keterangan' => 'string',
-            'jumlah_per_satuan' => 'numeric'
+            'jumlah_per_satuan' => 'numeric',
+            'satuan' => 'string',
             //gambar
         ]);
         if ($validator->fails()) {
@@ -84,7 +85,8 @@ class ApiProdukController extends Controller
                 'penjual_id' => 'required',
                 'promo_id' => 'numeric',
                 'keterangan' => 'string',
-                'jumlah_per_satuan' => 'numeric'
+                'jumlah_per_satuan' => 'numeric',
+                'satuan' => 'string',
                 //gambar
             ]
         );
