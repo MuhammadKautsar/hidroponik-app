@@ -43,6 +43,8 @@ class ApiProdukController extends Controller
                 'harga' => $row->harga, // number
                 'stok' => $row->stok, // number
                 'keterangan' => $row->keterangan, // string
+                'satuan' => $row->keterangan, // string
+                'jumlah_per_satuan' => $row->keterangan, // string
                 'penjual' => $row->penjual->username, // string
                 'foto_penjual' => $row->penjual->profile_image,
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
@@ -68,6 +70,7 @@ class ApiProdukController extends Controller
             'penjual_id' => 'required',
             'promo_id' => 'numeric',
             'keterangan' => 'string',
+            'jumlah_per_satuan' => 'numeric'
             //gambar
         ]);
         if ($validator->fails()) {
@@ -81,6 +84,7 @@ class ApiProdukController extends Controller
                 'penjual_id' => 'required',
                 'promo_id' => 'numeric',
                 'keterangan' => 'string',
+                'jumlah_per_satuan' => 'numeric'
                 //gambar
             ]
         );
@@ -127,6 +131,8 @@ class ApiProdukController extends Controller
             'harga' => $produk->harga, // number
             'stok' => $produk->stok, // number
             'keterangan' => $produk->keterangan, // string
+            'satuan' => $produk->keterangan, // string
+            'jumlah_per_satuan' => $produk->keterangan, // string
             'penjual' => $produk->penjual->username, // string
             'foto_penjual' => $produk->penjual->profile_image, // string         
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
@@ -211,6 +217,8 @@ class ApiProdukController extends Controller
                 'harga' => $produk->harga, // number
                 'stok' => $produk->stok, // number
                 'keterangan' => $produk->keterangan, // string
+                'satuan' => $produk->keterangan, // string
+                'jumlah_per_satuan' => $produk->keterangan, // string
                 'penjual' => $produk->penjual->username, // string
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
