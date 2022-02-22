@@ -169,7 +169,7 @@ class ApiProdukController extends Controller
     public function update(Produk $produk)
     {
         $data = request()->all();
-        if ($data['promo_id'])
+        if (isset($data['promo_id']))
             if ($data['promo_id'] == '') {
                 $data['promo_id'] = NULL;
             }
