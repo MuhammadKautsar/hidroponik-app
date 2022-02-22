@@ -35,6 +35,7 @@ class Produk extends Model
     {
         static::deleting(function ($produk) {
             $produk->orders()->delete();
+            $produk->order_mappings()->delete();
             $produk->feedbacks()->delete();
         });
     }
@@ -42,9 +43,9 @@ class Produk extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('nama', 'like', '%'.$query.'%')
-                ->orWhere('harga', 'like', '%'.$query.'%')
-                ->orWhere('stok', 'like', '%'.$query.'%');
+            : static::where('nama', 'like', '%' . $query . '%')
+            ->orWhere('harga', 'like', '%' . $query . '%')
+            ->orWhere('stok', 'like', '%' . $query . '%');
     }
 
     public function feedbacks()
@@ -55,6 +56,11 @@ class Produk extends Model
     public function order_mappings()
     {
         return $this->hasMany(OrderMapping::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_mappings', 'produk_id', 'order_id');
     }
 
     public function images()
