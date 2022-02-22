@@ -33,6 +33,7 @@ class ApiOrderController extends Controller
                     'jumlah' => $om->jumlah,
                     'harga' => $om->produk->harga,
                     'gambar' => $gambar,
+                    'penjual_produk' => $om->produk->penjual->username,
                 ]);
             }
             array_push($showData, [
@@ -130,6 +131,7 @@ class ApiOrderController extends Controller
                 'jumlah' => $om->jumlah,
                 'harga' => $om->produk->harga,
                 'gambar' => $gambar,
+                'penjual_produk' => $om->produk->penjual->username,
             ]);
         }
 
@@ -203,6 +205,7 @@ class ApiOrderController extends Controller
                     'jumlah' => $om->jumlah,
                     'harga' => $om->produk->harga,
                     'gambar' => $gambar,
+                    'penjual_produk' => $om->produk->penjual->username,
                 ]);
             }
 
@@ -255,6 +258,7 @@ class ApiOrderController extends Controller
                     'jumlah' => $om->jumlah,
                     'harga' => $om->produk->harga,
                     'gambar' => $gambar,
+                    'penjual_produk' => $om->produk->penjual->username,
                 ]);
             }
 
@@ -377,6 +381,7 @@ class ApiOrderController extends Controller
                     'jumlah' => $om->jumlah,
                     'harga' => $om->produk->harga,
                     'gambar' => $gambar,
+                    'penjual_produk' => $om->produk->penjual->username,
                 ]);
             }
 
@@ -481,6 +486,7 @@ class ApiOrderController extends Controller
                     'jumlah' => $om->jumlah,
                     'harga' => $om->produk->harga,
                     'gambar' => $gambar,
+                    'penjual_produk' => $om->produk->penjual->username,
                 ]);
             }
 
