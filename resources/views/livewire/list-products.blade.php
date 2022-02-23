@@ -44,6 +44,8 @@
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    <th class="text-center" scope="col">Satuan</th>
+                    <th class="text-center" scope="col">Jumlah/Satuan</th>
                     {{-- <th class="text-center" scope="col">Harga Promo</th> --}}
                     <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
@@ -76,6 +78,8 @@
                             Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
                         @endif
                       <td class="text-center">{{$item['stok']}}</td>
+                      <td class="text-center">{{$item['satuan']}}</td>
+                      <td class="text-center">{{$item['jumlah_per_satuan']}}</td>
                       <td class="text-center">{{ Str::limit($item->keterangan, 25) }}</td>
                       <td class="text-center">
                         <a href="/produk/{{$item->id}}/edit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Ubah</a>
@@ -121,7 +125,7 @@
                 @csrf
                 {{-- <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Cover</label><br>
-                  <input name="gambar" type="file" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input name="gambar" type="file">
                 </div> --}}
                 <div class="mb-3">
                   <label for="" class="form-label">Gambar</label><br>
@@ -138,7 +142,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                  <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror">
                   @error('nama')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -157,21 +161,41 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Harga</label>
-                  <input name="harga" type="number" class="form-control @error('harga') is-invalid @enderror" id="exampleInputEmail1">
+                  <input name="harga" type="number" class="form-control @error('harga') is-invalid @enderror">
                   @error('harga')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Stok</label>
-                  <input name="stok" type="number" class="form-control @error('stok') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <input name="stok" type="number" class="form-control @error('stok') is-invalid @enderror">
                   @error('stok')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Satuan</label>
+                    <select name="satuan" class="form-control @error('satuan') is-invalid @enderror">
+                        <option value="gram">Gram</Gption>
+                        <option value="Kg">Kg</option>
+                        <option value="Ons">Ons</option>
+                        <option value="Pcs">Pcs</option>
+                        <option value="Pack">Pack</option>
+                    </select>
+                    @error('satuan')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Jumlah per Satuan</label>
+                  <input name="jumlah_per_satuan" type="number" class="form-control @error('jumlah_per_satuan') is-invalid @enderror">
+                  @error('jumlah_per_satuan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
+                </div>
+                <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                  <textarea name="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" id="exampleInputEmail1" rows="3"></textarea>
+                  <textarea name="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" rows="3"></textarea>
                   @error('keterangan')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -215,7 +239,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Nama Produk</label>
-                  <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->nama}}">
+                  <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" value="{{$data->nama}}">
                   @error('nama')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -235,15 +259,15 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Harga</label>
-                  <input name="harga" type="number" class="form-control" id="exampleInputEmail1" value="{{$data->harga}}">
+                  <input name="harga" type="number" class="form-control" value="{{$data->harga}}">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Stok</label>
-                  <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data->stok}}">
+                  <input name="stok" type="number" class="form-control" value="{{$data->stok}}">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Keterangan</label>
-                  <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3">{{$data->keterangan}}</textarea>
+                  <textarea name="keterangan" type="text" class="form-control" rows="3">{{$data->keterangan}}</textarea>
                 </div>
             </div>
             <div class="modal-footer">

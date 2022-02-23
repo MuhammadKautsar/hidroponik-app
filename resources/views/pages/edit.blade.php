@@ -73,6 +73,45 @@
                             <input name="stok" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_product->stok}}">
                           </div>
                           <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Satuan</label>
+                            <select name="satuan" class="form-control @error('satuan') is-invalid @enderror">
+                                <option value="{{ $data_product->satuan }}" {{ old('satuan') == $data_product->satuan ? 'selected' : null }}>{{ $data_product->satuan }}</option>
+                                @if ($data_product->satuan=="gram")
+                                    <option value="Kg">Kg</option>
+                                    <option value="Ons">Ons</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option value="Pack">Pack</option>
+                                @elseif ($data_product->satuan=="Kg")
+                                    <option value="gram">Gram</Gption>
+                                    <option value="Ons">Ons</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option value="Pack">Pack</option>
+                                @elseif ($data_product->satuan=="Ons")
+                                    <option value="gram">Gram</Gption>
+                                    <option value="Kg">Kg</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option value="Pack">Pack</option>
+                                @elseif ($data_product->satuan=="Pcs")
+                                    <option value="gram">Gram</Gption>
+                                    <option value="Kg">Kg</option>
+                                    <option value="Ons">Ons</option>
+                                    <option value="Pack">Pack</option>
+                                @elseif ($data_product->satuan=="Pack")
+                                    <option value="gram">Gram</Gption>
+                                    <option value="Kg">Kg</option>
+                                    <option value="Ons">Ons</option>
+                                    <option value="Pcs">Pcs</option>
+                                @endif
+                            </select>
+                            @error('satuan')
+                              <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Jumlah per Satuan</label>
+                            <input name="jumlah_per_satuan" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_product->jumlah_per_satuan}}">
+                          </div>
+                          <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Keterangan</label>
                             <textarea name="keterangan" type="text" class="form-control" id="exampleInputEmail1" rows="3">{{$data_product->keterangan}}</textarea>
                           </div>

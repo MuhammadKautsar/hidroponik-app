@@ -44,7 +44,7 @@ class ProdukController extends Controller
             'nama' => 'required|min:3|max:20',
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
-            // 'promo_id' => 'required',
+            'jumlah_per_satuan' => 'numeric',
             'gambar' => 'required|max:5000'
         ]);
 
@@ -55,6 +55,8 @@ class ProdukController extends Controller
             'harga' => $request->harga,
             'stok' => $request->stok,
             'keterangan' => $request->keterangan,
+            'satuan' => $request->satuan,
+            'jumlah_per_satuan' => $request->jumlah_per_satuan,
             'total_feedback' => 0,
         ]);
 
@@ -95,7 +97,7 @@ class ProdukController extends Controller
             'nama' => 'required|min:3',
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
-            // 'promo_id' => 'required',
+            'jumlah_per_satuan' => 'numeric',
             // 'gambar' => 'required|max:5000'
         ]);
 
@@ -106,6 +108,8 @@ class ProdukController extends Controller
             'promo_id' => $request->promo_id,
             "harga" => $request->harga,
             "stok" => $request->stok,
+            "satuan" => $request->satuan,
+            "jumlah_per_satuan" => $request->jumlah_per_satuan,
             "harga_promo" => $request->harga_promo,
             "keterangan" => $request->keterangan,
             // "gambar" => asset('/gambar' . $produk->gambar),

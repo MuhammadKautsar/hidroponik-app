@@ -35,6 +35,8 @@
                     <th class="text-center" scope="col">Promo</th>
                     <th class="text-center" scope="col">Harga</th>
                     <th class="text-center" scope="col">Stok</th>
+                    <th class="text-center" scope="col">Satuan</th>
+                    <th class="text-center" scope="col">Jumlah/Satuan</th>
                     <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
@@ -61,6 +63,8 @@
                         @endif
                       <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td>
                       <td class="text-center">{{$item['stok']}}</td>
+                      <td class="text-center">{{$item['satuan']}}</td>
+                      <td class="text-center">{{$item['jumlah_per_satuan']}}</td>
                       <td class="text-center">{{ Str::limit($item->keterangan, 20) }}</td>
                       <td class="text-center">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">

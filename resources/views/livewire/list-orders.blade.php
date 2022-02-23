@@ -139,14 +139,12 @@
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
                     <option value="Diproses">Diproses</option>
-                    <option value="Batal">Batal</option>
                     @elseif ($data->status_order=="Diproses")
                     <option value="Dikirim">Dikirim</option>
-                    <option value="Batal">Batal</option>
                     @elseif ($data->status_order=="Dikirim")
                     <option value="Selesai">Selesai</option>
-                    <option value="Batal">Batal</option>
                     @endif
+                    <option value="Batal">Batal</option>
                   </select>
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>
