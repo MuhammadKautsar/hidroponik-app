@@ -2,11 +2,15 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--7">
-      @if(session('sukses'))
-        <div class="alert alert-light" role="alert">
-          {{session('sukses')}}
-        </div>
-      @endif
+        @if(session('sukses'))
+            <div class="alert alert-light" role="alert">
+                {{session('sukses')}}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{session('error')}}
+            </div>
+        @endif
       <style>
         .images-preview-div img
         {

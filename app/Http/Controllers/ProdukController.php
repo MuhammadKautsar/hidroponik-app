@@ -138,30 +138,36 @@ class ProdukController extends Controller
 
     public function destroy($id)
     {
-        $produks = Produk::findOrFail($id);
+        $produk = Produk::findOrFail($id);
 
-        $images = Image::where("produk_id", $produks->id)->get();
-        foreach ($images as $image) {
-            if (File::exists($this->path_file("uploads/" . $image->path_image))) {
-                File::delete($this->path_file("uploads/" . $image->path_image));
-            }
+        if ($produk->orders->count() == 0) {
+            $produk->delete();
+            return redirect('/produk')->with('sukses', 'Produk berhasil dihapus');
         }
-        $produks->delete();
-        return redirect('/produk')->with('sukses', 'Data berhasil dihapus');
+
+        if ($produk->orders()->whereIn('status_order', ['Belum', 'Diproses', 'Dikirim'])->first()) {
+            return redirect('/produk')->with('error', 'Produk tidak berhasil dihapus karena sedang ada order yang diproses');
+        } else {
+            $produk->delete();
+            return redirect('/produk')->with('sukses', 'Produk berhasil dihapus');
+        }
     }
 
     public function destroyAdmin($id)
     {
-        $produks = Produk::findOrFail($id);
+        $produk = Produk::findOrFail($id);
 
-        $images = Image::where("produk_id", $produks->id)->get();
-        foreach ($images as $image) {
-            if (File::exists($this->path_file("uploads/" . $image->path_image))) {
-                File::delete($this->path_file("uploads/" . $image->path_image));
-            }
+        if ($produk->orders->count() == 0) {
+            $produk->delete();
+            return redirect('admin/produk')->with('sukses', 'Produk berhasil dihapus');
         }
-        $produks->delete();
-        return redirect('admin/produk')->with('sukses', 'Data berhasil dihapus');
+
+        if ($produk->orders()->whereIn('status_order', ['Belum', 'Diproses', 'Dikirim'])->first()) {
+            return redirect('admin/produk')->with('error', 'Produk tidak berhasil dihapus karena sedang ada order yang diproses');
+        } else {
+            $produk->delete();
+            return redirect('admin/produk')->with('sukses', 'Produk berhasil dihapus');
+        }
     }
 
     public function deleteimage($id)
