@@ -71,15 +71,13 @@
                         @if ($item->promo_id=="")
                             Tidak ada</td>
                         @elseif ($item->promo_id!="")
-                        @php($diskon = $item->promo)
-                            {{$diskon->potongan}} %</td>
+                            {{$item->promo->potongan}} %</td>
                         @endif
                       <td class="text-center">
                         @if ($item->promo_id=="")
-                            Rp {{number_format($item['harga'],0,',','.')}}</td>
+                            Rp {{number_format($item['harga'], 0,',','.')}}</td>
                         @elseif ($item->promo_id!="")
-                        @php($diskon = $item->promo)
-                            Rp {{number_format($item['harga_promo'],0,',','.')}}</td>
+                            Rp {{number_format($item->harga-$item->harga*$item->promo->potongan/100, 0,',','.')}}</td>
                         @endif
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>

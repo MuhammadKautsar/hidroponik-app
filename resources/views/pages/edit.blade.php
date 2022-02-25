@@ -55,9 +55,15 @@
                             <label for="exampleInputEmail1" class="form-label">Promo</label>
                             <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
                                 <option value="">- Pilih -</option>
-                                @php($diskon = $data_product->promo)
                                 @foreach ($promo as $diskon)
-                                    <option value="{{ $diskon->id }}" {{ old('promo_id') == $diskon->id ? 'selected' : null }}>{{ $diskon->nama }} - {{ $diskon->potongan }} %</option>
+                                    <option
+                                        value="{{ $diskon->id }}"
+                                        @if ($diskon->id == $data_product->promo_id)
+                                            selected
+                                        @endif
+                                        >
+                                        {{ $diskon->nama }} - {{ $diskon->potongan }} %
+                                    </option>
                                 @endforeach
                             </select>
                             @error('promo_id')

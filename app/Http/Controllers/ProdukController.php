@@ -60,12 +60,6 @@ class ProdukController extends Controller
             'total_feedback' => 0,
         ]);
 
-        if ($request->promo_id!=""){
-            $produk['harga_promo'] = $request->harga-$request->harga*$produk->promo->potongan/100;
-        } elseif ($request->promo_id="") {
-            $produk['harga_promo'] = "";
-        }
-
         $produk->save();
 
         if($request->hasFile('gambar')){
@@ -114,12 +108,6 @@ class ProdukController extends Controller
             "keterangan" => $request->keterangan,
             // "gambar" => asset('/gambar' . $produk->gambar),
         ]);
-
-        if ($request->promo_id!=""){
-            $produk['harga_promo'] = $request->harga-$request->harga*$produk->promo->potongan/100;
-        } elseif ($request->promo_id="") {
-            $produk['harga_promo'] = "";
-        }
 
         $produk->save();
 
