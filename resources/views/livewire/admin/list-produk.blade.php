@@ -41,7 +41,6 @@
                     <th class="text-center" scope="col">Stok</th>
                     <th class="text-center" scope="col">Satuan</th>
                     <th class="text-center" scope="col">Jumlah/Satuan</th>
-                    <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -69,7 +68,6 @@
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>
                       <td class="text-center">{{$item['jumlah_per_satuan']}}</td>
-                      <td class="text-center">{{ Str::limit($item->keterangan, 20) }}</td>
                       <td class="text-center">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                             <i class="fa fa-eye"></i> Lihat
@@ -114,10 +112,14 @@
           <div class="modal-body">
             <form action="/produk/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
               <div class="mb-3">
-                <label for="" class="form-label">Gambar</label><br>
+                <label for="" class="form-label"><h3>Gambar :</h3></label><br>
                 <br>@foreach ($data->images as $img)
                     <img src="{{ $img->path_image }}" width="150px" height="110px" alt="Image">
                   @endforeach
+              </div>
+              <div class="mb-3"><br>
+                <label for="" class="form-label"><h3>Keterangan :</h3></label><br>
+                <td class="text-center">{{$data['keterangan']}}</td>
               </div>
           </div>
           <div class="modal-footer">

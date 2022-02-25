@@ -50,8 +50,6 @@
                     <th class="text-center" scope="col">Stok</th>
                     <th class="text-center" scope="col">Satuan</th>
                     <th class="text-center" scope="col">Jumlah/Satuan</th>
-                    {{-- <th class="text-center" scope="col">Harga Promo</th> --}}
-                    <th class="text-center" scope="col">Keterangan</th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -82,7 +80,6 @@
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>
                       <td class="text-center">{{$item['jumlah_per_satuan']}}</td>
-                      <td class="text-center">{{ Str::limit($item->keterangan, 25) }}</td>
                       <td class="text-center">
                         <a href="/produk/{{$item->id}}/edit" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Ubah</a>
                         <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
