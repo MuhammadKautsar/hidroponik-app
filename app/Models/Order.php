@@ -27,7 +27,7 @@ class Order extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('jumlah', 'like', '%' . $query . '%')
+            : static::where('total_harga', 'like', '%' . $query . '%')
             ->orWhere('status_order', 'like', '%' . $query . '%');
     }
 

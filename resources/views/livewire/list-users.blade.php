@@ -40,7 +40,6 @@
                       <th class="text-center" scope="col">Username</th>
                       <th class="text-center" scope="col">Email</th>
                       <th class="text-center" scope="col">No Hp</th>
-                      <th class="text-center" scope="col">Alamat</th>
                       <th class="text-center" scope="col">Level</th>
                       <th class="text-center" scope="col">Aksi</th>
                     </tr>
@@ -60,9 +59,11 @@
                         <td class="text-center">{{$item['username']}}</td>
                         <td class="text-center">{{$item['email']}}</td>
                         <td class="text-center">{{$item['nomor_hp']}}</td>
-                        <td class="text-center">{{ Str::limit($item->alamat, 20) }}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
+                            <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                                <i class="fa fa-info-circle"></i> Info
+                            </button>
                             @if ($item->level == "pembeli")
                                 @foreach ($item->orderpembelis as $pesanan)
                                     @if($pesanan->status_order == "Belum" || $pesanan->status_order == "Diproses" || $pesanan->status_order == "Dikirim")
@@ -202,5 +203,39 @@
       </form>
     </div>
   </div>
+
+  @foreach($data_user as $data)
+    <!-- Modal -->
+    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Info Pengguna</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Status</label>
+                  @if ($data->email_verified_at != "")
+                  <input readonly class="form-control" placeholder="Sudah Verifikasi"></input>
+                  @else
+                  <input readonly class="form-control" placeholder="Belum Verifikasi"></input>
+                  @endif
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                    <textarea readonly class="form-control" rows="3" placeholder="{{$data->alamat}}"></textarea>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
 
 </div>

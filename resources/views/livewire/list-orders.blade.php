@@ -30,8 +30,7 @@
                     <th class="text-center" scope="col">No</th>
                     <th class="text-center" scope="col">Tanggal</th>
                     <th class="text-center" scope="col">Pembeli</th>
-                    <th class="text-center" scope="col">Produk</th>
-                    <th class="text-center" scope="col">Jumlah</th>
+                    <th class="text-center" scope="col">Jumlah Item</th>
                     <th class="text-center" scope="col">Ongkir</th>
                     <th class="text-center" scope="col">Total Harga</th>
                     <th class="text-center" scope="col">Status</th>
@@ -40,36 +39,19 @@
                 </thead>
                 <tbody class="list">
                   @php $no = 0 @endphp
-                  @php $i = 0 @endphp
-                  @php $j = 0 @endphp
-                  @php $k = 0 @endphp
                   @forelse($data_order as $item)
                     @if ($item->penjual_id == Auth::user()->id)
                         @php $no++ @endphp
+                        @php $i = 0 @endphp
                         <tr>
                             <td class="text-center">{{$no}}</td>
                             <td class="text-center">{{$item['created_at']->format('d-m-Y H:i')}}</td>
                             <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
+                            <td class="text-center">
                                 @foreach ($item->order_mappings as $pesanan)
                                     @php $i++ @endphp
                                 @endforeach
-                            <td class="text-center">
-                                @foreach ($item->order_mappings as $pesanan)
-                                    @php $j++ @endphp
-                                    {{$pesanan->produk->nama}}
-                                    @if($j < $i)
-                                        ,
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td class="text-center">
-                                @foreach ($item->order_mappings as $pesanan)
-                                    @php $k++ @endphp
-                                    {{$pesanan->jumlah}}
-                                    @if($k < $i)
-                                        ,
-                                    @endif
-                                @endforeach
+                                    {{$i}}
                             </td>
                             <td class="text-center">Rp {{number_format($item['harga_jasa_pengiriman'],0,',','.')}}</td>
                             <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
@@ -120,6 +102,18 @@
           <div class="modal-body">
             <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Produk</label><br>
+                    @foreach ($data->order_mappings as $pesanan)
+                        <label style='text-align:right;' >{{$pesanan->produk->nama}}</label><br>
+                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><br>
+                    @endforeach
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label>
+                    <span class="form-control">{{$data->pembeli->nomor_hp}}</span>
+                </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
                     @if (($data->harga_jasa_pengiriman==0))
