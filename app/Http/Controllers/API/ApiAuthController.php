@@ -53,7 +53,7 @@ class ApiAuthController extends Controller
             'nama_lengkap' => $user->nama_lengkap,
         ];
         Mail::to($user->email)->send(new \App\Mail\VerifyMail($users));
-        return response()->json(['message' => $data['nama_lengkap'] . ' berhasil membuat akun', 'user' => $user, 'type' => 'success', 'token' => $token]);
+        return response()->json(['message' => $data['nama_lengkap'] . ' berhasil membuat akun', 'user' => $user, 'type' => 'success', 'token' => $token, 'verified' => $user->hasVerifiedEmail()]);
     }
 
     public function storeAlamat(User $user)
@@ -148,7 +148,7 @@ class ApiAuthController extends Controller
         // // TODO: belum ada atribut notificationTokens. tolong ditambahkan tabel kedepannya
 
         $token = Str::random(50);
-        return response()->json(['message' => 'berhasil login', 'user' => $user, 'token' => $token]);
+        return response()->json(['message' => 'berhasil login', 'user' => $user, 'token' => $token, 'verified' => $user->hasVerifiedEmail()]);
         // return response()->json(['message' => 'berhasil login', 'user' => $user]);
     }
 

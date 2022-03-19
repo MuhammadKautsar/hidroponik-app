@@ -98,6 +98,13 @@ class ApiOrderController extends Controller
             );
 
         $order = Order::create($data);
+
+        if ($order->penjual->notificationTokens) {
+            foreach ($order->penjual->notificationTokens as $notif) {
+                $this->sendNotification($notif->notificationToken, 'Pesanan Datang', "Hai " . $order->penjual->nama_lengkap . ", Pesanan baru diterima, silahkan cek di aplikasi");
+            }
+        }
+
         $om->update(['order_id' => $order->id, 'status_checkout' => 'Beli']);
 
         foreach ($om->get() as $row) {
@@ -588,6 +595,24 @@ class ApiOrderController extends Controller
             if ($order->pembeli->notificationTokens) {
                 foreach ($order->pembeli->notificationTokens as $notif) {
                     $this->sendNotification($notif->notificationToken, 'Pesanan Selesai', 'Terima Kasih ' . $order->pembeli->nama_lengkap . ', Pesanan telah diselesaikan');
+                }
+            }
+        } else if ($data['status_order'] == 'Diproses') {
+            if ($order->pembeli->notificationTokens) {
+                foreach ($order->pembeli->notificationTokens as $notif) {
+                    $this->sendNotification($notif->notificationToken, 'Pesanan Dikonfirmasi',  'Pesanan Anda Sedang ' . $order->status_order);
+                }
+            }
+        } else if ($data['status_order'] == 'Batal') {
+            if ($order->pembeli->notificationTokens) {
+                foreach ($order->pembeli->notificationTokens as $notif) {
+                    $this->sendNotification($notif->notificationToken, 'Pesanan Dibatalkan',  'Maaf, Pesanan anda telah dibatalkan oleh penjual');
+                }
+            }
+        } else {
+            if ($order->pembeli->notificationTokens) {
+                foreach ($order->pembeli->notificationTokens as $notif) {
+                    $this->sendNotification($notif->notificationToken, 'Tunggu Pesanan Anda',  'Pesanan Anda Sedang ' . $order->status_order);
                 }
             }
         }

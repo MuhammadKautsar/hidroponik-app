@@ -54,7 +54,8 @@ class ApiProdukController extends Controller
                 'promo_nama' => $row->promo_id ? $row->promo->nama : '',
                 'promo_id' => $row->promo_id,
                 'total_feedback' => $row->total_feedback,
-                'penjual_id' => $row->penjual_id . ''
+                'penjual_id' => $row->penjual_id . '',
+                'tanggal_diperbarui' => $row->updated_at->diffForHumans()
             ]);
         }
 
