@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\NotificationToken;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ApiAuthController extends Controller
@@ -44,7 +45,14 @@ class ApiAuthController extends Controller
 
 
         $user = User::create($data);
+
         $token = Str::random(50);
+
+        $users = [
+            'id' => $user->id,
+            'nama_lengkap' => $user->nama_lengkap,
+        ];
+        Mail::to($user->email)->send(new \App\Mail\VerifyMail($users));
         return response()->json(['message' => $data['nama_lengkap'] . ' berhasil membuat akun', 'user' => $user, 'type' => 'success', 'token' => $token]);
     }
 
@@ -164,6 +172,11 @@ class ApiAuthController extends Controller
         return response()->json(['message' => 'Berhasil logout']);
     }
 
+    public function verifikasiEmail(User $user)
+    {
+        $user->markEmailAsVerified();
+        return redirect('/');
+    }
     // notifikasi untuk si user hp
     private function sendNotification($to, $title, $body)
     {

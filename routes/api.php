@@ -34,6 +34,7 @@ Route::prefix('register')->group(function () {
     Route::post('alamat/{user}', [ApiAuthController::class, 'storeAlamat'])->name('registerAlamat');
 });
 Route::post('login', [ApiAuthController::class, 'login'])->name('login');
+Route::get('verifikasi/email/{user}', [ApiAuthController::class, 'verifikasiEmail'])->name('verifyEmail');
 Route::post('user/profil/{user}', [ApiAuthController::class, 'updateProfil'])->name('updateProfil');
 Route::post('logout/{user}', [ApiAuthController::class, 'logout'])->name('logout');
 Route::post('report/user', [ApiReportController::class, 'reportUser'])->name('reportUser');

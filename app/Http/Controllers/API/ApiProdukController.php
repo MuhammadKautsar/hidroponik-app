@@ -168,6 +168,20 @@ class ApiProdukController extends Controller
 
     public function update(Produk $produk)
     {
+        $validator = Validator::make(request()->all(), [
+            'nama' => 'required',
+            'harga' => 'required|numeric|digits_between:1,6',
+            'stok' => 'required|numeric',
+            'penjual_id' => 'required',
+            'keterangan' => 'string',
+            'jumlah_per_satuan' => 'numeric',
+            'satuan' => 'string',
+            'gambar' => 'required|array',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()]);
+        }
+
         $data = request()->all();
         if (isset($data['promo_id']))
             if ($data['promo_id'] == '') {
