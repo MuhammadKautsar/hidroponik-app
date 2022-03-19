@@ -19,7 +19,7 @@ class ApiProdukController extends Controller
         $showData = array();
 
         $today = strtotime(now());
-        $data = Produk::orderBy('updated_at', 'DESC')->get();
+        $data = Produk::where('stok', '!=', 0)->orderBy('updated_at', 'DESC')->get();
         foreach ($data as $row) {
 
             if ($row->penjual->status != 1) continue;

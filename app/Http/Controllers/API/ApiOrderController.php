@@ -112,7 +112,7 @@ class ApiOrderController extends Controller
                 'stok' => $row->produk->stok - $row->jumlah
             ]);
 
-            if ($row->produk->stok == 0) {
+            if ($row->produk->stok <= 0) {
                 $row->produk->order_mappings()->where('status_checkout', 'Keranjang')->delete();
             }
         }
