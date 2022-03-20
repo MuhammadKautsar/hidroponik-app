@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\OrderMapping;
 use App\Models\User;
+use App\Models\Produk;
+use App\Models\OrderMapping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -78,8 +79,15 @@ class ApiOrderMappingController extends Controller
 		$data['status_checkout'] = 'Keranjang';
 		$data['status_feedback'] = 0;
 		$om = OrderMapping::where('pembeli_id', $data['pembeli_id'])->where('produk_id', $data['produk_id'])->where('status_checkout', 'Keranjang');
+		$produk = Produk::find($data['produk_id']);
+		if ($produk->stok < $data['jumlah']) {
+			return response()->json(['message' => 'Stok tidak mencukupi']);
+		}
 		if ($om->exists()) {
 			$jumlah = $om->first()->jumlah;
+			if ($jumlah + $data['jumlah'] > $produk->stok) {
+				return response()->json(['message' => 'Stok tidak mencukupi']);
+			}
 			$om->update([
 				'jumlah' => $jumlah + $data['jumlah'],
 			]);
