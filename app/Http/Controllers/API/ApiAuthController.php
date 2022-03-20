@@ -95,6 +95,14 @@ class ApiAuthController extends Controller
             'nomor_hp' => 'required|max:13',
         ]);
 
+        if ($data['email'] !=  $user->email) {
+            $user->forceFill(['email_verified_at' => null]);
+            $users = [
+                'id' => $user->id,
+                'nama_lengkap' => $user->nama_lengkap,
+            ];
+            Mail::to($user->email)->send(new \App\Mail\VerifyMail($users));
+        }
         $user->update($data);
 
         if (request()->hasFile('gambar')) {
