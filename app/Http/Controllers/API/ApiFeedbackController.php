@@ -25,7 +25,7 @@ class ApiFeedbackController extends Controller
             }
             array_push($showData, [
                 'id' => $row->id . '',
-                'tanggal' => $row->created_at->format('d-m-Y'),
+                'tanggal' => $row->created_at->format('d F Y'),
                 'produk' => [
                     'id' => $row->produk->id,
                     'nama' => $row->produk->nama,
@@ -90,7 +90,7 @@ class ApiFeedbackController extends Controller
         }
         $showData = [
             'id' => $feedback->id . '',
-            'tanggal' => $feedback->created_at->format('d-m-Y'),
+            'tanggal' => $feedback->created_at->format('d F Y'),
             'produk' => [
                 'id' => $feedback->produk->id,
                 'nama' => $feedback->produk->nama,
@@ -139,7 +139,7 @@ class ApiFeedbackController extends Controller
             }
             array_push($showData, [
                 'id' => $row->id . '',
-                'tanggal' => $row->created_at->format('d-m-Y'),
+                'tanggal' => $row->created_at->format('d F Y'),
                 'produk' => [
                     'id' => $produk->id,
                     'nama' => $produk->nama,

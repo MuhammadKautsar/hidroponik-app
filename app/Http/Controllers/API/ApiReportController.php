@@ -33,10 +33,9 @@ class ApiReportController extends Controller
         ]);
 
         $data['tanggal'] = date('Y-m-d');
- 
+
 
         $report = Report::create($data);
         return response()->json(['message' => 'berhasil mereport pengguna', 'type' => 'success']);
     }
-
 }
