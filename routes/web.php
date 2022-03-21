@@ -42,9 +42,18 @@ Route::get('/privacy-policy', function () {
 Route::get('/images_upload', 'App\Http\Controllers\ImagesController@index');
 Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
 
-Route::get('/upload', 'App\Http\Controllers\CobaController@index');
-Route::post('/storedata', 'App\Http\Controllers\CobaController@store')->name('form.data');
-Route::post('/storeimage', 'App\Http\Controllers\CobaController@storeImage');
+// Route::get('/upload', 'App\Http\Controllers\CobaController@index');
+// Route::post('/storedata', 'App\Http\Controllers\CobaController@store')->name('form.data');
+// Route::post('/storeimage', 'App\Http\Controllers\CobaController@storeImage');
+
+//Route form displaying our form
+Route::get('/dropzoneform', 'App\Http\Controllers\CobaController@dropzoneform');
+
+//Rout for submitting the form datat
+Route::post('/storedata', 'CobaController@storeData')->name('form.data');
+
+//Route for submitting dropzone data
+Route::post('/storeimgae', 'CobaController@storeImage');
 
 Auth::routes(['verify'=>true]);
 

@@ -45,7 +45,7 @@ class ProdukController extends Controller
             'harga' => 'required|numeric|digits_between:1,6',
             'stok' => 'required|numeric',
             'jumlah_per_satuan' => 'numeric',
-            'gambar' => 'required|max:5000'
+            'gambar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:5000'
         ]);
 
         $produk = new Produk([

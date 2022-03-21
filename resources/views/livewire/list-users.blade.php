@@ -11,7 +11,7 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success btn-sm mt-2 float-right" data-bs-toggle="modal" data-bs-target="#form">
                   @if (auth()->user()->level=="superadmin")
-                  <i class="fa fa-plus"></i> Tambah Admin
+                  <i class="fa fa-plus"></i> Tambah Pengguna
                   @elseif (auth()->user()->level=="admin")
                   <i class="fa fa-plus"></i> Tambah Penjual
                   @endif
@@ -186,6 +186,7 @@
                 <option value="">-Pilih-</option>
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
+                <option value="penjual">Penjual</option>
                 @elseif (auth()->user()->level=="admin")
                 <option value="penjual">Penjual</option>
                 @endif

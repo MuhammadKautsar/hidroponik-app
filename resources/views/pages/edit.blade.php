@@ -24,25 +24,13 @@
                             <input name="gambar[]" multiple type="file" id="image" aria-describedby="emailHelp"><br>
                             <br>{{-- <div class="col-lg-3"> --}}
                               @foreach ($data_product->images as $img)
-                              <img src="{{ $img->path_image }}" width="100px" height="70px" alt="">
+                              <img src="{{ $img->path_image }}" width="130px" height="100px" alt="">
                               @if (count($data_product->images)>1)
                               <a href="/deleteimage/{{ $img->id }}"
                                  class="text-red"> X
-
-                                {{-- @csrf
-                                @method('delete') --}}
                                 </a>
                               @endif
                               @endforeach
-                            {{-- </div> --}}
-                            {{-- <br>@foreach ($data->images as $img)
-                                <img src="{{ $img->path_image }}" width="100px" height="70px" alt="Image">
-                              @endforeach
-                              <div class="col-md-12">
-                                <div class="mt-1 text-center">
-                                <div class="images-preview"> </div>
-                                </div>
-                              </div> --}}
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nama Produk</label>

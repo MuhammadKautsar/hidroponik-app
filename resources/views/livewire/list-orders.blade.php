@@ -118,7 +118,7 @@
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
                     @if (($data->harga_jasa_pengiriman==0))
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
-                    {{-- <small>Setelah diisi tidak dapat diubah lagi</small> --}}
+                    <small>Maksimal Rp 10.000 dan tidak dapat diubah lagi setelah diisi</small>
                     @elseif (($data->harga_jasa_pengiriman!=0))
                     <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
                     <input name="harga_jasa_pengiriman" type="hidden" class="form-control" value="{{$data->harga_jasa_pengiriman}}">

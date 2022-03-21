@@ -45,7 +45,8 @@ class Produk extends Model
         return empty($query) ? static::query()
             : static::where('nama', 'like', '%' . $query . '%')
             ->orWhere('harga', 'like', '%' . $query . '%')
-            ->orWhere('stok', 'like', '%' . $query . '%');
+            ->orWhere('stok', 'like', '%' . $query . '%')
+            ->orWhere('satuan', 'like', '%' . $query . '%');
     }
 
     public function feedbacks()

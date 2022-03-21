@@ -122,10 +122,6 @@
             <div class="modal-body">
               <form action="/produk/create" method="POST" enctype="multipart/form-data">
                 @csrf
-                {{-- <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Cover</label><br>
-                  <input name="gambar" type="file">
-                </div> --}}
                 <div class="mb-3">
                   <label for="" class="form-label">Gambar</label><br>
                   <input name="gambar[]" multiple type="file" class="@error('gambar') is-invalid @enderror" id="images" aria-describedby="emailHelp"><br>

@@ -114,7 +114,7 @@
               <div class="mb-3">
                 <label for="" class="form-label"><h3>Gambar :</h3></label><br>
                 <br>@foreach ($data->images as $img)
-                    <img src="{{ $img->path_image }}" width="150px" height="110px" alt="Image">
+                    <img src="{{ $img->path_image }}" width="150px" height="110px" alt="Image">&ensp;
                   @endforeach
               </div>
               <div class="mb-3"><br>

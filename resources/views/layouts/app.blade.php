@@ -41,6 +41,12 @@
                 background: #fff;
                 box-shadow: 0 0 20px #c1c1c1;
             }
+            /* body {
+                background-image: url("{{ asset('argon') }}/img/brand/petani_hidroponik.jpeg");
+                background-repeat: no-repeat;
+                background-size:cover;
+                filter: blur(8px);
+            } */
         </style>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
