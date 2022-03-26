@@ -7,9 +7,9 @@
         </div>
     </div>
     <div class="col-xl-6">
-        <div class="copyright text-center text-xl-right text-muted">
-            <a href="/privacy-policy" class="mr-3">Privacy Policy</a>
-            &copy; {{ now()->year }} <a href="#" class="font-weight-bold ml-1" target="_blank">AgriHub</a>
+        <div class="copyright text-center text-xl-right text-white">
+            <a href="/privacy-policy" class="mr-3 text-white">Privacy Policy</a>
+            &copy; {{ now()->year }} <a href="#" class="font-weight-bold ml-1 text-white" target="_blank">AgriHub</a>
         </div>
     </div>
 </div>

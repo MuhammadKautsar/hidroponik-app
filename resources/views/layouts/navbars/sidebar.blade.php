@@ -84,14 +84,14 @@
                         <i class="ni ni-shop text-black"></i> {{ __('Beranda') }}
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link {{ request()->is('pesanan') ? 'active' : '' }} text-white" href="{{ route('orders') }}">
-                        <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('produk') ? 'active' : '' }} text-white" href="{{ route('products') }}">
                         <i class="ni ni-basket text-black"></i> {{ __('Produk') }}
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link {{ request()->is('pesanan') ? 'active' : '' }} text-white" href="{{ route('orders') }}">
+                        <i class="ni ni-cart text-black"></i> {{ __('Pesanan') }}
                     </a>
                 </li>
                 <li class="nav-item">

@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'bg-silver'])
-
+<div class="content">
 @section('content')
     @include('layouts.headers.guest')
 
@@ -10,7 +10,7 @@
                     <div class="card-body px-lg-5 py-lg-4">
                         <div class="text-center text-muted mb-4">
                             <small>
-                                    Sign in with these credentials :
+                                    Masukkan email dan password anda :
                             </small>
                         </div>
                         @if (session('error'))
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success my-3">{{ __('Sign in') }}</button>
+                                <button type="submit" class="btn btn-success my-3">{{ __('Masuk') }}</button>
                             </div>
                         </form>
                     </div>
@@ -65,3 +65,4 @@
         </div>
     </div>
 @endsection
+</div>

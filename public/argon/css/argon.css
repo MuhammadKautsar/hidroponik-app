@@ -5706,6 +5706,7 @@ input[type='button'].btn-block
     border-radius: .375rem;
     background-color: #fff;
     background-clip: border-box;
+    opacity: 0.9;
 }
 .card > hr
 {
@@ -17916,7 +17917,7 @@ a.btn-icon-only
 {
     padding: 2.5rem 0;
 
-    background: #eef0f5;
+    background: none;
 }
 .footer .col-footer .heading
 {

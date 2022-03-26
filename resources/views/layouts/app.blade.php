@@ -41,12 +41,32 @@
                 background: #fff;
                 box-shadow: 0 0 20px #c1c1c1;
             }
-            /* body {
-                background-image: url("{{ asset('argon') }}/img/brand/petani_hidroponik.jpeg");
-                background-repeat: no-repeat;
-                background-size:cover;
-                filter: blur(8px);
-            } */
+
+            .content {
+            /* this is needed or the background will be offset by a few pixels at the top */
+            overflow: auto;
+            position: relative;
+            }
+
+            .content::before {
+            content: "";
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: -1;
+
+            display: block;
+            background-image: url('{{ asset('argon') }}/img/brand/Hidroponik-2_comp.jpg');
+            background-size:cover;
+            width: 100%;
+            height: 100%;
+
+            /* -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px); */
+            }
         </style>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -61,6 +81,7 @@
             </form>
             @include('layouts.navbars.sidebar')
         @endauth
+
 
         <div class="main-content">
             @include('layouts.navbars.navbar')

@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'bg-silver'])
-
+<div class="content">
 @section('content')
     @include('layouts.headers.guest')
 
@@ -16,14 +16,14 @@
                         <div class="text-center text-muted mb-4">
                             <small>
                                 Bagi Yang Ingin Mendaftar Menjadi Penjual di Aplikasi AgriHub, Silahkan Hubungi Admin di nomor :
-                                <br>
-                                1. 081234567890
-                                2. 085212345678
-                                <br>
+                                <br><br>
+                                1. 082167303899 &ensp;
+                                2. 082216405979
+                                <br><br>
                                 Atau kirim email ke :
-                                <br>
-                                1. juli@gmail.com
-                                2. fahri@gmail.com
+                                <br><br>
+                                1. ismuliajuli@gmail.com &ensp;
+                                2. fachruddin@gmail.com
                             </small>
                         </div>
                     </div>
@@ -32,3 +32,4 @@
         </div>
     </div>
 @endsection
+</div>

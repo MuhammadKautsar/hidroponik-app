@@ -105,14 +105,14 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Produk</label><br>
                     @foreach ($data->order_mappings as $pesanan)
-                        <label style='text-align:right;' >{{$pesanan->produk->nama}}</label><br>
+                        <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
                         <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><br>
                     @endforeach
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label>
-                    <span class="form-control">{{$data->pembeli->nomor_hp}}</span>
+                    <span class="form-control">{{$data->pembeli->nomor_hp}}<a type="button" class="btn btn-success btn-sm float-right" href="https://wa.me/62{{$data->pembeli->nomor_hp}}"><i class="fab fa-whatsapp"></i> Hubungi</a></span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
@@ -146,7 +146,7 @@
                 </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
             <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Update</button>
             </form>
           </div>

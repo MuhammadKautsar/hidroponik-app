@@ -1,5 +1,5 @@
 @extends('layouts.app', ['class' => 'bg-silver'])
-
+<div class="content">
 @section('content')
     @include('layouts.headers.guest')
 
@@ -48,3 +48,4 @@
         </div>
     </div>
 @endsection
+</div>

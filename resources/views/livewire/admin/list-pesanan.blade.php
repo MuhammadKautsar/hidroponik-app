@@ -96,7 +96,7 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Produk</label><br>
                     @foreach ($data->order_mappings as $pesanan)
-                        <label style='text-align:right;' >{{$pesanan->produk->nama}}</label><br>
+                        <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
                         <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                         <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><br>
                     @endforeach
