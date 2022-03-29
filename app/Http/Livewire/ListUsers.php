@@ -23,7 +23,7 @@ class ListUsers extends Component
     public $nomor_hp;
     public $alamat;
 
-    public $perPage = 5;
+    public $perPage = 10;
     public $sortField;
     public $sortAsc = true;
     public $search = '';
