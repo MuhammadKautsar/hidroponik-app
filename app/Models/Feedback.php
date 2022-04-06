@@ -22,11 +22,13 @@ class Feedback extends Model
         'rating',
     ];
 
-    public static function search($query)
+    public function scopeSearch($query, $term)
     {
-        return empty($query) ? static::query()
-            : static::where('komentar', 'like', '%'.$query.'%')
-                ->orWhere('rating', 'like', '%'.$query.'%');
+        $term = "%$term%";
+        $query->where(function($query) use ($term) {
+            $query->where('komentar', 'like', $term)
+                ->orWhere('rating', 'like', $term);
+        });
     }
 
     public function produk()

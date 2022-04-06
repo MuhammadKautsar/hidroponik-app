@@ -11,16 +11,39 @@ class ListProduk extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
+    public $sortBy = 'created_at';
+
+    public $sortDirection = 'desc';
+    public $bySatuan = null;
     public $perPage = 5;
-    public $sortField;
-    public $sortAsc = true;
     public $search = '';
+
+    public function sortBy($field)
+    {
+        if ($this->sortDirection == 'asc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        return $this->sortBy = $field;
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
-        return view('livewire.admin.list-produk', ['data_product' => Produk::search($this->search)
-        ->orderBy('created_at', 'desc')->paginate($this->perPage),])
-        ->extends('layouts.app')
-        ->section('content');
+        return view('livewire.admin.list-produk', [
+            'data_product' => Produk::when($this->bySatuan, function($query){
+                $query->where('satuan', $this->bySatuan);
+            })
+            ->search(trim($this->search))
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage),])
+            ->extends('layouts.app')
+            ->section('content');
     }
 }

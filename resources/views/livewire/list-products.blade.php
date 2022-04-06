@@ -23,43 +23,78 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-success mt-2 btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa fa-plus"></i> Tambah
-              </button>
-              <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Produk</h3>
                     </div>
-                    <input wire:model="search" class="form-control" type="text" placeholder="Cari Produk...">
+                    <div class="col form-inline">
+                        <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa fa-plus"></i> Tambah
+                          </button>
+                    </div>
                 </div>
-            </div>
-              <h3 class="mt-2">Produk</h3>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Filter :
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select wire:model="bySatuan" class="form-select">
+                            <option value="">- Satuan -</option>
+                            <option value="gram">Gram</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Ons">Ons</option>
+                            <option value="Pcs">Pcs</option>
+                            <option value="Pack">Pack</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Produk...">
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col">No</th>
+                    <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col">
+                        Id @include('partials._sort-icon',['field'=>'id'])
+                    </th>
                     <th class="text-center" scope="col">Gambar</th>
-                    <th class="text-center" scope="col">Nama</th>
-                    <th class="text-center" scope="col">Promo</th>
-                    <th class="text-center" scope="col">Harga</th>
-                    <th class="text-center" scope="col">Stok</th>
-                    <th class="text-center" scope="col">Satuan</th>
-                    <th class="text-center" scope="col">Jumlah/Satuan</th>
+                    <th wire:click="sortBy('nama')" style="cursor: pointer;" class="text-center" scope="col">
+                        Nama @include('partials._sort-icon',['field'=>'nama'])
+                    </th>
+                    <th wire:click="sortBy('promo_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Promo @include('partials._sort-icon',['field'=>'promo_id'])
+                    </th>
+                    <th wire:click="sortBy('harga')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Harga @include('partials._sort-icon',['field'=>'harga'])
+                    </th>
+                    <th wire:click="sortBy('stok')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Stok @include('partials._sort-icon',['field'=>'stok'])
+                    </th>
+                    <th wire:click="sortBy('satuan')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Satuan @include('partials._sort-icon',['field'=>'satuan'])
+                    </th>
+                    <th wire:click="sortBy('jumlah_per_satuan')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Jumlah/Satuan @include('partials._sort-icon',['field'=>'jumlah_per_satuan'])
+                    </th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @php $no = 0 @endphp
+                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_product as $item)
                   @if ($item->penjual_id == Auth::user()->id)
-                    @php $no++ @endphp
+                    {{-- @php $no++ @endphp --}}
                     <tr>
-                      <td class="text-center">{{$no}}</td>
+                        <td class="text-center">#Produk{{$item['id']}}</td>
                       <td class="text-center">
                         @php($img = $item->images)
                         <img src="{{ $img[0]->path_image }}" width="100px" height="70px" alt="Image">
@@ -171,7 +206,7 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Satuan</label>
                     <select name="satuan" class="form-control @error('satuan') is-invalid @enderror">
-                        <option value="gram">Gram</Gption>
+                        <option value="gram">Gram</option>
                         <option value="Kg">Kg</option>
                         <option value="Ons">Ons</option>
                         <option value="Pcs">Pcs</option>

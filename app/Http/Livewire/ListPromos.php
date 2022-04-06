@@ -22,9 +22,11 @@ class ListPromos extends Component
     public $akhir_periode;
     public $keterangan;
 
+    public $sortBy = 'created_at';
+
+    public $sortDirection = 'desc';
+    public $byLevel = null;
     public $perPage = 5;
-    public $sortField;
-    public $sortAsc = true;
     public $search = '';
 
     public function pengguna(Request $request)
@@ -79,6 +81,22 @@ class ListPromos extends Component
     //     $this->emit('deletepromo');
     // }
 
+    public function sortBy($field)
+    {
+        if ($this->sortDirection == 'asc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        return $this->sortBy = $field;
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $data = Promo::all();
@@ -90,9 +108,10 @@ class ListPromos extends Component
         }
 
         return view('livewire.list-promos', ['promo' => Promo::search($this->search)
-        ->orderBy('created_at', 'desc')->paginate($this->perPage),])
-        ->extends('layouts.app')
-        ->section('content');
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage),])
+            ->extends('layouts.app')
+            ->section('content');
     }
 
     private function clear()

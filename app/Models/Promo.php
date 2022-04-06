@@ -34,7 +34,10 @@ class Promo extends Model
     {
         return empty($query) ? static::query()
             : static::where('nama', 'like', '%' . $query . '%')
-            ->orWhere('potongan', 'like', '%' . $query . '%');
+            ->orWhere('potongan', 'like', '%' . $query . '%')
+            ->orWhere('awal_periode', 'like', '%' . $query . '%')
+            ->orWhere('akhir_periode', 'like', '%' . $query . '%')
+            ->orWhere('keterangan', 'like', '%' . $query . '%');
     }
 
     public function produks()

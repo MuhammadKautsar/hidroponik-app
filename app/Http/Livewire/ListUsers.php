@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Order;
 use Livewire\Component;
 use App\Models\User;
 // use Illuminate\Http\Request;
@@ -23,22 +22,24 @@ class ListUsers extends Component
     public $nomor_hp;
     public $alamat;
 
+    public $sortBy = 'created_at';
+
+    public $sortDirection = 'desc';
+    public $byLevel = null;
     public $perPage = 10;
-    public $sortField;
-    public $sortAsc = true;
     public $search = '';
 
     protected $queryString = ['search' => ['except' => '']];
 
     public function sortBy($field)
     {
-        if ($this->sortField === $field) {
-            $this->sortAsc = ! $this->sortAsc;
+        if ($this->sortDirection == 'asc') {
+            $this->sortDirection = 'desc';
         } else {
-            $this->sortAsc = true;
+            $this->sortDirection = 'asc';
         }
 
-        $this->sortField = $field;
+        return $this->sortBy = $field;
     }
 
     public function addNew()
@@ -87,10 +88,15 @@ class ListUsers extends Component
 
     public function render()
     {
-        return view('livewire.list-users', ['data_user' => User::search($this->search)
-        ->orderBy('created_at', 'desc')->paginate($this->perPage),], ['data_order' => Order::all()])
-        ->extends('layouts.app')
-        ->section('content');
+        return view('livewire.list-users', [
+            'data_user' => User::when($this->byLevel, function($query){
+                $query->where('level', $this->byLevel);
+            })
+            ->search(trim($this->search))
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage),])
+            ->extends('layouts.app')
+            ->section('content');
     }
 
     private function clear()

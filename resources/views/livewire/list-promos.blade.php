@@ -13,41 +13,71 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success mt-2 btn-sm float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa fa-plus"></i> Tambah
-                </button>
-                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Promo...">
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Promo</h3>
+                    </div>
+                    <div class="col form-inline">
+                        <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa fa-plus"></i> Tambah
+                        </button>
                     </div>
                 </div>
-                <h3 class="mt-2">Promo</h3>
-              </div>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Promo...">
+                        </div>
+                    </div>
+                </div>
+            </div>
               <!-- Light table -->
               <div class="table-responsive">
                 <table class="table align-items-center table-flush table-hover">
                   <thead class="thead-light">
                     <tr>
-                        <th class="text-center" scope="col">No</th>
+                        <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col">
+                            Id @include('partials._sort-icon',['field'=>'id'])
+                        </th>
                         <th class="text-center" scope="col">Gambar</th>
-                        <th class="text-center" scope="col">Nama</th>
-                        <th class="text-center" scope="col">Potongan</th>
-                        <th class="text-center" scope="col">Awal Periode</th>
-                        <th class="text-center" scope="col">Akhir Periode</th>
-                        <th class="text-center" scope="col">Keterangan</th>
+                        <th wire:click="sortBy('nama')" style="cursor: pointer;" class="text-center" scope="col">
+                            Nama @include('partials._sort-icon',['field'=>'nama'])
+                        </th>
+                        <th wire:click="sortBy('potongan')" style="cursor: pointer;" class="text-center" scope="col">
+                            Potongan @include('partials._sort-icon',['field'=>'potongan'])
+                        </th>
+                        <th wire:click="sortBy('awal_periode')" style="cursor: pointer;" class="text-center" scope="col">
+                            Awal Periode @include('partials._sort-icon',['field'=>'awal_periode'])
+                        </th>
+                        <th wire:click="sortBy('akhir_periode')" style="cursor: pointer;" class="text-center" scope="col">
+                            Akhir Periode @include('partials._sort-icon',['field'=>'akhir_periode'])
+                        </th>
+                        <th wire:click="sortBy('keterangan')" style="cursor: pointer;" class="text-center" scope="col">
+                            Keterangan @include('partials._sort-icon',['field'=>'keterangan'])
+                        </th>
                         <th class="text-center" scope="col">Aksi</th>
                     </tr>
                   </thead>
                   <tbody class="list">
-                    @php $no = 0 @endphp
+                    {{-- @php $no = 0 @endphp --}}
                     @forelse($promo as $item)
-                      @php $no++ @endphp
+                      {{-- @php $no++ @endphp --}}
                       <tr>
-                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">#Promo{{$item['id']}}</td>
                         <td class="text-center">
                         <img src="{{ $item->getPromoImage() }}" width="100px" height="70px" alt="Image">
                         </td>
@@ -77,9 +107,14 @@
               <!-- Card footer -->
               <div class="card-footer py-4">
                 <nav aria-label="...">
-                  <ul class="pagination justify-content-end mb-0">
-                    {{ $promo->links() }}
-                  </ul>
+                    <ul class="pagination justify-content mb-0">
+                        <li class="ml-lg float-left">
+                            Showing {{$promo->firstItem()}} to {{$promo->lastItem()}} out of {{$promo->total()}} items
+                        </li>
+                        <li class="ml-lg-auto float-right">
+                            {{ $promo->links() }}
+                        </li>
+                    </ul>
                 </nav>
               </div>
           </div>

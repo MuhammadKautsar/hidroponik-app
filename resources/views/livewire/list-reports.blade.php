@@ -7,35 +7,62 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Laporan...">
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Laporan</h3>
                     </div>
                 </div>
-                <h3 class="mt-2">Laporan</h3>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Laporan...">
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col" class="sort" data-sort="name">Id</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="budget">Tanggal</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="status">Laporan</th>
-                    <th class="text-center" scope="col">Pelapor</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Penjual</th>
+                    <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col">
+                        Id @include('partials._sort-icon',['field'=>'id'])
+                    </th>
+                    <th wire:click="sortBy('tanggal')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Tanggal @include('partials._sort-icon',['field'=>'tanggal'])
+                    </th>
+                    <th wire:click="sortBy('isi_laporan')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Laporan @include('partials._sort-icon',['field'=>'isi_laporan'])
+                    </th>
+                    <th wire:click="sortBy('pembeli_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Pelapor @include('partials._sort-icon',['field'=>'pembeli_id'])
+                    </th>
+                    <th wire:click="sortBy('penjual_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Penjual @include('partials._sort-icon',['field'=>'penjual_id'])
+                    </th>
                     <th class="text-center" scope="col">aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @php $no = 0 @endphp
+                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_report as $item)
-                    @php $no++ @endphp
+                    {{-- @php $no++ @endphp --}}
                     <tr>
-                      <td class="text-center">{{$no}}</td>
+                        <td class="text-center">#Laporan{{$item['id']}}</td>
                       <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
                       <td class="text-center">{{$item['isi_laporan']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
@@ -61,9 +88,13 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  {{ $data_report->links() }}
-                  </li>
+                <ul class="pagination justify-content mb-0">
+                    <li class="ml-lg float-left">
+                        Showing {{$data_report->firstItem()}} to {{$data_report->lastItem()}} out of {{$data_report->total()}} items
+                    </li>
+                    <li class="ml-lg-auto float-right">
+                        {{ $data_report->links() }}
+                    </li>
                 </ul>
               </nav>
             </div>

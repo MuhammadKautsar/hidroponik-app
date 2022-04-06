@@ -43,7 +43,7 @@ class OrderController extends Controller
         elseif ($request->input('harga_jasa_pengiriman') < 0) {
             return back()->with('status', 'Harga ongkir tidak mencapai minimal');
         }
-        elseif ($request->input('harga_jasa_pengiriman') == 0) {
+        elseif ($request->input('harga_jasa_pengiriman') == 0 && $request->input('status_order') != 'Batal') {
             return back()->with('status', 'Harga ongkir belum diisi');
         }
         else{

@@ -7,38 +7,70 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Ulasan...">
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Ulasan</h3>
                     </div>
                 </div>
-                <h3 class="mt-2">Ulasan</h3>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Filter :
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select wire:model="byRating" class="form-select">
+                            <option value="">- Rating -</option>
+                            @for($i = 1; $i <= 5; $i++)
+                                <option value="{{$i}}" style="color:orange">
+                                    @for($j = 1; $j <= $i; $j++)
+                                            &#xf005;
+                                    @endfor
+                                </option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Ulasan...">
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col" class="sort" data-sort="name">No</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="budget">Nama Produk</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="status">Pembeli</th>
-                    <th class="text-center" scope="col">Komentar</th>
-                    <th class="text-center" scope="col" class="sort" data-sort="completion">Rating</th>
+                    <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col">
+                        Id @include('partials._sort-icon',['field'=>'id'])
+                    </th>
+                    <th wire:click="sortBy('produk_id')" style="cursor: pointer;" class="text-center" scope="col">
+                        Nama Produk @include('partials._sort-icon',['field'=>'produk_id'])
+                    </th>
+                    <th wire:click="sortBy('user_id')" style="cursor: pointer;" class="text-center" scope="col">
+                        Pembeli @include('partials._sort-icon',['field'=>'user_id'])
+                    </th>
+                    <th wire:click="sortBy('komentar')" style="cursor: pointer;" class="text-center" scope="col">
+                        Komentar @include('partials._sort-icon',['field'=>'komentar'])
+                    </th>
+                    <th wire:click="sortBy('rating')" style="cursor: pointer;" class="text-center" scope="col">
+                        Rating @include('partials._sort-icon',['field'=>'rating'])
+                    </th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                    @php $no = 0 @endphp
+                    {{-- @php $no = 0 @endphp --}}
                   @forelse($feedbacks as $item)
                     @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
                         {{-- @foreach($data_product as $product)
                         @if ($product->penjual->id == Auth::user()->id) --}}
-                        @php $no++ @endphp
-                            <tr>
-                            <td class="text-center">{{$no}}</td>
+                        {{-- @php $no++ @endphp --}}
+                        <tr>
+                            <td class="text-center">#Ulasan{{$item['id']}}</td>
                             <td class="text-center">{{$item->produk->nama}}</td>
                             <td class="text-center">{{ $item->user->nama_lengkap }}</td>
                             <td class="text-center">{{$item['komentar']}}</td>
@@ -50,7 +82,7 @@
                             <td class="text-center">
                                 <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                             </td>
-                            </tr>
+                        </tr>
                         {{-- @endif
                         @endforeach --}}
                     @endif

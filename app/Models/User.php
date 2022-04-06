@@ -47,12 +47,16 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public static function search($query)
+    public function scopeSearch($query, $term)
     {
-        return empty($query) ? static::query()
-            : static::where('nama_lengkap', 'like', '%'.$query.'%')
-                ->orWhere('email', 'like', '%'.$query.'%')
-                ->orWhere('level', 'like', '%'.$query.'%');
+        $term = "%$term%";
+        $query->where(function($query) use ($term) {
+            $query->where('nama_lengkap', 'like', $term)
+                ->orWhere('username', 'like', $term)
+                ->orWhere('email', 'like', $term)
+                ->orWhere('nomor_hp', 'like', $term)
+                ->orWhere('level', 'like', $term);
+        });
     }
 
     /**

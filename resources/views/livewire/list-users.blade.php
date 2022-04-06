@@ -8,25 +8,52 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success btn-sm mt-2 float-right" data-bs-toggle="modal" data-bs-target="#form">
-                  @if (auth()->user()->level=="superadmin")
-                  <i class="fa fa-plus"></i> Tambah Pengguna
-                  @elseif (auth()->user()->level=="admin")
-                  <i class="fa fa-plus"></i> Tambah Penjual
-                  @endif
-                </button>
-                {{-- <form class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right" method="GET" > --}}
-                    <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                        <div class="input-group input-group-alternative">
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Pengguna</h3>
+                    </div>
+                    <div class="col form-inline">
+                        <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#form">
+                            @if (auth()->user()->level=="superadmin")
+                            <i class="fa fa-plus"></i> Tambah Pengguna
+                            @elseif (auth()->user()->level=="admin")
+                            <i class="fa fa-plus"></i> Tambah Penjual
+                            @endif
+                        </button>
+                    </div>
+                </div>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mt-2">
+                        Filter :
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select wire:model="byLevel" class="form-select">
+                            <option value="">- Level -</option>
+                            <option value="admin">Admin</option>
+                            <option value="penjual">Penjual</option>
+                            <option value="Pembeli">Pembeli</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
                             <input wire:model="search" class="form-control" type="text" placeholder="Cari Pengguna...">
                         </div>
                     </div>
-                {{-- </form> --}}
-                <h3 class="mt-2">Pengguna</h3>
+                </div>
             </div>
 
               <!-- Light table -->
@@ -34,24 +61,36 @@
                 <table class="table align-items-center table-flush table-hover">
                   <thead class="thead-light">
                     <tr>
-                      <th class="text-center" scope="col">No</th>
-                      <th class="text-center" scope="col">Foto</th>
-                      <th class="text-center" scope="col">Nama</th>
-                      <th class="text-center" scope="col">Username</th>
-                      <th class="text-center" scope="col">Email</th>
-                      <th class="text-center" scope="col">No Hp</th>
-                      <th class="text-center" scope="col">Level</th>
-                      <th class="text-center" scope="col">Aksi</th>
+                        <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col">
+                            Id @include('partials._sort-icon',['field'=>'id'])
+                        </th>
+                        <th class="text-center" scope="col">Foto</th>
+                        <th wire:click="sortBy('nama_lengkap')" style="cursor: pointer;" class="text-center" scope="col">
+                            Nama @include('partials._sort-icon',['field'=>'nama_lengkap'])
+                        </th>
+                        <th wire:click="sortBy('username')" style="cursor: pointer;" class="text-center" scope="col">
+                            Username @include('partials._sort-icon',['field'=>'username'])
+                        </th>
+                        <th wire:click="sortBy('email')" style="cursor: pointer;" class="text-center" scope="col">
+                            Email @include('partials._sort-icon',['field'=>'email'])
+                        </th>
+                        <th wire:click="sortBy('nomor_hp')" style="cursor: pointer;" class="text-center" scope="col">
+                            No Hp @include('partials._sort-icon',['field'=>'nomor_hp'])
+                        </th>
+                        <th wire:click="sortBy('level')" style="cursor: pointer;" class="text-center" scope="col">
+                            Level @include('partials._sort-icon',['field'=>'level'])
+                        </th>
+                        <th class="text-center" scope="col">Aksi</th>
                     </tr>
                   </thead>
                   <tbody class="list">
-                    @php $no = 0 @endphp
+                    {{-- @php $no = 0 @endphp --}}
                     @forelse($data_user as $item)
-                      @php $no++ @endphp
+                      {{-- @php $no++ @endphp --}}
                       @php $tidak = 0 @endphp
                       @php $boleh = 0 @endphp
                       <tr>
-                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">#User{{$item['id']}}</td>
                         <td class="text-center">
                           <img src="{{ $item->getProfileImage() }}" class="avatar avatar-sm rounded-circle" alt="Image">
                         </td>
@@ -111,9 +150,14 @@
               <!-- Card footer -->
             <div class="card-footer py-4">
                 <nav aria-label="...">
-                  <ul class="pagination justify-content-end mb-0">
-                    {{ $data_user->links() }}
-                  </ul>
+                    <ul class="pagination justify-content mb-0">
+                        <li class="ml-lg float-left">
+                            Showing {{$data_user->firstItem()}} to {{$data_user->lastItem()}} out of {{$data_user->total()}} items
+                        </li>
+                        <li class="ml-lg-auto float-right">
+                            {{ $data_user->links() }}
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>

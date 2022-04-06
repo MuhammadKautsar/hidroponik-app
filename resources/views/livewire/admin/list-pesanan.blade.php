@@ -7,39 +7,84 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-                <div class="navbar-search navbar-search-light form-inline mr-3 d-none d-md-flex ml-lg-auto float-right">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        </div>
-                        <input wire:model="search" class="form-control" type="text" placeholder="Cari Pesanan...">
+                <div class="row mb-3">
+                    <div class="col form-inline">
+                        <h3>Pesanan</h3>
                     </div>
                 </div>
-                <h3 class="mt-2">Pesanan</h3>
+                <hr size="5">
+                <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mt-2">
+                        Filter :
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select wire:model="byStatus" class="form-select">
+                            <option value="">- Status -</option>
+                            <option value="Belum">Belum</option>
+                            <option value="Diproses">Diproses</option>
+                            <option value="Dikirim">Dikirim</option>
+                            <option value="Selesai">Selesai</option>
+                            <option value="Batal">Batal</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Pesanan...">
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th class="text-center" scope="col" class="sort">No</th>
-                    <th class="text-center" scope="col" class="sort">Tanggal</th>
-                    <th class="text-center" scope="col" class="sort">Pembeli</th>
+                    <th wire:click="sortBy('id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Id @include('partials._sort-icon',['field'=>'id'])
+                    </th>
+                    <th wire:click="sortBy('created_at')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Tanggal @include('partials._sort-icon',['field'=>'created_at'])
+                    </th>
+                    <th class="text-center" scope="col">Jam</th>
+                    <th wire:click="sortBy('pembeli_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Pembeli @include('partials._sort-icon',['field'=>'pembeli_id'])
+                    </th>
                     <th class="text-center" scope="col">Jumlah Item</th>
-                    <th class="text-center" scope="col" class="sort">Total Harga</th>
-                    <th class="text-center" scope="col" class="sort">Penjual</th>
-                    <th class="text-center" scope="col" class="sort">Status</th>
+                    <th wire:click="sortBy('total_harga')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Total Harga @include('partials._sort-icon',['field'=>'total_harga'])
+                    </th>
+                    <th wire:click="sortBy('penjual_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Penjual @include('partials._sort-icon',['field'=>'penjual_id'])
+                    </th>
+                    <th wire:click="sortBy('status_order')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
+                        Status @include('partials._sort-icon',['field'=>'status_order'])
+                    </th>
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @php $no = 0 @endphp
+                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_order as $item)
-                        @php $no++ @endphp
+                        {{-- @php $no++ @endphp --}}
                         @php $i = 0 @endphp
                         <tr>
-                            <td class="text-center">{{$no}}</td>
-                            <td class="text-center">{{$item['created_at']->format('d-m-Y H:i')}}</td>
+                            <td class="text-center">#Agri{{$item['id']}}</td>
+                            <td class="text-center">{{$item['created_at']->format('d-m-Y')}}</td>
+                            <td class="text-center">{{$item['created_at']->format('H:i')}}</td>
                             <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>
                             <td class="text-center">
                                 @foreach ($item->order_mappings as $pesanan)
@@ -47,7 +92,7 @@
                                 @endforeach
                                     {{$i}}
                             </td>
-                            <td class="text-center">Rp {{number_format($item['total_harga'],0,',','.')}}</td>
+                            <td class="text-center">Rp{{number_format($item['total_harga']+$item['harga_jasa_pengiriman'],0,',','.')}},-</td>
                             <td class="text-center">{{$item->penjual->username}}</td>
                             <td class="text-center">{{$item['status_order']}}</td>
                             <td class="text-center">
@@ -70,8 +115,13 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  {{ $data_order->links() }}
+                <ul class="pagination justify-content mb-0">
+                    <li class="ml-lg float-left">
+                        Showing {{$data_order->firstItem()}} to {{$data_order->lastItem()}} out of {{$data_order->total()}} items
+                    </li>
+                    <li class="ml-lg-auto float-right">
+                        {{ $data_order->links() }}
+                    </li>
                 </ul>
               </nav>
             </div>
@@ -106,12 +156,12 @@
                     <span class="form-control">{{$data->pembeli->nomor_hp}}</span>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Ongkir</label>
-                    <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
-                </div>
+                    <label for="" class="form-label">Harga Orderan</label>
+                    <span class="form-control">Rp{{number_format($data['total_harga'],0,',','.')}},-</span>
+                  </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Status</label>
-                  <span class="form-control">{{$data->status_order}}</span>
+                    <label for="exampleInputEmail1" class="form-label">Ongkir</label>
+                    <span class="form-control">Rp{{number_format($data['harga_jasa_pengiriman'],0,',','.')}},-</span>
                 </div>
           </div>
           <div class="modal-footer">

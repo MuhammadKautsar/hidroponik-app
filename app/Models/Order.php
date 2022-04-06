@@ -24,11 +24,14 @@ class Order extends Model
         'harga_jasa_pengiriman',
     ];
 
-    public static function search($query)
+    public function scopeSearch($query, $term)
     {
-        return empty($query) ? static::query()
-            : static::where('total_harga', 'like', '%' . $query . '%')
-            ->orWhere('status_order', 'like', '%' . $query . '%');
+        $term = "%$term%";
+        $query->where(function($query) use ($term) {
+            $query->where('total_harga', 'like', $term)
+                ->orWhere('created_at', 'like', $term)
+                ->orWhere('status_order', 'like', $term);
+        });
     }
 
     public function pembeli()

@@ -29,9 +29,11 @@ class ListProducts extends Component
     public $keterangan;
     public $total_feedback;
 
-    public $perPage = 10;
-    public $sortField;
-    public $sortAsc = true;
+    public $sortBy = 'created_at';
+
+    public $sortDirection = 'desc';
+    public $bySatuan = null;
+    public $perPage = 5;
     public $search = '';
 
     public function addNew()
@@ -84,12 +86,32 @@ class ListProducts extends Component
         return redirect()->back();
     }
 
+    public function sortBy($field)
+    {
+        if ($this->sortDirection == 'asc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        return $this->sortBy = $field;
+    }
+
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        return view('livewire.list-products', ['data_product' => Produk::search($this->search)
-        ->orderBy('created_at', 'desc')->get(),], ['promo' => Promo::all()])
-        ->extends('layouts.app')
-        ->section('content');
+        return view('livewire.list-products', [
+            'data_product' => Produk::when($this->bySatuan, function($query){
+                $query->where('satuan', $this->bySatuan);
+            })
+            ->search(trim($this->search))
+            ->orderBy($this->sortBy, $this->sortDirection)->get(),], ['promo' => Promo::all()])
+            ->extends('layouts.app')
+            ->section('content');
     }
 
     private function clear()

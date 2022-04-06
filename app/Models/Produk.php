@@ -40,13 +40,15 @@ class Produk extends Model
         });
     }
 
-    public static function search($query)
+    public function scopeSearch($query, $term)
     {
-        return empty($query) ? static::query()
-            : static::where('nama', 'like', '%' . $query . '%')
-            ->orWhere('harga', 'like', '%' . $query . '%')
-            ->orWhere('stok', 'like', '%' . $query . '%')
-            ->orWhere('satuan', 'like', '%' . $query . '%');
+        $term = "%$term%";
+        $query->where(function($query) use ($term) {
+            $query->where('nama', 'like', $term)
+                ->orWhere('harga', 'like', $term)
+                ->orWhere('stok', 'like', $term)
+                ->orWhere('satuan', 'like', $term);
+        });
     }
 
     public function feedbacks()
