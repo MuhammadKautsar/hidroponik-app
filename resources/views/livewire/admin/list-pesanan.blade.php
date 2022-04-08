@@ -147,21 +147,25 @@
                     <label for="exampleInputEmail1" class="form-label">Produk</label><br>
                     @foreach ($data->order_mappings as $pesanan)
                         <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
-                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><br>
+                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;
+                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format($pesanan->produk->harga*$pesanan->jumlah,0,',','.')}},-</label><br>
                     @endforeach
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label>
-                    <span class="form-control">{{$data->pembeli->nomor_hp}}</span>
+                    <input class="form-control" disabled placeholder="{{$data->pembeli->nomor_hp}}">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label">Harga Orderan</label>
-                    <span class="form-control">Rp{{number_format($data['total_harga'],0,',','.')}},-</span>
+                    <input class="form-control" disabled placeholder="Rp{{number_format($data['total_harga'],0,',','.')}},-">
                   </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
-                    <span class="form-control">Rp{{number_format($data['harga_jasa_pengiriman'],0,',','.')}},-</span>
+                    <input class="form-control" disabled placeholder="Rp{{number_format($data['harga_jasa_pengiriman'],0,',','.')}},-">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}</textarea>
                 </div>
           </div>
           <div class="modal-footer">

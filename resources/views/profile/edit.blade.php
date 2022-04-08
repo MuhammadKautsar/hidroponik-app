@@ -50,8 +50,8 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('username') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-username">{{ __('Username') }}</label>
-                                    <span class="form-control">{{ old('username', auth()->user()->username) }}</span>
-                                    {{-- <input type="text" name="username" id="input-username" class="form-control form-control-alternative{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('Username') }}" value="{{ old('username', auth()->user()->username) }}" required autofocus> --}}
+                                    {{-- <span class="form-control">{{ old('username', auth()->user()->username) }}</span> --}}
+                                    <input disabled type="text" name="username" id="input-username" class="form-control form-control-alternative{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ __('Username') }}" value="{{ old('username', auth()->user()->username) }}" required autofocus>
 
                                     @if ($errors->has('username'))
                                         <span class="invalid-feedback" role="alert">
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="form-group{{ $errors->has('nomor_hp') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-nomor_hp">{{ __('Nomor HP') }}</label>
-                                    <input type="text" name="nomor_hp" id="input-nomor_hp" class="form-control form-control-alternative{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nomor HP') }}" value="{{ old('nomor_hp', auth()->user()->nomor_hp) }}">
+                                    <input type="number" name="nomor_hp" id="input-nomor_hp" class="form-control form-control-alternative{{ $errors->has('nomor_hp') ? ' is-invalid' : '' }}" placeholder="{{ __('Nomor HP') }}" value="{{ old('nomor_hp', auth()->user()->nomor_hp) }}">
 
                                     @if ($errors->has('nomor_hp'))
                                         <span class="invalid-feedback" role="alert">
@@ -103,7 +103,7 @@
                             <h6 class="heading-small text-muted mb-4">{{ __('Password') }}</h6>
 
                             @if (session('password_status'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <div class="alert alert-light alert-dismissible fade show" role="alert">
                                     {{ session('password_status') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

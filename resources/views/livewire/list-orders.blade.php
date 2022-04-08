@@ -89,12 +89,16 @@
                                     {{$i}}
                             </td>
                             <td class="text-center">Rp{{number_format($item['harga_jasa_pengiriman'],0,',','.')}},-</td>
-                            <td class="text-center">Rp{{number_format($item['total_harga'],0,',','.')}},-</td>
+                            <td class="text-center">Rp{{number_format($item['total_harga']+$item['harga_jasa_pengiriman'],0,',','.')}},-</td>
                             <td class="text-center">{{$item['status_order']}}</td>
                             <td class="text-center">
                                 @if ($item->status_order != "Selesai" && $item->status_order != "Batal")
                                 <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                                     <i class="fa fa-edit"></i> Tinjau
+                                </button>
+                                @else
+                                <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
+                                    <i class="fa fa-info-circle"></i> Detail
                                 </button>
                                 @endif
                             </td>
@@ -131,7 +135,7 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Pesanan</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tinjau Pesanan</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -141,27 +145,30 @@
                     <label for="exampleInputEmail1" class="form-label">Produk</label><br>
                     @foreach ($data->order_mappings as $pesanan)
                         <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
-                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><br>
+                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;
+                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format($pesanan->produk->harga*$pesanan->jumlah,0,',','.')}},-</label><br>
                     @endforeach
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label>
-                    <span class="form-control">{{$data->pembeli->nomor_hp}}<a type="button" class="btn btn-success btn-sm float-right" href="https://wa.me/62{{$data->pembeli->nomor_hp}}"><i class="fab fa-whatsapp"></i> Hubungi</a></span>
+                    <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label><a type="button" class="btn btn-success btn-sm float-end" href="https://wa.me/62{{$data->pembeli->nomor_hp}}"><i class="fab fa-whatsapp"></i> Hubungi</a>
+                    <input class="form-control" disabled placeholder="{{$data->pembeli->nomor_hp}}">
                 </div>
                 <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                    <textarea class="form-control" rows="2" disabled>{{$data->pembeli->alamat}}</textarea>
+                </div>
+                @if (($data->harga_jasa_pengiriman==0))
+                <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
-                    @if (($data->harga_jasa_pengiriman==0))
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
                     <small>Maksimal Rp 10.000 dan tidak dapat diubah lagi setelah diisi</small>
-                    @elseif (($data->harga_jasa_pengiriman!=0))
-                    <span class="form-control">{{$data->harga_jasa_pengiriman}}</span>
-                    <input name="harga_jasa_pengiriman" type="hidden" class="form-control" value="{{$data->harga_jasa_pengiriman}}">
-                    @endif
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                @else
+                <input name="harga_jasa_pengiriman" type="hidden" class="form-control" value="{{$data->harga_jasa_pengiriman}}">
+                @endif
                 <div class="mb-3">
                   <label for="" class="form-label">Status</label>
                   <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
@@ -181,12 +188,47 @@
                 </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
             <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Update</button>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detail Pesanan</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="/pesanan/{{$data->id}}/update" method="POST" enctype="multipart/form-data">
+                  {{csrf_field()}}
+                  <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Produk</label><br>
+                      @foreach ($data->order_mappings as $pesanan)
+                        <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
+                        <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;
+                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format($pesanan->produk->harga*$pesanan->jumlah,0,',','.')}},-</label><br>
+                      @endforeach
+                  </div>
+                  <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label>
+                      <input class="form-control" disabled placeholder="{{$data->pembeli->nomor_hp}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alamat</label>
+                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}</textarea>
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     @endforeach
 </div>

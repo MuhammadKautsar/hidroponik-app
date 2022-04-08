@@ -264,14 +264,14 @@
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Status</label>
                   @if ($data->email_verified_at != "")
-                  <input readonly class="form-control" placeholder="Sudah Verifikasi"></input>
+                  <input disabled class="form-control" placeholder="Sudah Verifikasi"></input>
                   @else
-                  <input readonly class="form-control" placeholder="Belum Verifikasi"></input>
+                  <input disabled class="form-control" placeholder="Belum Verifikasi"></input>
                   @endif
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                    <textarea readonly class="form-control" rows="3" placeholder="{{$data->alamat}}"></textarea>
+                    <textarea disabled class="form-control" rows="3" placeholder="{{$data->alamat}}"></textarea>
                 </div>
           </div>
           <div class="modal-footer">

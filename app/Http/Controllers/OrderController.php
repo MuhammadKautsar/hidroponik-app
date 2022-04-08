@@ -51,7 +51,6 @@ class OrderController extends Controller
         }
 
         $data_order->status_order = $request->input('status_order');
-        $data_order->total_harga = $data_order->total_harga + $data_order->harga_jasa_pengiriman;
         $data_order->update();
         return redirect('/pesanan');
     }
