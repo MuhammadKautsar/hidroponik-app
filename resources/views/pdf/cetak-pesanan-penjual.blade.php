@@ -33,6 +33,7 @@
         $order=App\Models\Order::where('penjual_id', '=', Auth::user()->id)->orderBy('created_at', 'desc')->first();
     @endphp
 
+    @if ($order != null)
     <title>Data Pesanan {{$order->penjual->username}}</title>
 
 </head>
@@ -106,6 +107,7 @@
             &copy; {{ now()->year }} <a >AgriHub</a>
         </div>
     </div>
+    @endif
 
 <script type="text/javascript">
     window.print();

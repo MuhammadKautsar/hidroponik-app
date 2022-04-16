@@ -15,6 +15,16 @@
                 <hr size="5">
                 <div class="row">
                     <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 mt-2">
                         Filter :
                     </div>
                     <div class="col-md-2 mt-1">
@@ -64,7 +74,7 @@
                 </thead>
                 <tbody class="list">
                   @forelse($feedbacks as $item)
-                    @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
+                    {{-- @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id) --}}
                         <tr>
                             <td class="text-center">#Ulasan{{$item['id']}}</td>
                             <td class="text-center">{{$item->produk->nama}}</td>
@@ -79,7 +89,7 @@
                                 <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                             </td>
                         </tr>
-                    @endif
+                    {{-- @endif --}}
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
@@ -94,8 +104,13 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  {{-- {{ $feedbacks->links() }} --}}
+                <ul class="pagination justify-content mb-0">
+                    <li class="ml-lg float-left">
+                        Showing {{$feedbacks->firstItem()}} to {{$feedbacks->lastItem()}} out of {{$feedbacks->total()}} items
+                    </li>
+                    <li class="ml-lg-auto float-right">
+                        {{ $feedbacks->links() }}
+                    </li>
                 </ul>
               </nav>
             </div>

@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Produk;
 use Livewire\Component;
 use App\Models\Feedback;
-use App\Models\Produk;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class ListFeedbacks extends Component
 {
@@ -41,8 +42,12 @@ class ListFeedbacks extends Component
             'feedbacks' => Feedback::when($this->byRating, function($query){
                 $query->where('rating', $this->byRating);
             })
+            ->whereHas('produk', function($q) {
+                $q->where('penjual_id', Auth::user()->id);
+            })
             ->search(trim($this->search))
-            ->orderBy($this->sortBy, $this->sortDirection)->get(),], ['data_product' => Produk::all()])
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage),], ['data_product' => Produk::all()])
             ->extends('layouts.app')
             ->section('content');
     }

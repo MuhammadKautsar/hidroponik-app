@@ -3,10 +3,10 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Hello') . ' '. auth()->user()->nama_lengkap,
-        'class' => 'col-lg-7'
+        // 'class' => 'col-lg-7'
     ])
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
         <div class="row">
             {{-- <div class="col-xl-8 order-xl-1"> --}}
             <div class="col">
