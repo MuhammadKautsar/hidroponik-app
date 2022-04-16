@@ -1,7 +1,7 @@
 <div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
       <div class="row">
         <div class="col">
           <div class="card">
@@ -63,12 +63,8 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                    {{-- @php $no = 0 @endphp --}}
                   @forelse($feedbacks as $item)
                     @if ($item->produk->penjual_id == Auth::user()->id && $item->produk->id == $item->produk_id)
-                        {{-- @foreach($data_product as $product)
-                        @if ($product->penjual->id == Auth::user()->id) --}}
-                        {{-- @php $no++ @endphp --}}
                         <tr>
                             <td class="text-center">#Ulasan{{$item['id']}}</td>
                             <td class="text-center">{{$item->produk->nama}}</td>
@@ -83,8 +79,6 @@
                                 <a href="/ulasan/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                             </td>
                         </tr>
-                        {{-- @endif
-                        @endforeach --}}
                     @endif
                   @empty
                     <tr class="text-center">

@@ -11,6 +11,11 @@
                     <div class="col form-inline">
                         <h3>Pesanan</h3>
                     </div>
+                    <div class="col form-inline">
+                        <a href="{{ route('cetak-pesanan') }}" target="_blank" type="button" class="btn btn-warning btn-sm ml-lg-auto float-right text-white">
+                            <i class="fa fa-file-pdf"></i> Export PDF
+                        </a>
+                    </div>
                 </div>
                 <hr size="5">
                 <div class="row">
@@ -77,9 +82,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_order as $item)
-                        {{-- @php $no++ @endphp --}}
                         @php $i = 0 @endphp
                         <tr>
                             <td class="text-center">#Agri{{$item['id']}}</td>

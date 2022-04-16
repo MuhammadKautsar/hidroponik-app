@@ -27,7 +27,7 @@
                               <img src="{{ $img->path_image }}" width="130px" height="100px" alt="">
                               @if (count($data_product->images)>1)
                               <a href="/deleteimage/{{ $img->id }}"
-                                 class="text-red"> X
+                                 class="text-red"> X &nbsp;
                                 </a>
                               @endif
                               @endforeach

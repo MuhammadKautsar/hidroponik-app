@@ -108,8 +108,10 @@ class ListProducts extends Component
             'data_product' => Produk::when($this->bySatuan, function($query){
                 $query->where('satuan', $this->bySatuan);
             })
+            ->where('penjual_id', Auth::user()->id)
             ->search(trim($this->search))
-            ->orderBy($this->sortBy, $this->sortDirection)->get(),], ['promo' => Promo::all()])
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage),], ['promo' => Promo::all()])
             ->extends('layouts.app')
             ->section('content');
     }

@@ -1,7 +1,7 @@
 <div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
         @if(session('sukses'))
             <div class="alert alert-light" role="alert">
                 {{session('sukses')}}
@@ -14,8 +14,8 @@
       <style>
         .images-preview-div img
         {
-        padding: 10px;
-        max-width: 100px;
+        padding: 1px;
+        max-width: 1000px;
         }
       </style>
       <div class="row">
@@ -35,6 +35,16 @@
                 </div>
                 <hr size="5">
                 <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
                     <div class="col-md-1 mt-2">
                         Filter :
                     </div>
@@ -89,10 +99,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_product as $item)
-                  @if ($item->penjual_id == Auth::user()->id)
-                    {{-- @php $no++ @endphp --}}
                     <tr>
                         <td class="text-center">#Produk{{$item['id']}}</td>
                       <td class="text-center">
@@ -108,9 +115,9 @@
                         @endif
                       <td class="text-center">
                         @if ($item->promo_id=="")
-                            Rp {{number_format($item['harga'], 0,',','.')}}</td>
+                            Rp{{number_format($item['harga'], 0,',','.')}},-</td>
                         @elseif ($item->promo_id!="")
-                            Rp {{number_format($item->harga-$item->harga*$item->promo->potongan/100, 0,',','.')}}</td>
+                            Rp{{number_format($item->harga-$item->harga*$item->promo->potongan/100, 0,',','.')}},-</td>
                         @endif
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>
@@ -120,7 +127,6 @@
                         <a href="/produk/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                       </td>
                     </tr>
-                    @endif
                     @empty
                     <tr class="text-center">
                         <td colspan="10">
@@ -135,8 +141,13 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  {{-- {{ $data_product->links() }} --}}
+                <ul class="pagination justify-content mb-0">
+                    <li class="ml-lg float-left">
+                        Showing {{$data_product->firstItem()}} to {{$data_product->lastItem()}} out of {{$data_product->total()}} items
+                    </li>
+                    <li class="ml-lg-auto float-right">
+                        {{ $data_product->links() }}
+                    </li>
                 </ul>
               </nav>
             </div>
@@ -257,7 +268,7 @@
                 <div class="mb-3">
                   <label for="" class="form-label">Gambar</label><br>
                   <input name="gambar[]" multiple type="file" id="image" aria-describedby="emailHelp"><br>
-                  <br>{{-- <div class="col-lg-3"> --}}
+                  <br>
                     @foreach ($data->images as $img)
                     @if (count($data->images)>1)
                     <img src="{{ $img->path_image }}" width="100px" height="70px" alt="">
@@ -319,7 +330,7 @@ var filesAmount = input.files.length;
 for (i = 0; i < filesAmount; i++) {
 var reader = new FileReader();
 reader.onload = function(event) {
-$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+$($.parseHTML('<img width="130px" height="100px">&nbsp')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
 }
 reader.readAsDataURL(input.files[i]);
 }

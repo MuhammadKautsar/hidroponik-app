@@ -83,14 +83,11 @@
                     <th wire:click="sortBy('satuan')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
                         Satuan @include('partials._sort-icon',['field'=>'satuan'])
                     </th>
-                    {{-- <th class="text-center" scope="col">Jumlah/Satuan</th> --}}
                     <th class="text-center" scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @php $no = 0 @endphp
                   @forelse($data_product as $item)
-                    {{-- @php $no++ @endphp --}}
                     <tr>
                       <td class="text-center">#Produk{{$item['id']}}</td>
                       <td class="text-center">
@@ -107,10 +104,9 @@
                         @php($diskon = $item->promo)
                         {{$diskon->potongan}} %</td>
                         @endif
-                      <td class="text-center">Rp {{number_format($item['harga'],0,',','.')}}</td>
+                      <td class="text-center">Rp{{number_format($item['harga'],0,',','.')}},-</td>
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>
-                      {{-- <td class="text-center">{{$item['jumlah_per_satuan']}}</td> --}}
                       <td class="text-center">
                         <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                             <i class="fa fa-eye"></i> Lihat

@@ -5735,6 +5735,16 @@ input[type='button'].btn-block
     flex: 1 1 auto;
 }
 
+.card-graph
+{
+    margin-top: 1.5rem;
+    margin-bottom: -5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+
+    flex: 1 1 auto;
+}
+
 .card-title
 {
     margin-bottom: 1.25rem;
@@ -17912,7 +17922,7 @@ a.btn-icon-only
 
 .dropdown-menu-xl
 {
-    min-width: 450px;
+    min-width: 500px;
 
     border-radius: .4375rem;
 }

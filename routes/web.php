@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Livewire\ListUsers;
+use App\Http\Livewire\ListOrders;
+use App\Http\Livewire\ListProduk;
+use App\Http\Livewire\ListPromos;
+use App\Http\Livewire\ListPesanan;
+use App\Http\Livewire\ListReports;
+use App\Http\Livewire\ListProducts;
+use App\Http\Livewire\ListFeedbacks;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Livewire\ListUmpanbalik;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ReportController;
-use App\Http\Livewire\ListUsers;
-use App\Http\Livewire\ListPromos;
-use App\Http\Livewire\ListFeedbacks;
-use App\Http\Livewire\ListReports;
-use App\Http\Livewire\ListOrders;
-use App\Http\Livewire\ListProducts;
-use App\Http\Livewire\ListProduk;
-use App\Http\Livewire\ListPesanan;
-use App\Http\Livewire\ListUmpanbalik;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,22 +39,6 @@ Route::get('/privacy-policy', function () {
     return view('privacy_policy');
 });
 
-Route::get('/images_upload', 'App\Http\Controllers\ImagesController@index');
-Route::post('/upload-images', 'App\Http\Controllers\ImagesController@post');
-
-// Route::get('/upload', 'App\Http\Controllers\CobaController@index');
-// Route::post('/storedata', 'App\Http\Controllers\CobaController@store')->name('form.data');
-// Route::post('/storeimage', 'App\Http\Controllers\CobaController@storeImage');
-
-//Route form displaying our form
-Route::get('/dropzoneform', 'App\Http\Controllers\CobaController@dropzoneform');
-
-//Rout for submitting the form datat
-Route::post('/storedata', 'CobaController@storeData')->name('form.data');
-
-//Route for submitting dropzone data
-Route::post('/storeimgae', 'CobaController@storeImage');
-
 Auth::routes(['verify'=>true]);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
@@ -75,6 +59,7 @@ Route::group(['middleware' => ['auth','verified','cekLevel:admin,superadmin']], 
      Route::get('/umpanbalik/{id}/delete', 'App\Http\Controllers\FeedbackController@destroyAdmin');
      Route::get('admin/produk', ListProduk::class)->name('produks');
      Route::get('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
+     Route::get('admin/cetak-pesanan', [OrderController::class, 'cetakPesanan'])->name('cetak-pesanan');
 });
 
 Route::group(['middleware' => ['auth','verified','cekLevel:penjual']], function () {
@@ -88,6 +73,7 @@ Route::group(['middleware' => ['auth','verified','cekLevel:penjual']], function 
 	Route::post('/pesanan/{id}/update', 'App\Http\Controllers\OrderController@update');
     Route::get('/ulasan', ListFeedbacks::class)->name('feedbacks');
     Route::get('/ulasan/{id}/delete', 'App\Http\Controllers\FeedbackController@destroy');
+    Route::get('/cetak-pesanan', [OrderController::class, 'cetakPesananPenjual'])->name('cetak-pesanan-penjual');
 });
 
 Route::group(['middleware' => ['auth','verified']], function () {

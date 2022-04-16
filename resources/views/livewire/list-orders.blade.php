@@ -1,7 +1,7 @@
 <div>
     @include('layouts.headers.cards')
 
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--8">
         @if(session('status'))
         <div class="alert alert-danger" role="alert">
           {{session('status')}}
@@ -16,9 +16,24 @@
                     <div class="col form-inline">
                         <h3>Pesanan</h3>
                     </div>
+                    <div class="col form-inline">
+                        <a href="{{ route('cetak-pesanan-penjual') }}" target="_blank" type="button" class="btn btn-danger btn-sm ml-lg-auto float-right text-white">
+                            <i class="fa fa-file-pdf"></i> Export PDF
+                        </a>
+                    </div>
                 </div>
                 <hr size="5">
                 <div class="row">
+                    <div class="col-md-1 mt-2">
+                        Page :
+                    </div>
+                    <div class="col-md-1 mt-1">
+                        <select wire:model="perPage" class="form-select">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>25</option>
+                        </select>
+                    </div>
                     <div class="col-md-1 mt-2">
                         Filter :
                     </div>
@@ -72,10 +87,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  {{-- @php $no = 0 @endphp --}}
                   @forelse($data_order as $item)
-                    @if ($item->penjual_id == Auth::user()->id)
-                        {{-- @php $no++ @endphp --}}
                         @php $i = 0 @endphp
                         <tr>
                             <td class="text-center">#Agri{{$item['id']}}</td>
@@ -103,7 +115,6 @@
                                 @endif
                             </td>
                         </tr>
-                    @endif
                   @empty
                     <tr class="text-center">
                         <td colspan="10">
@@ -118,8 +129,13 @@
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  {{-- {{ $data_order->links() }} --}}
+                <ul class="pagination justify-content mb-0">
+                    <li class="ml-lg float-left">
+                        Showing {{$data_order->firstItem()}} to {{$data_order->lastItem()}} out of {{$data_order->total()}} items
+                    </li>
+                    <li class="ml-lg-auto float-right">
+                        {{ $data_order->links() }}
+                    </li>
                 </ul>
               </nav>
             </div>
@@ -150,7 +166,7 @@
                     @endforeach
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label><a type="button" class="btn btn-success btn-sm float-end" href="https://wa.me/62{{$data->pembeli->nomor_hp}}"><i class="fab fa-whatsapp"></i> Hubungi</a>
+                    <label for="exampleInputEmail1" class="form-label">Nomor Hp Pembeli</label><a type="button" class="btn btn-success btn-sm float-end" target="_blank" href="https://wa.me/62{{$data->pembeli->nomor_hp}}"><i class="fab fa-whatsapp"></i> Hubungi</a>
                     <input class="form-control" disabled placeholder="{{$data->pembeli->nomor_hp}}">
                 </div>
                 <div class="mb-3">

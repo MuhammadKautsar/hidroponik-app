@@ -2,31 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Produk;
+use PDF;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
+    public function cetakPesanan()
     {
-        if($request->has('search')){
-            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(5);
-        }else{
-            $data_order=Order::all();
-        }
-        $data_product=Produk::all();
-        return view('pages.orders', compact('data_order', 'data_product'));
+        $data_order=Order::orderBy('created_at', 'desc')->get();
+        view()->share('data_order', $data_order);
+        $pdf = PDF::loadview('pdf.cetak-pesanan');
+        return $pdf->stream('data-pesanan.pdf');
     }
 
-    public function indexAdmin(Request $request)
+    public function cetakPesananPenjual()
     {
-        if($request->has('search')){
-            $data_order=Order::where('status_order','LIKE','%'.$request->search.'%')->paginate(5);
-        }else{
-            $data_order=Order::paginate(5);
-        }
-        return view('admin.pesanan', compact('data_order'));
+        $data_order=Order::where('penjual_id', '=', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        view()->share('data_order', $data_order);
+        $pdf = PDF::loadview('pdf.cetak-pesanan-penjual');
+        return $pdf->stream('data-pesanan-penjual.pdf');
     }
 
     public function update(Request $request, $id)

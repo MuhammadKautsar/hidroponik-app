@@ -160,14 +160,14 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Awal Periode</label>
-                        <input name="awal_periode" type="text" class="date form-control @error('awal_periode') is-invalid @enderror">
+                        <input name="awal_periode" type="text" placeholder="dd/mm/yyyy" class="date form-control @error('awal_periode') is-invalid @enderror">
                         @error('awal_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1" class="form-label">Akhir Periode</label>
-                        <input name="akhir_periode" type="text" class="date form-control @error('akhir_periode') is-invalid @enderror">
+                        <input name="akhir_periode" type="text" placeholder="dd/mm/yyyy" class="date form-control @error('akhir_periode') is-invalid @enderror">
                         @error('akhir_periode')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
