@@ -26,17 +26,17 @@ class Report extends Model
     public static function search($query)
     {
         return empty($query) ? static::query()
-            : static::where('isi_laporan', 'like', '%'.$query.'%')
-                ->orWhere('tanggal', 'like', '%'.$query.'%');
+            : static::where('isi_laporan', 'like', '%' . $query . '%')
+            ->orWhere('tanggal', 'like', '%' . $query . '%');
     }
 
     public function pembeli()
     {
-        return $this->belongsTo(User::class, 'pembeli_id');
+        return $this->belongsTo(User::class, 'pembeli_id')->withTrashed();
     }
 
     public function penjual()
     {
-        return $this->belongsTo(User::class, 'penjual_id');
+        return $this->belongsTo(User::class, 'penjual_id')->withTrashed();
     }
 }

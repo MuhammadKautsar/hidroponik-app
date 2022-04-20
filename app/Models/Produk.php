@@ -33,17 +33,17 @@ class Produk extends Model
     // saat delete. akan delete childnya juga
     protected static function booted()
     {
-        static::deleting(function ($produk) {
-            $produk->orders()->delete();
-            $produk->order_mappings()->delete();
-            $produk->feedbacks()->delete();
-        });
+        // static::deleting(function ($produk) {
+        //     $produk->orders()->delete();
+        //     $produk->order_mappings()->delete();
+        //     $produk->feedbacks()->delete();
+        // });
     }
 
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
-        $query->where(function($query) use ($term) {
+        $query->where(function ($query) use ($term) {
             $query->where('nama', 'like', $term)
                 ->orWhere('harga', 'like', $term)
                 ->orWhere('stok', 'like', $term)
@@ -53,7 +53,7 @@ class Produk extends Model
 
     public function feedbacks()
     {
-        return $this->hasMany(Feedback::class);
+        return $this->hasMany(Feedback::class)->withTrashed();
     }
 
     public function order_mappings()
@@ -73,11 +73,11 @@ class Produk extends Model
 
     public function penjual()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function promo()
     {
-        return $this->belongsTo(Promo::class);
+        return $this->belongsTo(Promo::class)->withTrashed();
     }
 }

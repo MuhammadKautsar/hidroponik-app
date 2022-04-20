@@ -25,7 +25,7 @@ class Feedback extends Model
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
-        $query->where(function($query) use ($term) {
+        $query->where(function ($query) use ($term) {
             $query->where('komentar', 'like', $term)
                 ->orWhere('rating', 'like', $term);
         });
@@ -33,11 +33,11 @@ class Feedback extends Model
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Produk::class)->withTrashed();
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 }

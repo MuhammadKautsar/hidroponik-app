@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\OrderMapping;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,8 @@ class Order extends Model
         'alasan',
     ];
 
+
+
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
@@ -37,16 +40,16 @@ class Order extends Model
 
     public function pembeli()
     {
-        return $this->belongsTo(User::class, 'pembeli_id');
+        return $this->belongsTo(User::class, 'pembeli_id')->withTrashed();
     }
 
     public function penjual()
     {
-        return $this->belongsTo(User::class, 'penjual_id');
+        return $this->belongsTo(User::class, 'penjual_id')->withTrashed();
     }
 
     public function order_mappings()
     {
-        return $this->hasMany(OrderMapping::class);
+        return $this->hasMany(OrderMapping::class)->withTrashed();
     }
 }
