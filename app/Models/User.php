@@ -33,6 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'status',
         'level',
         'profile_image',
+        'kecamatan',
+        'kota'
     ];
 
     // saat delete. akan delete childnya juga
@@ -50,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
-        $query->where(function($query) use ($term) {
+        $query->where(function ($query) use ($term) {
             $query->where('nama_lengkap', 'like', $term)
                 ->orWhere('username', 'like', $term)
                 ->orWhere('email', 'like', $term)

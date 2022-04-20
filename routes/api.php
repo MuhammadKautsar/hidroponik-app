@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ApiFeedbackController;
 use App\Http\Controllers\API\ApiOrderMappingController;
 use App\Http\Controllers\API\ApiReportController;
 use App\Http\Controllers\API\ApiPromoController;
+use App\Http\Controllers\API\ApiRefController;
 
 
 
@@ -89,6 +90,10 @@ Route::get('feedback/{produk}', [ApiFeedbackController::class, 'getFeedbackByPro
 Route::get('promos', [ApiPromoController::class, 'index'])->name('get_promo');
 
 // TODO(yaumil): hehe
+Route::prefix('ref')->group(function () {
+    Route::get('kabupaten', [ApiRefController::class, 'getKabupaten'])->name('get_kabupaten');
+    Route::get('kecamatan/{kabupaten}', [ApiRefController::class, 'getKecamatan'])->name('get_kecamatan');
+});
 // kasih feedback 
 // tampilin list order by pembeli
 // tampilin list order by penjual
