@@ -42,6 +42,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -148,6 +149,7 @@ class ApiOrderController extends Controller
             'total_harga' => $order->total_harga,
             'status_checkout' => $order->status_checkout,
             'status_order' => $order->status_order,
+            'alasan' => $order->alasan,
             'tanggal' => $order->created_at->format('d F Y'),
             'jam' => $order->created_at->format('H:i'),
             'harga_jasa_pengiriman' => $order->harga_jasa_pengiriman,
@@ -222,6 +224,7 @@ class ApiOrderController extends Controller
                 'id' => $row->id . '',
                 'total_harga' => $row->total_harga,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -275,6 +278,7 @@ class ApiOrderController extends Controller
                 'id' => $row->id . '',
                 'total_harga' => $row->total_harga,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -323,6 +327,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -398,6 +403,7 @@ class ApiOrderController extends Controller
                 'id' => $row->id . '',
                 'total_harga' => $row->total_harga,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -436,6 +442,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -503,6 +510,7 @@ class ApiOrderController extends Controller
                 'id' => $row->id . '',
                 'total_harga' => $row->total_harga,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -539,6 +547,7 @@ class ApiOrderController extends Controller
                 'total_harga' => $row->total_harga,
                 'status_checkout' => $row->status_checkout,
                 'status_order' => $row->status_order,
+                'alasan' => $row->alasan,
                 'tanggal' => $row->created_at->format('d F Y'),
                 'jam' => $row->created_at->format('H:i'),
                 'harga_jasa_pengiriman' => $row->harga_jasa_pengiriman,
@@ -577,7 +586,8 @@ class ApiOrderController extends Controller
     public function changeOrderStatus(Order $order)
     {
         $validator = Validator::make(request()->all(), [
-            'status_order' => 'required'
+            'status_order' => 'required',
+            'alasan' => 'string',
         ]);
 
 
@@ -586,7 +596,8 @@ class ApiOrderController extends Controller
         }
         $data = request()->validate(
             [
-                'status_order' => 'required'
+                'status_order' => 'required',
+                'alasan' => 'string',
             ]
         );
 

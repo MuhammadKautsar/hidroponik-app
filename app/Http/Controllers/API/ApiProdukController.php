@@ -210,6 +210,63 @@ class ApiProdukController extends Controller
         return response()->json(['message' => 'berhasil mengupdate']);
     }
 
+    public function sortProduk($sortBy)
+    {
+        $showData = array();
+
+        $today = strtotime(now());
+        if ($sortBy == 'termurah') {
+            $data = Produk::where('stok', '!=', 0)->orderBy('harga', 'ASC')->get();
+        } else if ($sortBy == 'termahal') {
+            $data = Produk::where('stok', '!=', 0)->orderBy('harga', 'DESC')->get();
+        } else if ($sortBy == 'tertinggi') {
+            $data = Produk::where('stok', '!=', 0)->orderBy('total_feedback', 'DESC')->get();
+        } else {
+            $data = Produk::where('stok', '!=', 0)->orderBy('updated_at', 'DESC')->get();
+        }
+
+        foreach ($data as $row) {
+
+            if ($row->penjual->status != 1) continue;
+
+            $gambar = array();
+            foreach ($row->images as $image) {
+                array_push($gambar, $image->path_image);
+            }
+            // delete promo yang udah expired
+            if ($row->promo_id) {
+                $end =  strtotime($row->promo->akhir_periode);
+                if ($today > $end) {
+
+                    $row->update(['promo_id' => NULL]);
+                }
+            }
+            array_push($showData, [
+                'id' => $row->id . '', // string
+                'nama' => $row->nama, // string
+                'gambar' => $gambar, // list/array
+                'harga' => $row->harga, // number
+                'stok' => $row->stok, // number
+                'keterangan' => $row->keterangan, // string
+                'satuan' => $row->satuan, // string
+                'jumlah_per_satuan' => $row->jumlah_per_satuan, // string
+                'penjual' => $row->penjual->username, // string
+                'foto_penjual' => $row->penjual->profile_image,
+                'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
+                'potongan' => $row->promo_id ? $row->promo->potongan : 0,
+                'periode_awal' => $row->promo_id ? $row->promo->awal_periode : '',
+                'periode_akhir' => $row->promo_id ? $row->promo->akhir_periode : '',
+                'promo_nama' => $row->promo_id ? $row->promo->nama : '',
+                'promo_id' => $row->promo_id,
+                'total_feedback' => $row->total_feedback,
+                'penjual_id' => $row->penjual_id . '',
+                'tanggal_diperbarui' => $row->updated_at->diffForHumans()
+            ]);
+        }
+
+        return response()->json($showData); //result.data
+    }
+
     public function getProdukByPenjualId(User $user)
     {
         $showData = [];

@@ -22,12 +22,13 @@ class Order extends Model
         'total_harga',
         'status_order',
         'harga_jasa_pengiriman',
+        'alasan',
     ];
 
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
-        $query->where(function($query) use ($term) {
+        $query->where(function ($query) use ($term) {
             $query->where('total_harga', 'like', $term)
                 ->orWhere('created_at', 'like', $term)
                 ->orWhere('status_order', 'like', $term);
