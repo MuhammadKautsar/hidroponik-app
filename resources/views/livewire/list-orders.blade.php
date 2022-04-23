@@ -162,7 +162,12 @@
                     @foreach ($data->order_mappings as $pesanan)
                         <label style='text-align:right;' >- {{$pesanan->produk->nama}}</label><br>
                         <img src="{{ $pesanan->produk->images[0]->path_image }}" width="130px" height="90px" alt="Image">&emsp;&emsp;&emsp;&emsp;
-                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label><label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format($pesanan->produk->harga*$pesanan->jumlah,0,',','.')}},-</label><br>
+                        <label style='text-align:right;' >Jumlah : {{$pesanan->jumlah}}</label>
+                        @if ($pesanan->produk->promo_id=="")
+                            <label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format($pesanan->produk->harga*$pesanan->jumlah,0,',','.')}},-</label><br>
+                        @elseif ($pesanan->produk->promo_id!="")
+                            <label style='text-align:right;' >&emsp;&emsp; Harga : Rp{{number_format(($pesanan->produk->harga-$pesanan->produk->harga*$pesanan->produk->promo->potongan/100)*$pesanan->jumlah,0,',','.')}},-</label><br>
+                        @endif
                     @endforeach
                 </div>
                 <div class="mb-3">

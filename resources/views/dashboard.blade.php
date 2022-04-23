@@ -96,7 +96,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Laporan</h5>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Keluhan</h5>
                             </div>
                             <div class="mt-2 ml-5 col-auto">
                                 <div class="icon icon-shape bg-red text-white rounded-circle shadow">

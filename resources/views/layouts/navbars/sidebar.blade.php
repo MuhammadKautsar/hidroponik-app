@@ -70,7 +70,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('admin/laporan') ? 'active' : '' }} text-white" href="{{ route('reports') }}">
-                        <i class="ni ni-single-copy-04 text-black"></i> {{ __('Laporan') }}
+                        <i class="ni ni-single-copy-04 text-black"></i> {{ __('Keluhan') }}
                     </a>
                 </li>
                 <li class="nav-item">

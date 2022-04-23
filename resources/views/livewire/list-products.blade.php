@@ -117,7 +117,12 @@
                         @if ($item->promo_id=="")
                             Rp{{number_format($item['harga'], 0,',','.')}},-</td>
                         @elseif ($item->promo_id!="")
-                            Rp{{number_format($item->harga-$item->harga*$item->promo->potongan/100, 0,',','.')}},-</td>
+                        <span class="price">
+                            <del style="color: red;">
+                                <span class="amount">Rp{{number_format($item['harga'],0,',','.')}},-</span>
+                            </del><br>
+                                <span class="amount">Rp{{number_format($item->harga-$item->harga*$item->promo->potongan/100, 0,',','.')}},-</span>
+                        </span></td>
                         @endif
                       <td class="text-center">{{$item['stok']}}</td>
                       <td class="text-center">{{$item['satuan']}}</td>
