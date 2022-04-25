@@ -60,6 +60,8 @@ class ApiAuthController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'alamat' => 'required|string',
+            'kota'  => 'required|string',
+            'kecamatan' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -68,6 +70,8 @@ class ApiAuthController extends Controller
 
         $data = request()->validate([
             'alamat' => 'required|string',
+            'kota'  => 'required|string',
+            'kecamatan' => 'required|string',
 
         ]);
 
@@ -81,6 +85,8 @@ class ApiAuthController extends Controller
         $validator = Validator::make(request()->all(), [
             'email' => 'required|string|email',
             'alamat' => 'required|string',
+            'kota'  => 'required|string',
+            'kecamatan' => 'required|string',
             'nomor_hp' => 'required|max:13',
         ]);
 
@@ -92,6 +98,8 @@ class ApiAuthController extends Controller
         $data = request()->validate([
             'email' => 'required|string|email',
             'alamat' => 'required|string',
+            'kota'  => 'required|string',
+            'kecamatan' => 'required|string',
             'nomor_hp' => 'required|max:13',
         ]);
 

@@ -31,6 +31,8 @@ class ApiOrderMappingController extends Controller
 				'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
 				'email_pembeli' => $row->pembeli->email,
 				'alamat_pembeli' => $row->pembeli->alamat,
+				'kota_pembeli' => $row->pembeli->kota,
+				'kecamatan_pembeli' => $row->pembeli->kecamatan,
 				'status_feedback' => $row->status_feedback,
 				'produk' => [
 					'id' => $row->produk_id . '',
@@ -117,6 +119,8 @@ class ApiOrderMappingController extends Controller
 			'nomor_hp_pembeli' => $orderMap->pembeli->nomor_hp,
 			'email_pembeli' => $orderMap->pembeli->email,
 			'alamat_pembeli' => $orderMap->pembeli->alamat,
+			'kota_pembeli' => $orderMap->pembeli->kota,
+			'kecamatan_pembeli' => $orderMap->pembeli->kecamatan,
 			'status_feedback' => $orderMap->status_feedback,
 			'produk' => [
 				'id' => $orderMap->produk_id . '',
@@ -178,6 +182,8 @@ class ApiOrderMappingController extends Controller
 				'nomor_hp_pembeli' => $row->pembeli->nomor_hp,
 				'email_pembeli' => $row->pembeli->email,
 				'alamat_pembeli' => $row->pembeli->alamat,
+				'kota_pembeli' => $row->pembeli->kota,
+				'kecamatan_pembeli' => $row->pembeli->kecamatan,
 				'status_feedback' => $row->status_feedback,
 				'produk' => [
 					'id' => $row->produk_id . '',
@@ -187,6 +193,8 @@ class ApiOrderMappingController extends Controller
 					'nomor_hp_penjual' => $row->produk->penjual->nomor_hp,
 					'email_penjual' => $row->produk->penjual->email,
 					'alamat_penjual' => $row->produk->penjual->alamat,
+					'kota_penjual' => $row->penjual->kota,
+					'kecamatan_penjual' => $row->penjual->kecamatan,
 					'nama' => $row->produk->nama,
 					'harga' => $row->produk->harga,
 					'stok' => $row->produk->stok,

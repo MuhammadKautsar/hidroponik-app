@@ -46,6 +46,8 @@ class ApiProdukController extends Controller
                 'satuan' => $row->satuan, // string
                 'jumlah_per_satuan' => $row->jumlah_per_satuan, // string
                 'penjual' => $row->penjual->username, // string
+                'kota_penjual' => $row->penjual->kota,
+                'kecamatan_penjual' => $row->penjual->kecamatan,
                 'foto_penjual' => $row->penjual->profile_image,
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
                 'potongan' => $row->promo_id ? $row->promo->potongan : 0,
@@ -136,7 +138,9 @@ class ApiProdukController extends Controller
             'keterangan' => $produk->keterangan, // string
             'satuan' => $produk->satuan, // string
             'jumlah_per_satuan' => $produk->jumlah_per_satuan,  // string
-            'penjual' => $produk->penjual->username, // string
+            'penjual' => $produk->penjual->username, // 
+            'kota_penjual' => $produk->penjual->kota,
+            'kecamatan_penjual' => $produk->penjual->kecamatan,
             'foto_penjual' => $produk->penjual->profile_image, // string         
             'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
             'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
@@ -251,6 +255,8 @@ class ApiProdukController extends Controller
                 'satuan' => $row->satuan, // string
                 'jumlah_per_satuan' => $row->jumlah_per_satuan, // string
                 'penjual' => $row->penjual->username, // string
+                'kota_penjual' => $row->penjual->kota,
+                'kecamatan_penjual' => $row->penjual->kecamatan,
                 'foto_penjual' => $row->penjual->profile_image,
                 'filter' => $row->promo_id ? 'Promo' : 'Biasa', // string
                 'potongan' => $row->promo_id ? $row->promo->potongan : 0,
@@ -294,6 +300,8 @@ class ApiProdukController extends Controller
                 'satuan' => $produk->satuan, // string
                 'jumlah_per_satuan' => $produk->jumlah_per_satuan,  // string
                 'penjual' => $produk->penjual->username, // string
+                'kota_penjual' => $produk->penjual->kota,
+                'kecamatan_penjual' => $produk->penjual->kecamatan,
                 'filter' => $produk->promo_id ? 'Promo' : 'Biasa', // string
                 'promo_id' => $produk->promo_id,
                 'potongan' => $produk->promo_id ? $produk->promo->potongan : 0,
