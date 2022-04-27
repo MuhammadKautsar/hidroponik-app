@@ -100,7 +100,7 @@
                         <td class="text-center">{{$item['nomor_hp']}}</td>
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
+                            <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
                                 <i class="fa fa-info-circle"></i> Info
                             </button>
                             @if ($item->level == "pembeli")
@@ -210,9 +210,35 @@
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
             </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
+                    <select name="kota" wire:model="selectedKota" class="form-select @error('kota') is-invalid @enderror">
+                        <option value="">-Pilih Kabupaten/Kota-</option>
+                        @foreach ($kotas as $kota)
+                            <option value="{{ $kota->kode }}">{{ $kota->nama }}</option>
+                        @endforeach
+                    </select>
+                    @error('kota')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
+                    <select name="kecamatan" wire:model="selectedKecamatan" class="form-select @error('kecamatan') is-invalid @enderror">
+                        <option value="">-Pilih Kecamatan-</option>
+                        @foreach ($kecamatans as $kecamatan)
+                            <option value="{{ $kecamatan->nama }}">{{ $kecamatan->nama }}</option>
+                        @endforeach
+                    </select>
+                    @error('kecamatan')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="" class="form-label">Alamat</label>
-                <input wire:model="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror">
+                <textarea wire:model="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" rows="2"></textarea>
                 @error('alamat')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -226,7 +252,7 @@
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Level</label>
-              <select wire:model="level" class="form-control @error('level') is-invalid @enderror">
+              <select wire:model="level" class="form-select @error('level') is-invalid @enderror">
                 <option value="">-Pilih-</option>
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
@@ -251,7 +277,7 @@
 
   @foreach($data_user as $data)
     <!-- Modal -->
-    <div class="modal fade" id="editModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="showModal-{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -268,6 +294,16 @@
                   @else
                   <input disabled class="form-control" placeholder="Belum Verifikasi"></input>
                   @endif
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
+                        <input disabled class="form-control" placeholder="{{$data->kota}}"></input>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
+                        <input disabled class="form-control" placeholder="{{$data->kecamatan}}"></input>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>

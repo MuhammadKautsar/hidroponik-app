@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\RefKabupatenKota;
+use App\Models\RefKecamatan;
 use Livewire\Component;
 use App\Models\User;
 // use Illuminate\Http\Request;
@@ -21,6 +23,11 @@ class ListUsers extends Component
     public $level;
     public $nomor_hp;
     public $alamat;
+    public $kotas;
+    public $kecamatans;
+
+    public $selectedKota = null;
+    public $selectedKecamatan = null;
 
     public $sortBy = 'created_at';
 
@@ -42,6 +49,17 @@ class ListUsers extends Component
         return $this->sortBy = $field;
     }
 
+    public function mount()
+    {
+        $this->kotas = RefKabupatenKota::whereIn('kode', ['11.71'])->get();
+        $this->kecamatans = collect();
+    }
+
+    public function updatedSelectedKota($kota)
+    {
+        $this->kecamatans = RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [$kota])->get();
+    }
+
     public function addNew()
     {
         $this->dispatchBrowserEvent('show-form');
@@ -57,16 +75,20 @@ class ListUsers extends Component
             'level' => $this->level,
             'nomor_hp' => $this->nomor_hp,
             'alamat' => $this->alamat,
+            'kota' => 'KOTA BANDA ACEH',
+            'kecamatan' => $this->selectedKecamatan,
         ];
 
         $validateData = Validator::make($data, [
             'nama_lengkap' => 'required',
             'username' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|min:5',
             'level' => 'required',
             'nomor_hp' => 'required|numeric|digits_between:11,13',
             'alamat' => 'required',
+            'kota' => 'required',
+            'kecamatan' => 'required',
         ])->validate();
 
         $validateData['password'] = bcrypt($validateData['password']);
@@ -108,5 +130,7 @@ class ListUsers extends Component
         $this->level = null;
         $this->nomor_hp = null;
         $this->alamat = null;
+        $this->selectedKota = null;
+        $this->selectedKecamatan = null;
     }
 }

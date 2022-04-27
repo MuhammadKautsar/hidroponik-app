@@ -173,7 +173,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}</textarea>
+                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                 </div>
           </div>
           <div class="modal-footer">

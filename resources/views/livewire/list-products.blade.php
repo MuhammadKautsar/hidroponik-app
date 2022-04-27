@@ -254,7 +254,7 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
     @foreach($data_product as $data)
     <!-- Modal Edit-->

@@ -87,7 +87,7 @@
                                 <div class="col ml--3">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <p class="text-sm mb-0">Ada laporan baru dari <strong class="text-dark">{{$lp->pembeli->nama_lengkap}}</strong>, silahkan diperiksa</p>
+                                            <p class="text-sm mb-0">Ada keluhan baru dari <strong class="text-dark">{{$lp->pembeli->nama_lengkap}}</strong>, silahkan diperiksa</p>
 
                                         </div>
                                         <div class="text-right text-muted">

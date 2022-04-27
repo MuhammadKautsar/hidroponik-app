@@ -176,13 +176,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                    <textarea class="form-control" rows="2" disabled>{{$data->pembeli->alamat}}</textarea>
+                    <textarea class="form-control" rows="2" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                 </div>
                 @if (($data->harga_jasa_pengiriman==0))
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
-                    <small>Maksimal Rp 10.000 dan tidak dapat diubah lagi setelah diisi</small>
+                    <small><i class="fa fa-info-circle" style="color: red;"></i> Maksimal Rp 10.000 dan tidak dapat diubah lagi setelah diisi</small>
                     @error('harga_jasa_pengiriman')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -192,7 +192,7 @@
                 @endif
                 <div class="mb-3">
                   <label for="" class="form-label">Status</label>
-                  <select name="status_order" id="" class="form-control @error('status_order') is-invalid @enderror">
+                  <select name="status_order" id="" class="form-select @error('status_order') is-invalid @enderror">
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
                     <option value="Diproses">Diproses</option>
@@ -203,6 +203,9 @@
                     @endif
                     <option value="Batal">Batal</option>
                   </select>
+                  @if ($data->status_order == "Belum")
+                  <small><i class="fa fa-info-circle" style="color: red;"></i> Pesanan yang tidak diproses 2 hari akan otomatis dibatalkan</small>
+                  @endif
                   @error('status_order')
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
@@ -241,7 +244,7 @@
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}</textarea>
+                    <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                   </div>
             </div>
             <div class="modal-footer">

@@ -79,10 +79,39 @@
                                         </span>
                                     @endif
                                 </div>
+                                @php
+                                    $kecamatans = App\Models\RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [11.71])->get();
+                                @endphp
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
+                                        <input disabled type="text" name="kota" id="input-kota" class="form-control form-control-alternative{{ $errors->has('kota') ? ' is-invalid' : '' }}" placeholder="{{ __('Kabupaten/Kota') }}" value="{{ old('kota', auth()->user()->kota) }}" required autofocus>
+                                        @error('kota')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
+                                        <select name="kecamatan" class="form-select form-control-alternative @error('kecamatan') is-invalid @enderror" id="kecamatan">
+                                            @foreach ($kecamatans as $kecamatan)
+                                                <option
+                                                value="{{ $kecamatan->nama }}"
+                                                @if ($kecamatan->nama == auth()->user()->kecamatan)
+                                                    selected
+                                                @endif
+                                                >
+                                                {{ $kecamatan->nama }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kecamatan')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="form-group{{ $errors->has('alamat') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-alamat">{{ __('Alamat') }}</label>
-                                    <input type="text" name="alamat" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" value="{{ old('alamat', auth()->user()->alamat) }}">
-
+                                    <textarea type="text" name="alamat" id="input-alamat" class="form-control form-control-alternative{{ $errors->has('alamat') ? ' is-invalid' : '' }}" placeholder="{{ __('Alamat') }}" rows="2">{{ old('alamat', auth()->user()->alamat) }}</textarea>
                                     @if ($errors->has('alamat'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('alamat') }}</strong>
