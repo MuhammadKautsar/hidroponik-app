@@ -9,7 +9,7 @@
             <div class="card-header border-0">
                 <div class="row mb-3">
                     <div class="col form-inline">
-                        <h3>Laporan</h3>
+                        <h3>Keluhan</h3>
                     </div>
                 </div>
                 <hr size="5">
@@ -46,10 +46,10 @@
                         Tanggal @include('partials._sort-icon',['field'=>'tanggal'])
                     </th>
                     <th wire:click="sortBy('isi_laporan')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
-                        Laporan @include('partials._sort-icon',['field'=>'isi_laporan'])
+                        Keluhan @include('partials._sort-icon',['field'=>'isi_laporan'])
                     </th>
                     <th wire:click="sortBy('pembeli_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
-                        Pelapor @include('partials._sort-icon',['field'=>'pembeli_id'])
+                        Pengirim @include('partials._sort-icon',['field'=>'pembeli_id'])
                     </th>
                     <th wire:click="sortBy('penjual_id')" style="cursor: pointer;" class="text-center" scope="col" class="sort">
                         Penjual @include('partials._sort-icon',['field'=>'penjual_id'])
@@ -62,7 +62,7 @@
                   @forelse($data_report as $item)
                     {{-- @php $no++ @endphp --}}
                     <tr>
-                        <td class="text-center">#Laporan{{$item['id']}}</td>
+                        <td class="text-center">#Keluhan{{$item['id']}}</td>
                       <td class="text-center">{!! date('d-m-Y', strtotime($item->tanggal)) !!}</td>
                       <td class="text-center">{{$item['isi_laporan']}}</td>
                       <td class="text-center">{{$item->pembeli->nama_lengkap}}</td>

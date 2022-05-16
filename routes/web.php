@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Location;
 use App\Http\Livewire\ListUsers;
 use App\Http\Livewire\ListOrders;
 use App\Http\Livewire\ListProduk;
@@ -15,6 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +62,7 @@ Route::group(['middleware' => ['auth','verified','cekLevel:admin,superadmin']], 
      Route::get('admin/produk', ListProduk::class)->name('produks');
      Route::get('/produks/{id}/delete', [ProdukController::class, 'destroyAdmin']);
      Route::get('admin/cetak-pesanan', [OrderController::class, 'cetakPesanan'])->name('cetak-pesanan');
+     Route::get('admin/lokasi', Location::class)->name('location');
 });
 
 Route::group(['middleware' => ['auth','verified','cekLevel:penjual']], function () {
@@ -80,4 +83,5 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+    Route::post('/getkecamatan', [ProfileController::class, 'getkecamatan'])->name('getkecamatan');
 });

@@ -78,6 +78,11 @@
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/lokasi') ? 'active' : '' }} text-white" href="{{ route('location') }}">
+                        <i class="bi bi-geo-alt-fill"></i> {{ __('Lokasi') }}
+                    </a>
+                </li>
                 @elseif (auth()->user()->level=="penjual")
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('home') ? 'active' : '' }} text-white" href="{{ route('home') }}">

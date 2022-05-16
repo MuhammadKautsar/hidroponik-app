@@ -12,7 +12,10 @@
                     <div class="col form-inline">
                         <h3>Pengguna</h3>
                     </div>
-                    <div class="col form-inline">
+                    <div class="col-md-3 ml-lg-auto float-right">
+                        {{-- <a href="lokasi" type="button" class="btn btn-primary btn-sm">
+                            <i class="bi bi-geo-alt-fill"></i> Atur Lokasi
+                        </a> --}}
                         <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#form">
                             @if (auth()->user()->level=="superadmin")
                             <i class="fa fa-plus"></i> Tambah Pengguna
@@ -174,7 +177,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
             @if (auth()->user()->level=="superadmin")
-            Tambah Admin
+            Tambah Pengguna
             @elseif (auth()->user()->level=="admin")
             Tambah Penjual
             @endif
@@ -295,19 +298,9 @@
                   <input disabled class="form-control" placeholder="Belum Verifikasi"></input>
                   @endif
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
-                        <input disabled class="form-control" placeholder="{{$data->kota}}"></input>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
-                        <input disabled class="form-control" placeholder="{{$data->kecamatan}}"></input>
-                    </div>
-                </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
-                    <textarea disabled class="form-control" rows="3" placeholder="{{$data->alamat}}"></textarea>
+                    <textarea disabled class="form-control" rows="3" placeholder="{{$data->alamat}}, {{$data->kecamatan}}, {{$data->kota}}"></textarea>
                 </div>
           </div>
           <div class="modal-footer">

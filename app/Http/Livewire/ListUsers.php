@@ -6,7 +6,6 @@ use App\Models\RefKabupatenKota;
 use App\Models\RefKecamatan;
 use Livewire\Component;
 use App\Models\User;
-// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Livewire\WithPagination;
@@ -24,6 +23,7 @@ class ListUsers extends Component
     public $nomor_hp;
     public $alamat;
     public $kotas;
+    public $kota_kab;
     public $kecamatans;
 
     public $selectedKota = null;
@@ -51,7 +51,10 @@ class ListUsers extends Component
 
     public function mount()
     {
-        $this->kotas = RefKabupatenKota::whereIn('kode', ['11.71'])->get();
+        $this->kotas = RefKabupatenKota::whereIn('kode', function ($query) {
+            $query->select('kode')
+                ->from('mapping_kabupaten_kotas');
+        })->get();
         $this->kecamatans = collect();
     }
 
@@ -67,6 +70,17 @@ class ListUsers extends Component
 
     public function createUser()
     {
+        $kabs = RefKabupatenKota::whereIn('kode', function ($query) {
+            $query->select('kode')
+                ->from('mapping_kabupaten_kotas');
+        })->get();
+
+        foreach($kabs as $kab){
+            if($this->selectedKota == $kab->kode){
+                $this->kota_kab = $kab->nama;
+            }
+        }
+
         $data = [
             'nama_lengkap' => $this->nama_lengkap,
             'username' => $this->username,
@@ -75,7 +89,7 @@ class ListUsers extends Component
             'level' => $this->level,
             'nomor_hp' => $this->nomor_hp,
             'alamat' => $this->alamat,
-            'kota' => 'KOTA BANDA ACEH',
+            'kota' => $this->kota_kab,
             'kecamatan' => $this->selectedKecamatan,
         ];
 

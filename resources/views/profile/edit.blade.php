@@ -80,20 +80,38 @@
                                     @endif
                                 </div>
                                 @php
-                                    $kecamatans = App\Models\RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [11.71])->get();
+                                    $kotas =  App\Models\RefKabupatenKota::whereIn('kode', function ($query) {
+                                        $query->select('kode')
+                                            ->from('mapping_kabupaten_kotas');
+                                    })->get();
+                                    // $kecamatans = App\Models\RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [$kode_kota])->get();
                                 @endphp
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
-                                        <input disabled type="text" name="kota" id="input-kota" class="form-control form-control-alternative{{ $errors->has('kota') ? ' is-invalid' : '' }}" placeholder="{{ __('Kabupaten/Kota') }}" value="{{ old('kota', auth()->user()->kota) }}" required autofocus>
+                                        <select name="kota" class="form-select form-control-alternative @error('kota') is-invalid @enderror" id="kota">
+                                            {{-- <option value="">- Pilih -</option> --}}
+                                            @foreach ($kotas as $kota)
+                                                <option
+                                                value="{{ $kota->kode }}"
+                                                @if ($kota->nama == auth()->user()->kota)
+                                                    selected
+                                                @endif
+                                                >
+                                                {{ $kota->nama }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                         @error('kota')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
-                                        <select name="kecamatan" class="form-select form-control-alternative @error('kecamatan') is-invalid @enderror" id="kecamatan">
-                                            @foreach ($kecamatans as $kecamatan)
+                                        <select name="kecamatan" class="form-select form-control-alternative @error('kecamatan') is-invalid @enderror" id="kecamatan" placeholder="{{auth()->user()->kecamatan}}">
+                                            {{-- <option value="">- Pilih -</option> --}}
+                                            <option value="{{auth()->user()->kecamatan}}">{{auth()->user()->kecamatan}}</option>
+                                            {{-- @foreach ($kecamatans as $kecamatan)
                                                 <option
                                                 value="{{ $kecamatan->nama }}"
                                                 @if ($kecamatan->nama == auth()->user()->kecamatan)
@@ -102,7 +120,7 @@
                                                 >
                                                 {{ $kecamatan->nama }}
                                             </option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                         @error('kecamatan')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -178,4 +196,33 @@
 
         @include('layouts.footers.auth')
     </div>
+
+    <script>
+        $(function () {
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
+        $(function(){
+
+            $('#kota').on('change',function(){
+                let kode_kota = $('#kota').val();
+
+                $.ajax({
+                    type : 'POST',
+                    url : "{{route('getkecamatan')}}",
+                    data : {kode_kota:kode_kota},
+                    cache : false,
+
+                    success: function(msg){
+                        $('#kecamatan').html(msg);
+                    },
+                    error: function(data){
+                        console.log('error:',data)
+                    },
+                })
+            })
+        })
+    });
+    </script>
 @endsection
