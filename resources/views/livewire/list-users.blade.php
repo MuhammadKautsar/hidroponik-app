@@ -217,7 +217,7 @@
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
                     <select name="kota" wire:model="selectedKota" class="form-select @error('kota') is-invalid @enderror">
-                        <option value="">-Pilih Kabupaten/Kota-</option>
+                        <option value="">- Pilih -</option>
                         @foreach ($kotas as $kota)
                             <option value="{{ $kota->kode }}">{{ $kota->nama }}</option>
                         @endforeach
@@ -229,7 +229,7 @@
                 <div class="form-group col-md-6">
                     <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
                     <select name="kecamatan" wire:model="selectedKecamatan" class="form-select @error('kecamatan') is-invalid @enderror">
-                        <option value="">-Pilih Kecamatan-</option>
+                        <option value="">- Pilih -</option>
                         @foreach ($kecamatans as $kecamatan)
                             <option value="{{ $kecamatan->nama }}">{{ $kecamatan->nama }}</option>
                         @endforeach
@@ -256,7 +256,7 @@
             <div class="mb-3">
               <label for="" class="form-label">Level</label>
               <select wire:model="level" class="form-select @error('level') is-invalid @enderror">
-                <option value="">-Pilih-</option>
+                <option value="">- Pilih -</option>
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
                 <option value="penjual">Penjual</option>

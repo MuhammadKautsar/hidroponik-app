@@ -27,9 +27,14 @@ class ProfileController extends Controller
 
         $kecamatans = RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [$kode_kota])->get();
 
+        $option = '<option value="">- Pilih Kecamatan -</option>';
+
         foreach ($kecamatans as $kecamatan){
-            echo "<option value='$kecamatan->nama'>$kecamatan->nama</option>";
+            $option .= "<option value='$kecamatan->nama'>$kecamatan->nama</option>";
         }
+
+        echo $option;
+
     }
 
     /**
@@ -40,6 +45,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request)
     {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'email' => 'required|email',
+            'nomor_hp' => 'required|numeric|digits_between:11,13',
+            'alamat' => 'required',
+            'kota' => 'required',
+            'kecamatan' => 'required',
+        ]);
+
         auth()->user()->update($request->all());
         if($request->hasFile('profile_image')){
             $files=$request->file('profile_image');
@@ -62,7 +76,7 @@ class ProfileController extends Controller
             }
         }
 
-        return back()->withStatus(__('Profile successfully updated.'));
+        return back()->withStatus(__('Profil berhasil diperbarui.'));
     }
 
     /**

@@ -84,13 +84,12 @@
                                         $query->select('kode')
                                             ->from('mapping_kabupaten_kotas');
                                     })->get();
-                                    // $kecamatans = App\Models\RefKecamatan::whereRaw("SUBSTR(kode,1,5) = ?", [$kode_kota])->get();
                                 @endphp
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1" class="form-label">Kabupaten/Kota</label>
                                         <select name="kota" class="form-select form-control-alternative @error('kota') is-invalid @enderror" id="kota">
-                                            {{-- <option value="">- Pilih -</option> --}}
+                                            <option value="">- Pilih Kabupaten/Kota -</option>
                                             @foreach ($kotas as $kota)
                                                 <option
                                                 value="{{ $kota->kode }}"
@@ -102,29 +101,26 @@
                                             </option>
                                             @endforeach
                                         </select>
-                                        @error('kota')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                        @if ($errors->has('kota'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('kota') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
                                         <select name="kecamatan" class="form-select form-control-alternative @error('kecamatan') is-invalid @enderror" id="kecamatan" placeholder="{{auth()->user()->kecamatan}}">
-                                            {{-- <option value="">- Pilih -</option> --}}
-                                            <option value="{{auth()->user()->kecamatan}}">{{auth()->user()->kecamatan}}</option>
-                                            {{-- @foreach ($kecamatans as $kecamatan)
-                                                <option
-                                                value="{{ $kecamatan->nama }}"
-                                                @if ($kecamatan->nama == auth()->user()->kecamatan)
-                                                    selected
-                                                @endif
-                                                >
-                                                {{ $kecamatan->nama }}
-                                            </option>
-                                            @endforeach --}}
+                                            @if(auth()->user()->kecamatan == null)
+                                                <option value="">- Pilih Kecamatan -</option>
+                                            @else
+                                                <option value="{{auth()->user()->kecamatan}}">{{auth()->user()->kecamatan}}</option>
+                                            @endif
                                         </select>
-                                        @error('kecamatan')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                        @if ($errors->has('kecamatan'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('kecamatan') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('alamat') ? ' has-danger' : '' }}">

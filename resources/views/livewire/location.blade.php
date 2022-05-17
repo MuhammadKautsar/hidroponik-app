@@ -97,17 +97,7 @@
               </table>
             </div>
             <!-- Card footer -->
-            <div class="card-footer py-4">
-              <nav aria-label="...">
-                {{-- <ul class="pagination justify-content mb-0">
-                    <li class="ml-lg float-left">
-                        Showing {{$data_lokasi->firstItem()}} to {{$data_lokasi->lastItem()}} out of {{$data_lokasi->total()}} items
-                    </li>
-                    <li class="ml-lg-auto float-right">
-                        {{ $data_lokasi->links() }}
-                    </li>
-                </ul> --}}
-              </nav>
+            <div class="card-footer py-3">
             </div>
           </div>
         </div>
