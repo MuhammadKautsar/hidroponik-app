@@ -263,7 +263,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            @if(auth()->user()->level=="admin")
+            {{-- @if(auth()->user()->level=="admin")
             <div class="mb-3">
                 <label for="" class="form-label">Foto KTP</label>
                 <input wire:model="foto_ktp" type="file" class="form-control @error('foto_ktp') is-invalid @enderror">
@@ -271,7 +271,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            @endif
+            @endif --}}
             <div class="mb-3">
                 <label for="" class="form-label">Password</label>
                 <input wire:model="password" type="password" class="form-control @error('password') is-invalid @enderror">
@@ -328,7 +328,7 @@
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                     <textarea disabled class="form-control" rows="3" placeholder="{{$data->alamat}}, {{$data->kecamatan}}, {{$data->kota}}"></textarea>
                 </div>
-                @if ($data->level == "penjual")
+                {{-- @if ($data->level == "penjual")
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Foto KTP</label><br>
                     @if($data->foto_ktp!="")
@@ -337,7 +337,7 @@
                     <img src="{{ asset('uploads/promos/no-image.png') }}" width="150px" height="110px">
                     @endif
                 </div>
-                @endif
+                @endif --}}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
