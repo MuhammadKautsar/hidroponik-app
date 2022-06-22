@@ -332,7 +332,7 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Foto KTP</label><br>
                     @if($data->foto_ktp!="")
-                    <img src="{{ asset('storage') }}/{{ $data->foto_ktp }}" width="170px" height="120px">
+                    <img src="{{ asset('images/' .$data->foto_ktp) }}" width="170px" height="120px">
                     @else
                     <img src="{{ asset('uploads/promos/no-image.png') }}" width="150px" height="110px">
                     @endif
