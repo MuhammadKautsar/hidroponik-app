@@ -8,7 +8,6 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 
@@ -86,9 +85,7 @@ class ListUsers extends Component
         }
 
         if($this->level == 'penjual'){
-
-            $img = $this->storeImage();
-
+            $filename = $this->foto_ktp->store('foto_ktp', 'public');
             $data = [
                 'nama_lengkap' => $this->nama_lengkap,
                 'username' => $this->username,
@@ -99,7 +96,7 @@ class ListUsers extends Component
                 'alamat' => $this->alamat,
                 'kota' => $this->kota_kab,
                 'kecamatan' => $this->selectedKecamatan,
-                'foto_ktp' => $img,
+                'foto_ktp' => $filename,
             ];
 
             $validateData = Validator::make($data, [
@@ -153,20 +150,6 @@ class ListUsers extends Component
         return redirect()->back();
     }
 
-    public function storeImage()
-    {
-        if (!$this->foto_ktp) {
-            return null;
-        }
-
-        $extension = $this->foto_ktp->getClientOriginalExtension();
-        $nameImage = Str::random().'.'.$extension;
-        $images = 'images/'.$nameImage;
-        \Image::make($this->foto_ktp)->save($images);
-
-        return $nameImage;
-    }
-
     public function updatedSearch()
     {
         $this->resetPage();
@@ -194,7 +177,7 @@ class ListUsers extends Component
         $this->level = null;
         $this->nomor_hp = null;
         $this->alamat = null;
-        $this->foto_ktp = '';
+        $this->foto_ktp = null;
         $this->selectedKota = null;
         $this->selectedKecamatan = null;
     }
