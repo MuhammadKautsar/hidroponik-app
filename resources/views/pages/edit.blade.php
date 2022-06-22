@@ -41,7 +41,7 @@
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Promo</label>
-                            <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                            <select name="promo_id" class="form-select @error('promo_id') is-invalid @enderror">
                                 <option value="">- Pilih -</option>
                                 @foreach ($promo as $diskon)
                                     <option
@@ -68,7 +68,7 @@
                           </div>
                           <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Satuan</label>
-                            <select name="satuan" class="form-control @error('satuan') is-invalid @enderror">
+                            <select name="satuan" class="form-select @error('satuan') is-invalid @enderror">
                                 <option value="{{ $data_product->satuan }}" {{ old('satuan') == $data_product->satuan ? 'selected' : null }}>{{ $data_product->satuan }}</option>
                                 @if ($data_product->satuan=="gram")
                                     <option value="Kg">Kg</option>
@@ -111,8 +111,8 @@
                           </div>
                       </div>
                       <div class="card-footer">
-                        <button type="submit" class="btn btn-primary float-right"><i class="fa fa-save"></i> Update</button>
-                        <a href="/produk" type="button" class="btn btn-secondary float-right mr-2"><i class="fa fa-times"></i> Close</a>
+                        <button type="submit" class="btn btn-primary float-right"><i class="fa fa-save"></i> Ubah</button>
+                        <a href="/produk" type="button" class="btn btn-light float-right mr-2"><i class="fa fa-times"></i> Batal</a>
                         </form>
                       </div>
                       {{-- @endforeach --}}

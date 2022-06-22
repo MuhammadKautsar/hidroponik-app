@@ -102,7 +102,19 @@
                             </td>
                             <td class="text-center">Rp{{number_format($item['harga_jasa_pengiriman'],0,',','.')}},-</td>
                             <td class="text-center">Rp{{number_format($item['total_harga']+$item['harga_jasa_pengiriman'],0,',','.')}},-</td>
-                            <td class="text-center">{{$item['status_order']}}</td>
+                            <td class="text-left">
+                                @if ($item['status_order'] == 'Belum')
+                                    <i class="bi bi-circle-fill" style="color: silver"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Diproses')
+                                    <i class="bi bi-circle-fill" style="color: rgb(0, 153, 255)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Dikirim')
+                                    <i class="bi bi-circle-fill" style="color: rgb(240, 240, 35)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Selesai')
+                                    <i class="bi bi-circle-fill" style="color: rgb(77, 186, 34)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Batal')
+                                    <i class="bi bi-circle-fill" style="color: rgb(229, 34, 34)"></i> &nbsp;{{$item['status_order']}}
+                                @endif
+                            </td>
                             <td class="text-center">
                                 @if ($item->status_order != "Selesai" && $item->status_order != "Batal")
                                 <button type="button" class="btn btn-warning btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
@@ -196,12 +208,12 @@
                     <option value="{{$data->status_order}}" hidden selected>{{$data->status_order}}</option>
                     @if ($data->status_order=="Belum")
                     <option value="Diproses">Diproses</option>
+                    <option value="Batal">Batal</option>
                     @elseif ($data->status_order=="Diproses")
                     <option value="Dikirim">Dikirim</option>
                     @elseif ($data->status_order=="Dikirim")
                     <option value="Selesai">Selesai</option>
                     @endif
-                    <option value="Batal">Batal</option>
                   </select>
                   @if ($data->status_order == "Belum")
                   <small><i class="fa fa-info-circle" style="color: red;"></i> Pesanan yang tidak diproses 2 hari akan otomatis dibatalkan</small>
@@ -212,8 +224,8 @@
                 </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-            <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Update</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-save"></i> Tinjau</button>
             </form>
           </div>
         </div>
@@ -248,7 +260,7 @@
                   </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
               </form>
             </div>
           </div>

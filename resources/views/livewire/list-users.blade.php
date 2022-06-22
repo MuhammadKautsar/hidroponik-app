@@ -18,7 +18,7 @@
                         </a> --}}
                         <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#form">
                             @if (auth()->user()->level=="superadmin")
-                            <i class="fa fa-plus"></i> Tambah Pengguna
+                            <i class="fa fa-plus"></i> Tambah Admin
                             @elseif (auth()->user()->level=="admin")
                             <i class="fa fa-plus"></i> Tambah Penjual
                             @endif
@@ -104,7 +104,7 @@
                         <td class="text-center">{{$item['level']}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#showModal-{{ $item->id }}">
-                                <i class="fa fa-info-circle"></i> Info
+                                <i class="fa fa-info-circle"></i>
                             </button>
                             @if ($item->level == "pembeli")
                                 @foreach ($item->orderpembelis as $pesanan)
@@ -123,20 +123,37 @@
                                     @endif
                                 @endforeach
                             @endif
-                            @if ($tidak == 0 && $item->level != "superadmin" && $item->level != "admin")
-                                @if ($item->status == 1)
-                                <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
-                                class="btn btn-warning btn-sm m-2">
-                                    <i class="fa fa-ban"></i> Blokir
-                                </a>
-                                @else
+                            @if (auth()->user()->level=="superadmin")
+                                @if ($tidak == 0 && $item->level != "superadmin")
+                                    @if ($item->status == 1)
+                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
+                                    class="btn btn-warning btn-sm m-2">
+                                        <i class="fa fa-ban"></i>
+                                    </a>
+                                    @else
+                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
+                                   class="btn btn-success btn-sm m-2">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                    @endif
+                                    <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm m-2" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i></a>
+                                @endif
+                            @elseif(auth()->user()->level=="admin")
+                                @if ($tidak == 0 && $item->level != "superadmin" && $item->level != "admin")
+                                    @if ($item->status == 1)
+                                    <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 0]) }}"
+                                    class="btn btn-warning btn-sm m-2">
+                                        <i class="fa fa-ban"></i>
+                                    </a>
+                                    @else
                                     <a href="{{ route('users.status.update', ['user_id' => $item->id, 'status_code' => 1]) }}"
                                     class="btn btn-success btn-sm m-2">
-                                        <i class="fa fa-check"></i> Izinkan
+                                        <i class="fa fa-check"></i>
                                     </a>
+                                    @endif
+                                    <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm m-2" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i></a>
                                 @endif
                             @endif
-                          {{-- <a href="/pengguna/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')">Hapus</a> --}}
                         </td>
                       </tr>
                     @empty
@@ -177,7 +194,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
             @if (auth()->user()->level=="superadmin")
-            Tambah Pengguna
+            Tambah Admin
             @elseif (auth()->user()->level=="admin")
             Tambah Penjual
             @endif
@@ -246,6 +263,15 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            @if(auth()->user()->level=="admin")
+            <div class="mb-3">
+                <label for="" class="form-label">Foto KTP</label>
+                <input wire:model="foto_ktp" type="file" class="form-control @error('foto_ktp') is-invalid @enderror">
+                @error('foto_ktp')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            @endif
             <div class="mb-3">
                 <label for="" class="form-label">Password</label>
                 <input wire:model="password" type="password" class="form-control @error('password') is-invalid @enderror">
@@ -259,7 +285,7 @@
                 <option value="">- Pilih -</option>
                 @if (auth()->user()->level=="superadmin")
                 <option value="admin">Admin</option>
-                <option value="penjual">Penjual</option>
+                {{-- <option value="penjual">Penjual</option> --}}
                 @elseif (auth()->user()->level=="admin")
                 <option value="penjual">Penjual</option>
                 @endif
@@ -270,8 +296,8 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
+          <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
         </div>
       </div>
       </form>
@@ -302,9 +328,19 @@
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                     <textarea disabled class="form-control" rows="3" placeholder="{{$data->alamat}}, {{$data->kecamatan}}, {{$data->kota}}"></textarea>
                 </div>
+                @if ($data->level == "penjual")
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Foto KTP</label><br>
+                    @if($data->foto_ktp!="")
+                    <img src="{{ asset('storage') }}/{{ $data->foto_ktp }}" width="170px" height="120px">
+                    @else
+                    <img src="{{ asset('uploads/promos/no-image.png') }}" width="150px" height="110px">
+                    @endif
+                </div>
+                @endif
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
             </form>
           </div>
         </div>

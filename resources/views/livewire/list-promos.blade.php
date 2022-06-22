@@ -17,11 +17,13 @@
                     <div class="col form-inline">
                         <h3>Promo</h3>
                     </div>
+                    @if (auth()->user()->level=="admin")
                     <div class="col form-inline">
                         <button type="button" class="btn btn-success btn-sm ml-lg-auto float-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="fa fa-plus"></i> Tambah
                         </button>
                     </div>
+                    @endif
                 </div>
                 <hr size="5">
                 <div class="row">
@@ -87,9 +89,11 @@
                         <td class="text-center">{!! date('d-m-Y', strtotime($item->akhir_periode)) !!}</td>
                         <td class="text-center">{{$item['keterangan']}}</td>
                         <td class="text-center">
+                        @if (auth()->user()->level=="admin")
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                             <i class="fa fa-edit"></i> Ubah
                         </button>
+                        @endif
                         <a href="/promo/{{$item->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Hapus</a>
                         </td>
                       </tr>
@@ -179,8 +183,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
               </form>
             </div>
           </div>

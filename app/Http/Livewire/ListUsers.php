@@ -9,10 +9,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class ListUsers extends Component
 {
     use WithPagination;
+    use WithFileUploads;
     protected $paginationTheme = 'bootstrap';
 
     public $nama_lengkap;
@@ -25,6 +27,7 @@ class ListUsers extends Component
     public $kotas;
     public $kota_kab;
     public $kecamatans;
+    public $foto_ktp;
 
     public $selectedKota = null;
     public $selectedKecamatan = null;
@@ -81,29 +84,59 @@ class ListUsers extends Component
             }
         }
 
-        $data = [
-            'nama_lengkap' => $this->nama_lengkap,
-            'username' => $this->username,
-            'email' => $this->email,
-            'password' => $this->password,
-            'level' => $this->level,
-            'nomor_hp' => $this->nomor_hp,
-            'alamat' => $this->alamat,
-            'kota' => $this->kota_kab,
-            'kecamatan' => $this->selectedKecamatan,
-        ];
+        if($this->level == 'penjual'){
+            $filename = $this->foto_ktp->store('foto_ktp', 'public');
+            $data = [
+                'nama_lengkap' => $this->nama_lengkap,
+                'username' => $this->username,
+                'email' => $this->email,
+                'password' => $this->password,
+                'level' => $this->level,
+                'nomor_hp' => $this->nomor_hp,
+                'alamat' => $this->alamat,
+                'kota' => $this->kota_kab,
+                'kecamatan' => $this->selectedKecamatan,
+                'foto_ktp' => $filename,
+            ];
 
-        $validateData = Validator::make($data, [
-            'nama_lengkap' => 'required',
-            'username' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:5',
-            'level' => 'required',
-            'nomor_hp' => 'required|numeric|digits_between:11,13',
-            'alamat' => 'required',
-            'kota' => 'required',
-            'kecamatan' => 'required',
-        ])->validate();
+            $validateData = Validator::make($data, [
+                'nama_lengkap' => 'required',
+                'username' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:5',
+                'level' => 'required',
+                'nomor_hp' => 'required|numeric|digits_between:11,13',
+                'alamat' => 'required',
+                'kota' => 'required',
+                'kecamatan' => 'required',
+                'foto_ktp' => 'required',
+            ])->validate();
+        }
+
+        else{
+            $data = [
+                'nama_lengkap' => $this->nama_lengkap,
+                'username' => $this->username,
+                'email' => $this->email,
+                'password' => $this->password,
+                'level' => $this->level,
+                'nomor_hp' => $this->nomor_hp,
+                'alamat' => $this->alamat,
+                'kota' => $this->kota_kab,
+                'kecamatan' => $this->selectedKecamatan,
+            ];
+            $validateData = Validator::make($data, [
+                'nama_lengkap' => 'required',
+                'username' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:5',
+                'level' => 'required',
+                'nomor_hp' => 'required|numeric|digits_between:11,13',
+                'alamat' => 'required',
+                'kota' => 'required',
+                'kecamatan' => 'required',
+            ])->validate();
+        }
 
         $validateData['password'] = bcrypt($validateData['password']);
 
@@ -144,6 +177,7 @@ class ListUsers extends Component
         $this->level = null;
         $this->nomor_hp = null;
         $this->alamat = null;
+        $this->foto_ktp = null;
         $this->selectedKota = null;
         $this->selectedKecamatan = null;
     }

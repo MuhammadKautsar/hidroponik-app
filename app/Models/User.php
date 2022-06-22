@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Produk;
+use App\Models\Order;
 use App\Models\Report;
 use App\Models\Feedback;
 use App\Models\OrderMapping;
@@ -34,7 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'level',
         'profile_image',
         'kecamatan',
-        'kota'
+        'kota',
+        'foto_ktp'
     ];
 
     // saat delete. akan delete childnya juga
@@ -44,7 +46,8 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->produks()->delete();
             $user->reportpenjuals()->delete();
             $user->reportpembelis()->delete();
-            $user->orders()->delete();
+            $user->orderpenjuals()->delete();
+            $user->orderpembelis()->delete();
             $user->notificationTokens()->delete();
         });
     }

@@ -13,20 +13,37 @@
         <li class="nav-item dropdown d-none d-md-flex ml-lg-auto">
             <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ni ni-bell-55"></i>
-                {{-- @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
-                <span class="label label-warning">{{count($laporan)}}</span>
+                @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
+                    @if ($laporan->count() > 0)
+                        <div class="badge badge-danger">{{count($laporan)}}</div>
+                    @endif
                 @else
-                <span class="label label-warning">{{count($order)+count($stok)}}</span>
-                @endif --}}
+                    @if ($order->count() > 0 || $stok->count() > 0)
+                        <div class="badge badge-danger">{{count($order)+count($stok)}}</div>
+                    @endif
+                @endif
             </a>
             <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right py-0 overflow-hidden">
-                <div class="px-3 py-3">
+                @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
+                    @if ($laporan->count() < 1)
+                    <div class="px-3 py-3">
+                        <h6 class="text-sm text-muted m-0">Tidak ada notifikasi.</h6>
+                    </div>
+                    @endif
+                @else
+                    @if ($order->count() < 1 && $stok->count() < 1)
+                    <div class="px-3 py-3">
+                        <h6 class="text-sm text-muted m-0">Tidak ada notifikasi.</h6>
+                    </div>
+                    @endif
+                @endif
+                {{-- <div class="px-3 py-3">
                     @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
                     <h6 class="text-sm text-muted m-0">Kamu memiliki <strong class="text-dark">{{count($laporan)}}</strong> notifikasi.</h6>
                     @else
                     <h6 class="text-sm text-muted m-0">Kamu memiliki <strong class="text-dark">{{count($order)+count($stok)}}</strong> notifikasi.</h6>
                     @endif
-                </div>
+                </div> --}}
                 @foreach ($order as $od)
                 <div class="list-group list-group-flush">
                     <a href="{{ route('orders') }}" class="list-group-item list-group-item-action">

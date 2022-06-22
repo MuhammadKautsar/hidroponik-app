@@ -97,7 +97,19 @@
                             </td>
                             <td class="text-center">Rp{{number_format($item['total_harga']+$item['harga_jasa_pengiriman'],0,',','.')}},-</td>
                             <td class="text-center">{{$item->penjual->username}}</td>
-                            <td class="text-center">{{$item['status_order']}}</td>
+                            <td class="text-left">
+                                @if ($item['status_order'] == 'Belum')
+                                    <i class="bi bi-circle-fill" style="color: silver"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Diproses')
+                                    <i class="bi bi-circle-fill" style="color: rgb(0, 153, 255)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Dikirim')
+                                    <i class="bi bi-circle-fill" style="color: rgb(240, 240, 35)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Selesai')
+                                    <i class="bi bi-circle-fill" style="color: rgb(77, 186, 34)"></i> &nbsp;{{$item['status_order']}}
+                                @elseif ($item['status_order'] == 'Batal')
+                                    <i class="bi bi-circle-fill" style="color: rgb(229, 34, 34)"></i> &nbsp;{{$item['status_order']}}
+                                @endif
+                            </td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-light btn-sm float-center" data-bs-toggle="modal" data-bs-target="#editModal-{{ $item->id }}">
                                     <i class="fa fa-info-circle"></i> Detail
@@ -177,7 +189,7 @@
                 </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
             </form>
           </div>
         </div>

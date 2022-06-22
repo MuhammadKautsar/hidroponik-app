@@ -195,7 +195,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Promo</label>
-                  <select name="promo_id" class="form-control @error('promo_id') is-invalid @enderror">
+                  <select name="promo_id" class="form-select @error('promo_id') is-invalid @enderror">
                       <option value="">- Pilih -</option>
                       @foreach ($promo as $item)
                           <option value="{{ $item->id }}">{{ $item->nama }} - {{ $item->potongan }} %</option>
@@ -221,7 +221,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Satuan</label>
-                    <select name="satuan" class="form-control @error('satuan') is-invalid @enderror">
+                    <select name="satuan" class="form-select @error('satuan') is-invalid @enderror">
                         <option value="gram">Gram</option>
                         <option value="Kg">Kg</option>
                         <option value="Ons">Ons</option>
@@ -248,8 +248,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Submit</button>
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
               </form>
             </div>
           </div>
