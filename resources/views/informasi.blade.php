@@ -5,25 +5,43 @@
 
     <div class="container mt--9 pb-5">
         <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
+            <div class="col-lg-8 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
+                        <div class="text-center mb-4">
                             <h2>
-                                    Informasi :
+                                    Informasi Pendaftaran
                             </h2>
                         </div>
-                        <div class="text-center text-muted mb-4">
+                        <div class="text-center mb-4">
                             <small>
-                                Bagi Yang Ingin Mendaftar Menjadi Penjual di Aplikasi AgriHub, Silahkan Hubungi Admin di nomor :
+                                Bagi yang ingin mendaftar menjadi Penjual di aplikasi AgriHub, silahkan hubungi Admin dibawah ini :
                                 <br><br>
-                                1. 082167303899 &ensp;
-                                2. 082216405979
+                                082167303899 &ensp;
+                                082299887401
+                                <br>
+                                <normal style="color: blue;">ismuliajuli@gmail.com &ensp;
+                                fachruddin@gmail.com</normal>
                                 <br><br>
-                                Atau kirim email ke :
+                                Dan memberikan data nama lengkap, username, email, nomor hp, alamat dan password yang akan digunakan oleh admin untuk keperluan pendaftaran akun penjual.
+                            </small>
+                        </div>
+                        <hr size="5">
+                        <div class="text-center mb-4">
+                            <h2>
+                                    Syarat Mendaftar
+                            </h2>
+                        </div>
+                        <div class="text-center mb-4">
+                            <small>
+                                Berikut syarat untuk mendaftar sebagai penjual di aplikasi Agrihub yaitu :
                                 <br><br>
-                                1. ismuliajuli@gmail.com &ensp;
-                                2. fachruddin@gmail.com
+                                <ol class="text-left mb-4">
+                                    <li>Minimal usaha tanaman hidroponik sudah berjalan 1 tahun</li>
+                                    <li>Siap mengikuti harga yang sudah ditetapkan bersama</li>
+                                    <li>Memiliki minimal 1000 lubang tanam</li>
+                                    <li>Sayuran yang dijual tidak disemprot pestisida</li>
+                                </ol>
                             </small>
                         </div>
                     </div>

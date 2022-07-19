@@ -29,7 +29,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Laporan...">
+                            <input wire:model="search" class="form-control" type="text" placeholder="Cari Keluhan...">
                         </div>
                     </div>
                 </div>

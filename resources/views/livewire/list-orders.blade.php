@@ -190,7 +190,7 @@
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                     <textarea class="form-control" rows="2" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                 </div>
-                @if (($data->harga_jasa_pengiriman==0))
+                @if ($data->harga_jasa_pengiriman==0)
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Ongkir</label>
                     <input name="harga_jasa_pengiriman" type="number" class="form-control @error('harga_jasa_pengiriman') is-invalid @enderror" value="{{$data->harga_jasa_pengiriman}}">
@@ -222,6 +222,16 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                   @enderror
                 </div>
+                @if ($data->status_order == "Belum")
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alasan</label>
+                    <input name="alasan" type="text" class="form-control @error('alasan') is-invalid @enderror">
+                    <small><i class="fa fa-info-circle" style="color: red;"></i> Wajib diisi jika ingin membatalkan pesanan</small>
+                    @error('alasan')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                @endif
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>
@@ -258,6 +268,16 @@
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                     <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                   </div>
+                  @if ($data->status_order == "Batal")
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alasan</label>
+                    @if ($data->alasan != "")
+                    <input class="form-control" disabled placeholder="{{$data->alasan}}">
+                    @else
+                    <input class="form-control" disabled placeholder="Dibatalkan sistem">
+                    @endif
+                  </div>
+                  @endif
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>

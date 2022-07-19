@@ -104,6 +104,11 @@
                         <i class="ni ni-chat-round text-black"></i> {{ __('Ulasan') }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('aturan') ? 'active' : '' }} text-white" href="/aturan">
+                        <i class="bi bi-exclamation-diamond-fill"></i> {{ __('Aturan') }}
+                    </a>
+                </li>
                 @endif
             </ul>
         </div>

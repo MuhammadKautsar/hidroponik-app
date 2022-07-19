@@ -84,36 +84,6 @@ class ListUsers extends Component
             }
         }
 
-        // if($this->level == 'penjual'){
-        //     $filename = $this->foto_ktp->store('foto_ktp', 'public');
-        //     $data = [
-        //         'nama_lengkap' => $this->nama_lengkap,
-        //         'username' => $this->username,
-        //         'email' => $this->email,
-        //         'password' => $this->password,
-        //         'level' => $this->level,
-        //         'nomor_hp' => $this->nomor_hp,
-        //         'alamat' => $this->alamat,
-        //         'kota' => $this->kota_kab,
-        //         'kecamatan' => $this->selectedKecamatan,
-        //         'foto_ktp' => $filename,
-        //     ];
-
-        //     $validateData = Validator::make($data, [
-        //         'nama_lengkap' => 'required',
-        //         'username' => 'required',
-        //         'email' => 'required|email|unique:users',
-        //         'password' => 'required|min:5',
-        //         'level' => 'required',
-        //         'nomor_hp' => 'required|numeric|digits_between:11,13',
-        //         'alamat' => 'required',
-        //         'kota' => 'required',
-        //         'kecamatan' => 'required',
-        //         'foto_ktp' => 'required',
-        //     ])->validate();
-        // }
-
-        // else{
             $data = [
                 'nama_lengkap' => $this->nama_lengkap,
                 'username' => $this->username,
@@ -136,7 +106,6 @@ class ListUsers extends Component
                 'kota' => 'required',
                 'kecamatan' => 'required',
             ])->validate();
-        // }
 
         $validateData['password'] = bcrypt($validateData['password']);
 

@@ -187,6 +187,16 @@
                     <label for="exampleInputEmail1" class="form-label">Alamat</label>
                     <textarea class="form-control" rows="3" disabled>{{$data->pembeli->alamat}}, Kec. {{$data->pembeli->kecamatan}}, {{$data->pembeli->kota}}</textarea>
                 </div>
+                @if ($data->status_order == "Batal")
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Alasan</label>
+                    @if ($data->alasan != "")
+                    <input class="form-control" disabled placeholder="{{$data->alasan}}">
+                    @else
+                    <input class="form-control" disabled placeholder="Dibatalkan sistem">
+                    @endif
+                  </div>
+                @endif
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Tutup</button>

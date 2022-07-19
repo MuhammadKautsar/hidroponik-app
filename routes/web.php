@@ -77,6 +77,9 @@ Route::group(['middleware' => ['auth','verified','cekLevel:penjual']], function 
     Route::get('/ulasan', ListFeedbacks::class)->name('feedbacks');
     Route::get('/ulasan/{id}/delete', 'App\Http\Controllers\FeedbackController@destroy');
     Route::get('/cetak-pesanan', [OrderController::class, 'cetakPesananPenjual'])->name('cetak-pesanan-penjual');
+    Route::get('/aturan', function () {
+        return view('aturan');
+    });
 });
 
 Route::group(['middleware' => ['auth','verified']], function () {

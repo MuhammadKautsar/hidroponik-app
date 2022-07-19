@@ -47,6 +47,18 @@ class OrderController extends Controller
             $data_order->harga_jasa_pengiriman = $request->input('harga_jasa_pengiriman');
         }
 
+        if ($request->input('status_order') == 'Batal') {
+            // $request->validate([
+            //     'alasan' => 'required',
+            // ]);
+            if ($request->input('alasan') == '') {
+                return back()->with('status', 'Alasan batal belum diisi');
+            }
+            else{
+                $data_order->alasan = $request->input('alasan');
+            }
+        }
+
         $data_order->status_order = $request->input('status_order');
         $data_order->update();
         return redirect('/pesanan');

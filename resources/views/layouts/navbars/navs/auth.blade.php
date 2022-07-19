@@ -8,14 +8,27 @@
             $stok = App\Models\Produk::where('penjual_id', '=', Auth::user()->id)->where('stok', '<', '1')->get();
             $order = App\Models\Order::where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Belum')->orderBy('created_at', 'desc')->get();
             $laporan = App\Models\Report::orderBy('created_at', 'desc')->get();
+
+            $today = strtotime(now());
+            $hitung = 0;
+            foreach ($laporan as $row) {
+            // lewat 3 hari kemudian
+                $passDate =  strtotime($row->created_at->modify('+3 days'));
+                if ($today <= $passDate) {
+                    $hitung++;
+                }
+            }
         @endphp
 
         <li class="nav-item dropdown d-none d-md-flex ml-lg-auto">
             <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ni ni-bell-55"></i>
                 @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
-                    @if ($laporan->count() > 0)
+                    {{-- @if ($laporan->count() > 0)
                         <div class="badge badge-danger">{{count($laporan)}}</div>
+                    @endif --}}
+                    @if ($hitung > 0)
+                        <div class="badge badge-danger">{{$hitung}}</div>
                     @endif
                 @else
                     @if ($order->count() > 0 || $stok->count() > 0)
@@ -25,7 +38,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right py-0 overflow-hidden">
                 @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
-                    @if ($laporan->count() < 1)
+                    {{-- @if ($laporan->count() < 1) --}}
+                    @if ($hitung < 1)
                     <div class="px-3 py-3">
                         <h6 class="text-sm text-muted m-0">Tidak ada notifikasi.</h6>
                     </div>
@@ -94,28 +108,32 @@
                 @endforeach
                 @if (auth()->user()->level=="superadmin" || auth()->user()->level=="admin")
                     @foreach ($laporan as $lp)
-                    <div class="list-group list-group-flush">
-                        <a href="{{ route('reports') }}" class="list-group-item list-group-item-action">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                {{-- <img alt="Image placeholder" src="$lp->getProfileImage()" class="avatar rounded-circle"> --}}
-                                <i class="ni ni-single-copy-04"></i>
-                                </div>
-                                <div class="col ml--3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="text-sm mb-0">Ada keluhan baru dari <strong class="text-dark">{{$lp->pembeli->nama_lengkap}}</strong>, silahkan diperiksa</p>
-
+                        @php $today = strtotime(now()); @endphp
+                        @php $passDate =  strtotime($lp->created_at->modify('+3 days')); @endphp
+                        @if ($today <= $passDate)
+                            <div class="list-group list-group-flush">
+                                <a href="{{ route('reports') }}" class="list-group-item list-group-item-action">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                        {{-- <img alt="Image placeholder" src="$lp->getProfileImage()" class="avatar rounded-circle"> --}}
+                                        <i class="ni ni-single-copy-04"></i>
                                         </div>
-                                        <div class="text-right text-muted">
-                                            <small>{{ $lp->updated_at->diffForHumans() }}</small>
+                                        <div class="col ml--3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="text-sm mb-0">Ada keluhan baru dari <strong class="text-dark">{{$lp->pembeli->nama_lengkap}}</strong>, silahkan diperiksa</p>
+
+                                                </div>
+                                                <div class="text-right text-muted">
+                                                    <small>{{ $lp->created_at->diffForHumans() }}</small>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-
-                                </div>
+                                </a>
                             </div>
-                        </a>
-                    </div>
+                        @endif
                     @endforeach
                 @endif
                 {{-- <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a> --}}
