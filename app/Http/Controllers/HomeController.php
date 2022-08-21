@@ -54,47 +54,47 @@ class HomeController extends Controller
 
         $ulasan = $feedbacks->count();
 
-        $ordersel_feb  = Order::whereMonth('created_at', '02')->where('status_order', 'Selesai')->count();
         $ordersel_mar  = Order::whereMonth('created_at', '03')->where('status_order', 'Selesai')->count();
         $ordersel_apr  = Order::whereMonth('created_at', '04')->where('status_order', 'Selesai')->count();
         $ordersel_mei  = Order::whereMonth('created_at', '05')->where('status_order', 'Selesai')->count();
         $ordersel_jun  = Order::whereMonth('created_at', '06')->where('status_order', 'Selesai')->count();
         $ordersel_jul  = Order::whereMonth('created_at', '07')->where('status_order', 'Selesai')->count();
+        $ordersel_agu  = Order::whereMonth('created_at', '08')->where('status_order', 'Selesai')->count();
 
-        $orderbat_feb  = Order::whereMonth('created_at', '02')->where('status_order', 'Batal')->count();
         $orderbat_mar  = Order::whereMonth('created_at', '03')->where('status_order', 'Batal')->count();
         $orderbat_apr  = Order::whereMonth('created_at', '04')->where('status_order', 'Batal')->count();
         $orderbat_mei  = Order::whereMonth('created_at', '05')->where('status_order', 'Batal')->count();
         $orderbat_jun  = Order::whereMonth('created_at', '06')->where('status_order', 'Batal')->count();
         $orderbat_jul  = Order::whereMonth('created_at', '07')->where('status_order', 'Batal')->count();
+        $orderbat_agu  = Order::whereMonth('created_at', '08')->where('status_order', 'Batal')->count();
 
-        $produk_feb  = Produk::whereMonth('created_at', '02')->count();
         $produk_mar  = Produk::whereMonth('created_at', '03')->count();
         $produk_apr  = Produk::whereMonth('created_at', '04')->count();
         $produk_mei  = Produk::whereMonth('created_at', '05')->count();
         $produk_jun  = Produk::whereMonth('created_at', '06')->count();
         $produk_jul  = Produk::whereMonth('created_at', '07')->count();
+        $produk_agu  = Produk::whereMonth('created_at', '08')->count();
 
-        $pendapatan_feb  = Order::whereMonth('created_at', '02')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
         $pendapatan_mar  = Order::whereMonth('created_at', '03')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
         $pendapatan_apr  = Order::whereMonth('created_at', '04')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
         $pendapatan_mei  = Order::whereMonth('created_at', '05')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
         $pendapatan_jun  = Order::whereMonth('created_at', '06')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
         $pendapatan_jul  = Order::whereMonth('created_at', '07')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
+        $pendapatan_agu  = Order::whereMonth('created_at', '08')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->sum('total_harga');
 
-        $orderselpen_feb  = Order::whereMonth('created_at', '02')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
         $orderselpen_mar  = Order::whereMonth('created_at', '03')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
         $orderselpen_apr  = Order::whereMonth('created_at', '04')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
         $orderselpen_mei  = Order::whereMonth('created_at', '05')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
         $orderselpen_jun  = Order::whereMonth('created_at', '06')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
         $orderselpen_jul  = Order::whereMonth('created_at', '07')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
+        $orderselpen_agu  = Order::whereMonth('created_at', '08')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Selesai')->count();
 
-        $orderbatpen_feb  = Order::whereMonth('created_at', '02')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
         $orderbatpen_mar  = Order::whereMonth('created_at', '03')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
         $orderbatpen_apr  = Order::whereMonth('created_at', '04')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
         $orderbatpen_mei  = Order::whereMonth('created_at', '05')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
         $orderbatpen_jun  = Order::whereMonth('created_at', '06')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
         $orderbatpen_jul  = Order::whereMonth('created_at', '07')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
+        $orderbatpen_agu  = Order::whereMonth('created_at', '08')->where('penjual_id', '=', Auth::user()->id)->where('status_order', 'Batal')->count();
 
         return view('dashboard', compact(
             'jumlah_produk', 'jumlah_pesanan', 'jumlah_promo', 'jumlah_laporan', 'jumlah_user', 'jumlah_ulasan',
@@ -103,17 +103,17 @@ class HomeController extends Controller
 
             'admin', 'penjual', 'pembeli',
 
-            'ordersel_feb', 'ordersel_mar', 'ordersel_apr', 'ordersel_mei', 'ordersel_jun', 'ordersel_jul',
+            'ordersel_mar', 'ordersel_apr', 'ordersel_mei', 'ordersel_jun', 'ordersel_jul', 'ordersel_agu',
 
-            'orderbat_feb', 'orderbat_mar', 'orderbat_apr', 'orderbat_mei', 'orderbat_jun', 'orderbat_jul',
+            'orderbat_mar', 'orderbat_apr', 'orderbat_mei', 'orderbat_jun', 'orderbat_jul', 'orderbat_agu',
 
-            'produk_feb', 'produk_mar', 'produk_apr', 'produk_mei', 'produk_jun', 'produk_jul',
+            'produk_mar', 'produk_apr', 'produk_mei', 'produk_jun', 'produk_jul', 'produk_agu',
 
-            'pendapatan_feb', 'pendapatan_mar', 'pendapatan_apr', 'pendapatan_mei', 'pendapatan_jun', 'pendapatan_jul',
+            'pendapatan_mar', 'pendapatan_apr', 'pendapatan_mei', 'pendapatan_jun', 'pendapatan_jul', 'pendapatan_agu',
 
-            'orderselpen_feb', 'orderselpen_mar', 'orderselpen_apr', 'orderselpen_mei', 'orderselpen_jun', 'orderselpen_jul',
+            'orderselpen_mar', 'orderselpen_apr', 'orderselpen_mei', 'orderselpen_jun', 'orderselpen_jul', 'orderselpen_agu',
 
-            'orderbatpen_feb', 'orderbatpen_mar', 'orderbatpen_apr', 'orderbatpen_mei', 'orderbatpen_jun', 'orderbatpen_jul',
+            'orderbatpen_mar', 'orderbatpen_apr', 'orderbatpen_mei', 'orderbatpen_jun', 'orderbatpen_jul', 'orderbatpen_agu'
         ));
     }
 }

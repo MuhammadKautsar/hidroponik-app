@@ -360,15 +360,15 @@
         const lineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli'],
+                labels: ['Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus'],
                 datasets: [{
                     label: 'Pesanan Selesai',
-                    data: [{{$ordersel_feb}},
-                        {{$ordersel_mar}},
+                    data: [{{$ordersel_mar}},
                         {{$ordersel_apr}},
                         {{$ordersel_mei}},
                         {{$ordersel_jun}},
-                        {{$ordersel_jul}}],
+                        {{$ordersel_jul}},
+                        {{$ordersel_agu}}],
                     backgroundColor: [
                         'rgb(60, 179, 113)',
                     ],
@@ -379,12 +379,12 @@
                 },
                 {
                     label: 'Pesanan Batal',
-                    data: [{{$orderbat_feb}},
-                        {{$orderbat_mar}},
+                    data: [{{$orderbat_mar}},
                         {{$orderbat_apr}},
                         {{$orderbat_mei}},
                         {{$orderbat_jun}},
-                        {{$orderbat_jul}}],
+                        {{$orderbat_jul}},
+                        {{$orderbat_agu}}],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                     ],
@@ -409,15 +409,15 @@
         const barChart = new Chart(ctz, {
             type: 'bar',
             data: {
-                labels: ['Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli'],
+                labels: ['Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus'],
                 datasets: [{
                     label: 'Produk Baru Perbulan',
-                    data: [{{$produk_feb}},
-                        {{$produk_mar}},
+                    data: [{{$produk_mar}},
                         {{$produk_apr}},
                         {{$produk_mei}},
                         {{$produk_jun}},
-                        {{$produk_jul}}],
+                        {{$produk_jul}},
+                        {{$produk_agu}}],
                     backgroundColor: [
                         'rgb(54, 162, 235)',
                     ],
@@ -458,15 +458,15 @@
         const salesChart = new Chart(dtx, {
             type: 'line',
             data: {
-                labels: ['Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli'],
+                labels: ['Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus'],
                 datasets: [{
                     label: 'Pendapatan Perbulan',
-                    data: [{{$pendapatan_feb}},
-                        {{$pendapatan_mar}},
+                    data: [{{$pendapatan_mar}},
                         {{$pendapatan_apr}},
                         {{$pendapatan_mei}},
                         {{$pendapatan_jun}},
-                        {{$pendapatan_jul}}],
+                        {{$pendapatan_jul}},
+                        {{$pendapatan_agu}}],
                     backgroundColor: [
                         'rgb(54, 162, 235)',
                     ],
@@ -491,27 +491,27 @@
         const orderChart = new Chart(dtz, {
             type: 'bar',
             data: {
-                labels: ['Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli'],
+                labels: ['Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus'],
                 datasets: [{
                     label: 'Selesai',
-                    data: [{{$orderselpen_feb}},
-                        {{$orderselpen_mar}},
+                    data: [{{$orderselpen_mar}},
                         {{$orderselpen_apr}},
                         {{$orderselpen_mei}},
                         {{$orderselpen_jun}},
-                        {{$orderselpen_jul}}],
+                        {{$orderselpen_jul}},
+                        {{$orderselpen_agu}}],
                     backgroundColor: [
                         'rgb(60, 179, 113)',
                     ],
                 },
                 {
                     label: 'Batal',
-                    data: [{{$orderbatpen_feb}},
-                        {{$orderbatpen_mar}},
+                    data: [{{$orderbatpen_mar}},
                         {{$orderbatpen_apr}},
                         {{$orderbatpen_mei}},
                         {{$orderbatpen_jun}},
-                        {{$orderbatpen_jul}}],
+                        {{$orderbatpen_jul}},
+                        {{$orderbatpen_agu}}],
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                     ],
